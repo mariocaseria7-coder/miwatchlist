@@ -17,3 +17,18 @@ reescribirse personalmente tras comprenderlos.
 **Pendiente del alumno:** dibujar sin IA las cuatro pantallas y navegación, guardar
 la imagen como `docs/boceto.png`. No hay un boceto personal generado por IA.
 **Qué modifiqué, descarté y aprendí:** pendiente de completar personalmente.
+
+## Fase 1 · Modelo
+
+**Herramienta usada:** Codex.
+**Prompts principales:** implementación del plan aprobado (conversación).
+**Qué me dio la IA:** modelo inmutable, enums con etiquetas, JSON, copyWith y pruebas.
+**Decisiones de la IA:** validar título y estrellas también en el modelo; distinguir
+notas omitidas de null para poder borrar una nota al editar.
+**Acepté / modifiqué / descarté:** pendiente de revisión personal.
+**Errores detectados por el alumno:** pendiente de revisión.
+**Lo que he aprendido:** pendiente de redactar personalmente.
+**Preguntas de comprensión (sin IA):**
+1. ¿Por qué son final los campos y cómo cambio el estado? Pendiente.
+2. ¿Cómo se guarda y recupera un enum en JSON? Pendiente.
+3. ¿Qué pasa si no hay notas en el JSON? Pendiente.
