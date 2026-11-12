@@ -93,75 +93,84 @@ class _PantallaDetalleState extends State<PantallaDetalle> {
             alignment: Alignment.topCenter,
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 600),
-              child: ListView(
+              child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: tema.colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _elemento.tipo.etiqueta.toUpperCase(),
-                          style: TextStyle(
-                            color: tema.colorScheme.onPrimaryContainer,
-                            letterSpacing: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        color: tema.colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _elemento.tipo.etiqueta.toUpperCase(),
+                            style: TextStyle(
+                              color: tema.colorScheme.onPrimaryContainer,
+                              letterSpacing: 2,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          _elemento.titulo,
-                          style: tema.textTheme.headlineMedium?.copyWith(
-                            color: tema.colorScheme.onPrimaryContainer,
+                          const SizedBox(height: 12),
+                          Text(
+                            _elemento.titulo,
+                            style: tema.textTheme.headlineMedium?.copyWith(
+                              color: tema.colorScheme.onPrimaryContainer,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 16),
-                        Chip(label: Text(_elemento.etiquetaEstado)),
-                      ],
+                          const SizedBox(height: 16),
+                          Chip(label: Text(_elemento.etiquetaEstado)),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 28),
-                  Text('Tu valoración', style: tema.textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  SelectorEstrellas(valor: _elemento.valoracion),
-                  const SizedBox(height: 8),
-                  Text(
-                    _elemento.valoracion == 0
-                        ? 'Sin valorar'
-                        : '${_elemento.valoracion} de 5 estrellas',
-                  ),
-                  const SizedBox(height: 28),
-                  Text('Notas', style: tema.textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  Text(_elemento.notas ?? 'Todavía no has añadido notas.'),
-                  const SizedBox(height: 28),
-                  Text('En tu lista desde', style: tema.textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  Text(fechaTexto),
-                  const SizedBox(height: 8),
-                  Text('ID: ${_elemento.id}', style: tema.textTheme.bodySmall),
-                  const SizedBox(height: 32),
-                  if (_ocupado)
-                    const Center(child: CircularProgressIndicator()),
-                  FilledButton.icon(
-                    onPressed: _ocupado ? null : _editar,
-                    icon: const Icon(Icons.edit_outlined),
-                    label: const Text('Editar'),
-                  ),
-                  const SizedBox(height: 8),
-                  TextButton.icon(
-                    onPressed: _ocupado ? null : _borrar,
-                    style: TextButton.styleFrom(
-                      foregroundColor: tema.colorScheme.error,
+                    const SizedBox(height: 28),
+                    Text('Tu valoración', style: tema.textTheme.titleMedium),
+                    const SizedBox(height: 8),
+                    SelectorEstrellas(valor: _elemento.valoracion),
+                    const SizedBox(height: 8),
+                    Text(
+                      _elemento.valoracion == 0
+                          ? 'Sin valorar'
+                          : '${_elemento.valoracion} de 5 estrellas',
                     ),
-                    icon: const Icon(Icons.delete_outline),
-                    label: const Text('Borrar'),
-                  ),
-                ],
+                    const SizedBox(height: 28),
+                    Text('Notas', style: tema.textTheme.titleMedium),
+                    const SizedBox(height: 8),
+                    Text(_elemento.notas ?? 'Todavía no has añadido notas.'),
+                    const SizedBox(height: 28),
+                    Text(
+                      'En tu lista desde',
+                      style: tema.textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(fechaTexto),
+                    const SizedBox(height: 8),
+                    Text(
+                      'ID: ${_elemento.id}',
+                      style: tema.textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 32),
+                    if (_ocupado)
+                      const Center(child: CircularProgressIndicator()),
+                    FilledButton.icon(
+                      onPressed: _ocupado ? null : _editar,
+                      icon: const Icon(Icons.edit_outlined),
+                      label: const Text('Editar'),
+                    ),
+                    const SizedBox(height: 8),
+                    TextButton.icon(
+                      onPressed: _ocupado ? null : _borrar,
+                      style: TextButton.styleFrom(
+                        foregroundColor: tema.colorScheme.error,
+                      ),
+                      icon: const Icon(Icons.delete_outline),
+                      label: const Text('Borrar'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

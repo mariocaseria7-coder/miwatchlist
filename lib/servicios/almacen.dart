@@ -6,11 +6,10 @@ import '../modelos/elemento.dart';
 
 /// Guarda la colección completa como un único texto JSON en el dispositivo.
 class Almacen {
-  Almacen({SharedPreferencesAsync? preferencias})
-    : _preferencias = preferencias;
-  SharedPreferencesAsync? _preferencias;
-  SharedPreferencesAsync get _prefs =>
-      _preferencias ??= SharedPreferencesAsync();
+  Almacen({this.preferencias});
+  final SharedPreferencesAsync? preferencias;
+  late final SharedPreferencesAsync _prefs =
+      preferencias ?? SharedPreferencesAsync();
 
   /// Recupera una lista vacía si no hay datos o su contenido está dañado.
   Future<List<Elemento>> cargar() async {
@@ -21,8 +20,9 @@ class Almacen {
       final elementos = json
           .map((e) => Elemento.fromJson(e as Map<String, dynamic>))
           .toList();
-      if (elementos.map((e) => e.id).toSet().length != elementos.length)
+      if (elementos.map((e) => e.id).toSet().length != elementos.length) {
         return [];
+      }
       return elementos;
     } on FormatException {
       return [];

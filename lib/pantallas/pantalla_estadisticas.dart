@@ -113,9 +113,8 @@ class PantallaEstadisticas extends StatelessWidget {
                               : resumen.porEstado[estado]! / resumen.total,
                           minHeight: 10,
                           borderRadius: BorderRadius.circular(10),
-                          semanticsLabel: estado.etiqueta,
-                          semanticsValue:
-                              '${resumen.porEstado[estado]} de ${resumen.total}',
+                          semanticsLabel:
+                              '${estado.etiqueta}: ${resumen.porEstado[estado]} de ${resumen.total} elementos',
                         ),
                       ],
                     ),

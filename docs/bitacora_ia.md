@@ -105,3 +105,34 @@ confirmar cambios. JSON inválido produce lista vacía; errores de acceso ofrece
 1. ¿Cómo se evita dividir entre cero? Pendiente.
 2. ¿Por qué se excluyen los elementos con cero estrellas? Pendiente.
 3. ¿Qué ventaja tiene definir los colores en el tema? Pendiente.
+
+## Fase 8 · Pruebas, documentación y entrega
+
+**Herramienta usada:** Codex.
+**Prompts principales:** «PLEASE IMPLEMENT THIS PLAN:» y el plan completo de esta
+conversación. El alumno debe conservar la conversación y registrar personalmente
+cualquier petición posterior.
+**Qué me dio la IA:** pruebas, README, registro de validación, capturas Android,
+APK y documentación para preparar la defensa.
+**Errores detectados durante ejecución:** formulario con campos diferidos,
+valor semántico incorrecto de barras y gestos de pruebas antes de terminar el
+desplazamiento; corregidos y verificados. Detalles en `validacion.md`.
+**Limitaciones del entorno:** Windows bloquea el ejecutable de pruebas nativo;
+19 pruebas ejecutadas en Chrome con ajuste temporal de los archivos CanvasKit.
+**Acepté sin cambios / modifiqué / descarté:** pendiente de revisión personal.
+**Lo que he aprendido (2–3 líneas propias):** pendiente de redactar por el alumno.
+**Preguntas de comprensión (sin IA):**
+1. ¿Qué diferencia hay entre prueba unitaria y de widget? Pendiente.
+2. ¿Qué hace tester.pump y por qué se usa tras pulsar un botón? Pendiente.
+
+## Revisión antes de entregar
+
+- [ ] He hecho el boceto sin IA y guardado docs/boceto.png.
+- [ ] He leído y comprendido todos los archivos de lib.
+- [ ] He reescrito los comentarios con mis palabras.
+- [ ] He completado las reflexiones de cada fase honestamente.
+- [ ] He contestado las preguntas sin IA.
+- [ ] He repetido la demostración y un cambio en directo sin IA.
+
+Los commits describen el trabajo técnico realizado; no certifican que el alumno
+haya revisado o comprendido cada fase. Estas revisiones siguen pendientes.

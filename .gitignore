@@ -46,3 +46,7 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Entregables generados; el código y las capturas sí se versionan.
+/entrega/*.apk
+__pycache__/
