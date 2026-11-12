@@ -95,8 +95,9 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
                   validator: (texto) {
                     final titulo = texto?.trim() ?? '';
                     if (titulo.isEmpty) return 'Escribe un título.';
-                    if (titulo.length > 60)
+                    if (titulo.length > 60) {
                       return 'El título no puede superar los 60 caracteres.';
+                    }
                     return null;
                   },
                 ),

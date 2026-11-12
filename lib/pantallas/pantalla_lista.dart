@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../modelos/elemento.dart';
 import '../widgets/tarjeta_elemento.dart';
 import 'pantalla_formulario.dart';
+import 'pantalla_detalle.dart';
 
 /// Mantiene la colección y coordina las operaciones de las otras pantallas.
 class PantallaLista extends StatefulWidget {
@@ -57,6 +58,31 @@ class _PantallaListaState extends State<PantallaLista> {
     setState(() => _elementos.add(elemento));
   }
 
+  /// Mantiene la lista como única propietaria de los datos modificables.
+  void _abrirDetalle(Elemento elemento) {
+    Navigator.push<void>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PantallaDetalle(
+          elemento: elemento,
+          onActualizar: (actualizado) async {
+            final indice = _elementos.indexWhere((e) => e.id == actualizado.id);
+            if (indice == -1) return false;
+            setState(() => _elementos[indice] = actualizado);
+            return true;
+          },
+          onBorrar: () async {
+            setState(() => _elementos.removeWhere((e) => e.id == elemento.id));
+            ScaffoldMessenger.of(
+              this.context,
+            ).showSnackBar(const SnackBar(content: Text('Elemento borrado.')));
+            return true;
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +115,7 @@ class _PantallaListaState extends State<PantallaLista> {
                   itemBuilder: (context, index) => TarjetaElemento(
                     key: ValueKey(_elementos[index].id),
                     elemento: _elementos[index],
-                    onTap: () {},
+                    onTap: () => _abrirDetalle(_elementos[index]),
                   ),
                 ),
         ),

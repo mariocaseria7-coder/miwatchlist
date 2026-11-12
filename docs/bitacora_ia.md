@@ -45,3 +45,28 @@ notas omitidas de null para poder borrar una nota al editar.
 1. ¿Cuándo usar ListView.builder frente a ListView? Pendiente.
 2. ¿Por qué la tarjeta recibe un callback? Pendiente.
 3. ¿Por qué puede ser StatelessWidget? Pendiente.
+
+## Fase 3 · Formulario
+
+**Herramienta usada:** Codex.
+**Prompts principales:** implementación del plan aprobado.
+**Qué me dio la IA:** formulario, validación, estrellas interactivas y navegación.
+**Errores de la IA detectados durante ejecución:** un lint por un if sin llaves,
+corregido tras flutter analyze.
+**Acepté / modifiqué / descarté / aprendí:** pendiente de revisión personal.
+**Preguntas de comprensión (sin IA):**
+1. ¿Qué hacen validate y el operador !? Pendiente.
+2. ¿Por qué es necesario dispose? Pendiente.
+3. ¿Cómo viajan los datos desde Guardar hasta la lista? Pendiente.
+
+## Fase 4 · Detalle, edición y borrado
+
+**Herramienta usada:** Codex.
+**Prompts principales:** implementación del plan aprobado.
+**Qué me dio la IA:** detalle con todos los datos, callbacks y confirmación de borrado.
+**Decisiones de la IA:** edición mediante copia local, conservación de id y fecha.
+**Acepté / modifiqué / descarté / errores / aprendí:** pendiente de revisión personal.
+**Preguntas de comprensión (sin IA):**
+1. ¿Cómo distingue el formulario alta y edición? Pendiente.
+2. ¿Cómo se identifica el elemento que hay que reemplazar? Pendiente.
+3. ¿Qué devuelve showDialog y cómo se comprueba? Pendiente.
