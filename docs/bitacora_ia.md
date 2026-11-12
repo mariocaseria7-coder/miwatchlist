@@ -136,3 +136,30 @@ desplazamiento; corregidos y verificados. Detalles en `validacion.md`.
 
 Los commits describen el trabajo técnico realizado; no certifican que el alumno
 haya revisado o comprendido cada fase. Estas revisiones siguen pendientes.
+
+## Revisión posterior · Plan por módulos y estilos
+
+**Herramienta usada:** Codex.
+**Prompt principal:** «Modularizame el plan y creame estilos».
+**Qué me dio la IA:** plan por módulos M00–M08, guía de estilos y carpeta
+`lib/estilos` con tema Material y estilos compartidos conectados a las pantallas.
+Las pruebas de widgets utilizan el tema de la aplicación para comprobar los flujos
+con la apariencia configurada.
+**Acepté / modifiqué / descarté / aprendí:** pendiente de revisión personal.
+
+## Revisión posterior · Portadas y mejora visual
+
+**Prompt:** «Dame mas estilo visual , quiero que en el apartado de juegos, podamos insertar una imagen».
+**Herramienta:** Codex.
+**Resultado de IA:** portada opcional por URL para videojuegos, vista previa,
+eliminación, persistencia del enlace y recuperación visual ante errores de carga;
+compatibilidad con datos antiguos, degradados y tarjetas con sombra.
+**Reflexión y revisión personal:** pendiente del alumno.
+
+**Ajuste posterior solicitado:** mostrar también la portada en la miniatura del
+mando junto al título. Se reutiliza el mismo enlace, con recorte cuadrado y
+el icono de reserva si falta la imagen o falla su carga.
+
+**Ampliación posterior:** el usuario solicita imágenes también para películas y
+series al crear y editar. Se elimina la restricción por tipo, se conserva el enlace
+al cambiar de categoría y se reutiliza un componente de portada común.

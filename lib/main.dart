@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'estilos/tema_app.dart';
 import 'pantallas/pantalla_lista.dart';
 
 /// Inicia la aplicación con los servicios de Flutter disponibles.
@@ -14,23 +15,10 @@ class MiWatchlistApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colores = ColorScheme.fromSeed(seedColor: const Color(0xFF6750A4));
     return MaterialApp(
       title: 'Mi Watchlist',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: colores,
-        scaffoldBackgroundColor: colores.surface,
-        appBarTheme: AppBarTheme(
-          backgroundColor: colores.surface,
-          foregroundColor: colores.onSurface,
-          centerTitle: false,
-        ),
-        inputDecorationTheme: const InputDecorationTheme(
-          border: OutlineInputBorder(),
-          alignLabelWithHint: true,
-        ),
-      ),
+      theme: TemaApp.claro,
       home: const PantallaLista(),
     );
   }

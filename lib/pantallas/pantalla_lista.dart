@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../estilos/estilos_app.dart';
+
 import '../modelos/elemento.dart';
 import '../servicios/almacen.dart';
 import '../widgets/tarjeta_elemento.dart';
@@ -162,7 +164,7 @@ class _PantallaListaState extends State<PantallaLista> {
         body: _errorCarga
             ? Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(24),
+                  padding: EstilosApp.margenPantalla,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -184,7 +186,7 @@ class _PantallaListaState extends State<PantallaLista> {
             : SafeArea(
                 child: Center(
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 760),
+                    constraints: EstilosApp.anchoColeccion,
                     child: AbsorbPointer(
                       absorbing: _guardando,
                       child: CustomScrollView(
@@ -202,23 +204,17 @@ class _PantallaListaState extends State<PantallaLista> {
                                 children: [
                                   Text(
                                     'TU COLECCIÓN',
-                                    style: tema.textTheme.labelLarge?.copyWith(
-                                      color: tema.colorScheme.primary,
-                                      letterSpacing: 2,
-                                    ),
+                                    style: EstilosApp.etiqueta(context),
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     'Historias por descubrir.',
-                                    style: tema.textTheme.headlineMedium
-                                        ?.copyWith(fontWeight: FontWeight.w700),
+                                    style: tema.textTheme.headlineMedium,
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     '${_elementos.length} elementos · Películas, series y videojuegos',
-                                    style: TextStyle(
-                                      color: tema.colorScheme.onSurfaceVariant,
-                                    ),
+                                    style: EstilosApp.textoSecundario(context),
                                   ),
                                   const SizedBox(height: 24),
                                   TextField(

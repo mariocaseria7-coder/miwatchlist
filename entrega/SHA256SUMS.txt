@@ -1,1 +1,1 @@
-a5c06b7ef4d3dacf2b74106beef9fb0eaddc6417e02591f60dc90abd78e14808  mi-watchlist-debug.apk
+acb8a720e37d6a43eedf1787e66e17de368f06295a839d83eef1d5ffcd4d9dad  mi-watchlist-debug.apk

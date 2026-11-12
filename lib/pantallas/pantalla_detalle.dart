@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../estilos/estilos_app.dart';
+
 import '../modelos/elemento.dart';
 import '../widgets/selector_estrellas.dart';
+import '../widgets/imagen_elemento.dart';
 import 'pantalla_formulario.dart';
 
 /// Muestra un elemento y solicita al padre que guarde sus modificaciones.
@@ -92,18 +95,27 @@ class _PantallaDetalleState extends State<PantallaDetalle> {
           child: Align(
             alignment: Alignment.topCenter,
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 600),
+              constraints: EstilosApp.anchoContenido,
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(24),
+                padding: EstilosApp.margenPantalla,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: tema.colorScheme.primaryContainer,
-                        borderRadius: BorderRadius.circular(24),
+                    if (_elemento.tipo == Tipo.videojuego ||
+                        (_elemento.imagenUrl?.trim().isNotEmpty ?? false)) ...[
+                      ClipRRect(
+                        borderRadius: EstilosApp.radioPanel,
+                        child: ImagenElemento(
+                          tipo: _elemento.tipo,
+                          url: _elemento.imagenUrl,
+                          alto: 220,
+                        ),
                       ),
+                      const SizedBox(height: 16),
+                    ],
+                    Container(
+                      padding: EstilosApp.margenPantalla,
+                      decoration: EstilosApp.panelDestacado(context),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

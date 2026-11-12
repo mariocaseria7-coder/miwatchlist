@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:miwatchlist/estilos/tema_app.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:miwatchlist/modelos/elemento.dart';
 import 'package:miwatchlist/pantallas/pantalla_formulario.dart';
@@ -18,7 +19,9 @@ void main() {
     testWidgets('rechaza título inválido de longitud ${titulo.length}', (
       tester,
     ) async {
-      await tester.pumpWidget(const MaterialApp(home: PantallaFormulario()));
+      await tester.pumpWidget(
+        MaterialApp(theme: TemaApp.claro, home: PantallaFormulario()),
+      );
       await tester.enterText(find.byKey(const ValueKey('titulo')), titulo);
       await guardar(tester);
       final mensaje = titulo.trim().isEmpty
@@ -36,6 +39,7 @@ void main() {
         Elemento? resultado;
         await tester.pumpWidget(
           MaterialApp(
+            theme: TemaApp.claro,
             home: Builder(
               builder: (context) => Scaffold(
                 body: TextButton(
@@ -81,6 +85,7 @@ void main() {
     Elemento? resultado;
     await tester.pumpWidget(
       MaterialApp(
+        theme: TemaApp.claro,
         home: Builder(
           builder: (context) => Scaffold(
             body: TextButton(

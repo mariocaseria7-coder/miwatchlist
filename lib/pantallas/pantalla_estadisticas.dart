@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../estilos/estilos_app.dart';
+
 import '../modelos/elemento.dart';
 
 /// Calcula un resumen de toda la colección sin depender de sus filtros.
@@ -50,9 +52,9 @@ class PantallaEstadisticas extends StatelessWidget {
         child: Align(
           alignment: Alignment.topCenter,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 600),
+            constraints: EstilosApp.anchoContenido,
             child: ListView(
-              padding: const EdgeInsets.all(24),
+              padding: EstilosApp.margenPantalla,
               children: [
                 Text(
                   'Tu colección, en perspectiva',
@@ -62,11 +64,8 @@ class PantallaEstadisticas extends StatelessWidget {
                 const Text('Cada historia cuenta. Así va tu recorrido.'),
                 const SizedBox(height: 28),
                 Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: tema.colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(24),
-                  ),
+                  padding: EstilosApp.margenPantalla,
+                  decoration: EstilosApp.panelDestacado(context),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

@@ -2,10 +2,14 @@
 
 Tu colección personal de películas, series y videojuegos. Añade lo que quieres
 ver o jugar, registra tu progreso, valora con estrellas y consulta estadísticas.
-Los datos se guardan en el dispositivo, sin cuentas ni servicios externos.
+Los datos se guardan en el dispositivo, sin cuentas. Las portadas opcionales se cargan desde el enlace que añadas.
 
 Proyecto educativo de Desarrollo de Interfaces. Implementado con Flutter, Dart,
 `StatefulWidget`, `setState` y navegación con `Navigator`.
+
+El [plan por módulos](docs/plan_implementacion.md) organiza el trabajo de M00 a
+M08. La [guía de estilos](docs/estilos.md) explica cómo cambiar colores,
+tipografía, controles y medidas compartidas.
 
 ## Ejecutar
 
@@ -51,13 +55,18 @@ capturas se crearon durante las pruebas; una instalación nueva empieza vacía.
 | --- | --- |
 | <img src="docs/capturas/detalle.png" width="260" alt="Detalle de un elemento"> | <img src="docs/capturas/estadisticas.png" width="260" alt="Resumen de toda la colección"> |
 
-También se incluye la [captura del estado vacío](docs/capturas/vacia.png).
+También se incluye la [captura del estado vacío](docs/capturas/vacia.png),
+conservada de la validación inicial. Las cuatro pantallas anteriores muestran
+el tema actual.
 
 ## Organización
 
 ```text
 lib/
   main.dart
+  estilos/
+    tema_app.dart
+    estilos_app.dart
   modelos/elemento.dart
   servicios/almacen.dart
   pantallas/
@@ -161,3 +170,21 @@ enunciado exige realizar personalmente:
 
 La bitácora documenta la intervención real de IA y deja las respuestas personales
 pendientes. Las ampliaciones opcionales no forman parte de esta versión.
+
+## Imágenes para películas, series y videojuegos
+
+El apartado **Imagen de portada** aparece siempre al crear o editar un elemento,
+sea película, serie o videojuego.
+Pega un enlace directo a una imagen (preferentemente HTTPS) y pulsa **Ver imagen**
+para previsualizarla. Puedes quitarla o sustituirla al editar. Guardar conserva el
+enlace junto con el elemento; cancelar descarta los cambios.
+
+La misma imagen aparece en la cabecera de la tarjeta, en la miniatura junto al
+título (en lugar del mando) y en el detalle. Se guarda el enlace, no una copia
+local: necesita Internet y que el servidor permita mostrarla. Si no está disponible
+se muestra una cabecera de reserva. Los elementos anteriores siguen funcionando.
+La selección desde galería no está incluida: esta versión mantiene los paquetes
+permitidos del enunciado.
+
+Las capturas anteriores documentan la revisión previa; los elementos con imagen tienen
+una cabecera visual con portada o degradado.

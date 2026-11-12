@@ -75,6 +75,43 @@ El APK final se ha instalado y abierto en el emulador. Se ha comprobado:
 Los datos de demostración viven únicamente en el emulador. El APK y el código
 no contienen una colección inicial precargada.
 
+## Revisión posterior · Plan modular y estilos
+
+- Plan dividido en M00–M08, con responsabilidades, contratos y cierre por módulo.
+- Tema extraído a `lib/estilos/tema_app.dart` y medidas y superficies compartidas
+  a `lib/estilos/estilos_app.dart`, consumidos por todas las pantallas.
+- `flutter analyze --no-pub`: sin problemas.
+- 19 pruebas pasadas en Chrome, ahora con `TemaApp.claro` aplicado a las pruebas
+  de widgets. Se utilizó el mismo ajuste temporal de CanvasKit descrito arriba.
+- APK recompilado e instalado conservando la colección del emulador.
+- Pantallas de lista, formulario, detalle y estadísticas revisadas y sus capturas
+  actualizadas. El registro de la aplicación no muestra excepciones ni desbordes.
+- Las capturas de estado vacío y móvil pequeño se conservan de la validación
+  inicial; esta revisión no se ha probado en un dispositivo físico.
+
+## Revisión posterior · Portadas de videojuegos
+
+- Campo opcional `imagenUrl`, compatible con el JSON anterior y eliminable al editar.
+- Formulario con enlace, validación, vista previa y opción de quitar la portada.
+- Imagen visible en tarjeta y detalle; cabecera de reserva si no hay imagen o falla.
+- Análisis sin problemas y APK recompilado.
+- Las 19 pruebas anteriores y la nueva prueba de modelo pasaron en la suite.
+  Tras corregir la codificación del mensaje de error, se repitieron las dos pruebas
+  de portadas: ambas pasaron en Chrome. Son 21 casos distintos verificados.
+- No se ha comprobado en dispositivo físico ni la descarga desde servidores externos.
+  Las imágenes requieren Internet; se conserva el enlace, sin descargar una copia local.
+
+## Corrección · Imágenes para todos los tipos
+
+El formulario ofrece imagen al crear y editar películas, series y videojuegos.
+El guardado conserva el enlace en cualquier categoría y el componente común
+`ImagenElemento` se utiliza en las tarjetas y detalles. La miniatura también
+utiliza la imagen para los tres tipos.
+
+Análisis limpio, APK recompilado y 26 pruebas pasadas en Chrome, incluyendo los
+seis escenarios de alta y edición de portadas. Esta revisión no se ha comprobado
+en un móvil físico.
+
 ## Pendiente del alumno
 
 `docs/boceto.png` debe ser un boceto propio sin IA. Los comentarios del código y

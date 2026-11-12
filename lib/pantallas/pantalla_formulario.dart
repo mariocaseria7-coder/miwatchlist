@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../estilos/estilos_app.dart';
+
 import '../modelos/elemento.dart';
 import '../widgets/selector_estrellas.dart';
+import '../widgets/imagen_elemento.dart';
 
 /// Formulario compartido que devuelve una copia solo al guardar.
 class PantallaFormulario extends StatefulWidget {
@@ -15,6 +18,8 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _titulo;
   late final TextEditingController _notas;
+  late final TextEditingController _imagen;
+  String? _vistaPrevia;
   late Tipo _tipo;
   late Estado _estado;
   late int _valoracion;
@@ -24,6 +29,8 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
     super.initState();
     _titulo = TextEditingController(text: widget.inicial?.titulo ?? '');
     _notas = TextEditingController(text: widget.inicial?.notas ?? '');
+    _imagen = TextEditingController(text: widget.inicial?.imagenUrl ?? '');
+    _vistaPrevia = widget.inicial?.imagenUrl;
     _tipo = widget.inicial?.tipo ?? Tipo.pelicula;
     _estado = widget.inicial?.estado ?? Estado.pendiente;
     _valoracion = widget.inicial?.valoracion ?? 0;
@@ -33,6 +40,7 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
   void dispose() {
     _titulo.dispose();
     _notas.dispose();
+    _imagen.dispose();
     super.dispose();
   }
 
@@ -50,6 +58,7 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
         estado: _estado,
         valoracion: _valoracion,
         notas: notas.isEmpty ? null : notas,
+        imagenUrl: _imagen.text.trim().isNotEmpty ? _imagen.text.trim() : null,
         fechaAlta: widget.inicial?.fechaAlta ?? ahora,
       ),
     );
@@ -66,11 +75,11 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
       child: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 600),
+          constraints: EstilosApp.anchoContenido,
           child: Form(
             key: _formKey,
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
+              padding: EstilosApp.margenPantalla,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -121,6 +130,64 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
                     onChanged: (t) {
                       if (t != null) setState(() => _tipo = t);
                     },
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Imagen de portada',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 12),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: ImagenElemento(
+                      tipo: _tipo,
+                      url: _vistaPrevia,
+                      alto: 160,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    key: const ValueKey('imagenUrl'),
+                    controller: _imagen,
+                    keyboardType: TextInputType.url,
+                    autocorrect: false,
+                    decoration: const InputDecoration(
+                      labelText: 'Enlace de imagen (opcional)',
+                      hintText: 'https://ejemplo.com/portada.jpg',
+                      helperText: 'Pega un enlace directo a una imagen. Se necesita Internet.',
+                      helperMaxLines: 2,
+                      errorMaxLines: 2,
+                    ),
+                    validator: (valor) {
+                      final texto = valor?.trim() ?? '';
+                      if (texto.isEmpty) return null;
+                      final uri = Uri.tryParse(texto);
+                      if (uri == null ||
+                          !['http', 'https'].contains(uri.scheme) ||
+                          uri.host.isEmpty) {
+                        return 'Introduce un enlace http o https válido.';
+                      }
+                      return null;
+                    },
+                  ),
+                  Wrap(
+                    spacing: 8,
+                    children: [
+                      TextButton.icon(
+                        onPressed: () =>
+                            setState(() => _vistaPrevia = _imagen.text.trim()),
+                        icon: const Icon(Icons.visibility_outlined),
+                        label: const Text('Ver imagen'),
+                      ),
+                      TextButton.icon(
+                        onPressed: () => setState(() {
+                          _imagen.clear();
+                          _vistaPrevia = null;
+                        }),
+                        icon: const Icon(Icons.close),
+                        label: const Text('Quitar imagen'),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 20),
                   DropdownButtonFormField<Estado>(

@@ -27,6 +27,7 @@ class Elemento {
     required this.estado,
     this.valoracion = 0,
     this.notas,
+    this.imagenUrl,
     required this.fechaAlta,
   }) : titulo = titulo.trim() {
     if (id.isEmpty || this.titulo.isEmpty || this.titulo.length > 60) {
@@ -47,6 +48,7 @@ class Elemento {
   final Estado estado;
   final int valoracion;
   final String? notas;
+  final String? imagenUrl;
   final DateTime fechaAlta;
 
   String get etiquetaEstado => estado == Estado.enCurso
@@ -61,6 +63,7 @@ class Elemento {
     'estado': estado.name,
     'valoracion': valoracion,
     'notas': notas,
+    'imagenUrl': imagenUrl,
     'fechaAlta': fechaAlta.toIso8601String(),
   };
 
@@ -72,6 +75,7 @@ class Elemento {
     estado: Estado.values.byName(json['estado'] as String),
     valoracion: json['valoracion'] as int,
     notas: json['notas'] as String?,
+    imagenUrl: json['imagenUrl'] as String?,
     fechaAlta: DateTime.parse(json['fechaAlta'] as String),
   );
 
@@ -84,6 +88,7 @@ class Elemento {
     Estado? estado,
     int? valoracion,
     Object? notas = _sinCambio,
+    Object? imagenUrl = _sinCambio,
   }) => Elemento(
     id: id,
     titulo: titulo ?? this.titulo,
@@ -91,6 +96,9 @@ class Elemento {
     estado: estado ?? this.estado,
     valoracion: valoracion ?? this.valoracion,
     notas: identical(notas, _sinCambio) ? this.notas : notas as String?,
+    imagenUrl: identical(imagenUrl, _sinCambio)
+        ? this.imagenUrl
+        : imagenUrl as String?,
     fechaAlta: fechaAlta,
   );
 }

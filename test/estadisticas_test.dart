@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:miwatchlist/estilos/tema_app.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:miwatchlist/modelos/elemento.dart';
 import 'package:miwatchlist/pantallas/pantalla_estadisticas.dart';
@@ -38,7 +39,10 @@ void main() {
 
   testWidgets('vacía muestra estados seguros y barras a cero', (tester) async {
     await tester.pumpWidget(
-      const MaterialApp(home: PantallaEstadisticas(elementos: [])),
+      MaterialApp(
+        theme: TemaApp.claro,
+        home: PantallaEstadisticas(elementos: []),
+      ),
     );
     expect(find.byType(LinearProgressIndicator), findsNWidgets(3));
     for (final barra in tester.widgetList<LinearProgressIndicator>(

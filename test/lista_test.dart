@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:miwatchlist/estilos/tema_app.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:miwatchlist/modelos/elemento.dart';
 import 'package:miwatchlist/servicios/almacen.dart';
@@ -34,7 +35,12 @@ void main() {
   );
 
   Future<void> montar(WidgetTester tester, Almacen almacen) async {
-    await tester.pumpWidget(MaterialApp(home: PantallaLista(almacen: almacen)));
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: TemaApp.claro,
+        home: PantallaLista(almacen: almacen),
+      ),
+    );
     await tester.pumpAndSettle();
   }
 
@@ -137,7 +143,12 @@ void main() {
 
   testWidgets('espera a cargar antes de permitir altas', (tester) async {
     final almacen = AlmacenMemoria([])..lectura = Completer<List<Elemento>>();
-    await tester.pumpWidget(MaterialApp(home: PantallaLista(almacen: almacen)));
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: TemaApp.claro,
+        home: PantallaLista(almacen: almacen),
+      ),
+    );
     await tester.pump();
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
     expect(find.byType(FloatingActionButton), findsNothing);
