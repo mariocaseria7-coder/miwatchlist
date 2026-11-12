@@ -32,3 +32,16 @@ notas omitidas de null para poder borrar una nota al editar.
 1. ¿Por qué son final los campos y cómo cambio el estado? Pendiente.
 2. ¿Cómo se guarda y recupera un enum en JSON? Pendiente.
 3. ¿Qué pasa si no hay notas en el JSON? Pendiente.
+
+## Fase 2 · Lista y componentes
+
+**Herramienta usada:** Codex.
+**Prompts principales:** implementación del plan aprobado.
+**Qué me dio la IA:** lista con cuatro ejemplos temporales, tarjetas y estrellas.
+**Decisiones de la IA:** callbacks, claves por id y etiquetas accesibles de valoración.
+**Acepté / modifiqué / descarté / aprendí:** pendiente de revisión personal.
+**Errores detectados:** el sistema bloquea flutter_tester.exe; probar en Chrome.
+**Preguntas de comprensión (sin IA):**
+1. ¿Cuándo usar ListView.builder frente a ListView? Pendiente.
+2. ¿Por qué la tarjeta recibe un callback? Pendiente.
+3. ¿Por qué puede ser StatelessWidget? Pendiente.
