@@ -5,6 +5,7 @@ import '../servicios/almacen.dart';
 import '../widgets/tarjeta_elemento.dart';
 import 'pantalla_formulario.dart';
 import 'pantalla_detalle.dart';
+import 'pantalla_estadisticas.dart';
 
 /// Es la propietaria de la colección completa y coordina sus cambios.
 class PantallaLista extends StatefulWidget {
@@ -131,7 +132,26 @@ class _PantallaListaState extends State<PantallaLista> {
     return PopScope(
       canPop: !_guardando,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Mi Watchlist')),
+        appBar: AppBar(
+          title: const Text('Mi Watchlist'),
+          actions: [
+            IconButton(
+              tooltip: 'Estadísticas',
+              icon: const Icon(Icons.bar_chart_rounded),
+              onPressed: ocupado
+                  ? null
+                  : () => Navigator.push<void>(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PantallaEstadisticas(
+                          elementos: List.unmodifiable(_elementos),
+                        ),
+                      ),
+                    ),
+            ),
+            const SizedBox(width: 8),
+          ],
+        ),
         floatingActionButton: ocupado
             ? null
             : FloatingActionButton.extended(

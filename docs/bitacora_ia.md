@@ -93,3 +93,15 @@ confirmar cambios. JSON inválido produce lista vacía; errores de acceso ofrece
 1. ¿Por qué cargar devuelve Future? Pendiente.
 2. ¿Cómo se carga sin hacer initState async? Pendiente.
 3. ¿Dónde están los datos y qué pasa al desinstalar? Pendiente.
+
+## Fase 7 · Estadísticas y tema
+
+**Herramienta usada:** Codex.
+**Prompts principales:** implementación del plan aprobado.
+**Qué me dio la IA:** tema morado común, estadísticas completas y barras nativas.
+**Decisiones de la IA:** media solo de valorados y todos los tipos empatados.
+**Acepté / modifiqué / descarté / errores / aprendí:** pendiente de revisión personal.
+**Preguntas de comprensión (sin IA):**
+1. ¿Cómo se evita dividir entre cero? Pendiente.
+2. ¿Por qué se excluyen los elementos con cero estrellas? Pendiente.
+3. ¿Qué ventaja tiene definir los colores en el tema? Pendiente.
