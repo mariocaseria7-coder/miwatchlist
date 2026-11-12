@@ -5,16 +5,15 @@ import '../widgets/tarjeta_elemento.dart';
 import 'pantalla_formulario.dart';
 import 'pantalla_detalle.dart';
 
-/// Mantiene la colección y coordina las operaciones de las otras pantallas.
+/// Es la propietaria de la colección completa y coordina sus cambios.
 class PantallaLista extends StatefulWidget {
   const PantallaLista({super.key});
-
   @override
   State<PantallaLista> createState() => _PantallaListaState();
 }
 
 class _PantallaListaState extends State<PantallaLista> {
-  final List<Elemento> _elementos = [
+  List<Elemento> _elementos = [
     Elemento(
       id: '1',
       titulo: 'Dune: Parte 2',
@@ -47,36 +46,55 @@ class _PantallaListaState extends State<PantallaLista> {
       fechaAlta: DateTime(2026, 11, 4),
     ),
   ];
+  final _busqueda = TextEditingController();
+  Estado? _filtro;
+  bool _cargando = false;
+  bool _guardando = false;
 
-  /// Espera el resultado sin cambiar la colección si se cancela.
+  @override
+  void dispose() {
+    _busqueda.dispose();
+    super.dispose();
+  }
+
+  /// Reemplaza la colección completa después de validar una operación.
+  Future<bool> _guardar(List<Elemento> propuesta) async {
+    if (_guardando || _cargando) return false;
+    setState(() => _elementos = propuesta);
+    return true;
+  }
+
+  /// El formulario devuelve null cuando se cierra sin guardar.
   Future<void> _anadir() async {
     final elemento = await Navigator.push<Elemento>(
       context,
       MaterialPageRoute(builder: (context) => const PantallaFormulario()),
     );
     if (!mounted || elemento == null) return;
-    setState(() => _elementos.add(elemento));
+    await _guardar([..._elementos, elemento]);
   }
 
-  /// Mantiene la lista como única propietaria de los datos modificables.
+  /// Las operaciones del detalle se aplican por id a la lista original.
   void _abrirDetalle(Elemento elemento) {
     Navigator.push<void>(
       context,
       MaterialPageRoute(
         builder: (context) => PantallaDetalle(
           elemento: elemento,
-          onActualizar: (actualizado) async {
-            final indice = _elementos.indexWhere((e) => e.id == actualizado.id);
-            if (indice == -1) return false;
-            setState(() => _elementos[indice] = actualizado);
-            return true;
-          },
+          onActualizar: (actualizado) => _guardar([
+            for (final e in _elementos)
+              if (e.id == actualizado.id) actualizado else e,
+          ]),
           onBorrar: () async {
-            setState(() => _elementos.removeWhere((e) => e.id == elemento.id));
-            ScaffoldMessenger.of(
-              this.context,
-            ).showSnackBar(const SnackBar(content: Text('Elemento borrado.')));
-            return true;
+            final borrado = await _guardar(
+              _elementos.where((e) => e.id != elemento.id).toList(),
+            );
+            if (borrado && mounted) {
+              ScaffoldMessenger.of(this.context).showSnackBar(
+                const SnackBar(content: Text('Elemento borrado.')),
+              );
+            }
+            return borrado;
           },
         ),
       ),
@@ -85,40 +103,178 @@ class _PantallaListaState extends State<PantallaLista> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Mi Watchlist')),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _anadir,
-        icon: const Icon(Icons.add),
-        label: const Text('Añadir'),
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 760),
-          child: _elementos.isEmpty
-              ? Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text('Tu próxima historia empieza aquí.'),
-                      const SizedBox(height: 16),
-                      FilledButton(
-                        onPressed: _anadir,
-                        child: const Text('Añadir el primero'),
+    final tema = Theme.of(context);
+    final consulta = _busqueda.text.trim().toLowerCase();
+    final visibles = _elementos
+        .where(
+          (e) =>
+              (_filtro == null || e.estado == _filtro) &&
+              e.titulo.toLowerCase().contains(consulta),
+        )
+        .toList();
+    final ocupado = _cargando || _guardando;
+    return PopScope(
+      canPop: !_guardando,
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Mi Watchlist')),
+        floatingActionButton: ocupado
+            ? null
+            : FloatingActionButton.extended(
+                onPressed: _anadir,
+                icon: const Icon(Icons.add),
+                label: const Text('Añadir'),
+              ),
+        body: _cargando
+            ? const Center(child: CircularProgressIndicator())
+            : SafeArea(
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 760),
+                    child: AbsorbPointer(
+                      absorbing: _guardando,
+                      child: CustomScrollView(
+                        slivers: [
+                          SliverToBoxAdapter(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                24,
+                                16,
+                                24,
+                                12,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'TU COLECCIÓN',
+                                    style: tema.textTheme.labelLarge?.copyWith(
+                                      color: tema.colorScheme.primary,
+                                      letterSpacing: 2,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Historias por descubrir.',
+                                    style: tema.textTheme.headlineMedium
+                                        ?.copyWith(fontWeight: FontWeight.w700),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    '${_elementos.length} elementos · Películas, series y videojuegos',
+                                    style: TextStyle(
+                                      color: tema.colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 24),
+                                  TextField(
+                                    key: const ValueKey('buscar'),
+                                    controller: _busqueda,
+                                    decoration: InputDecoration(
+                                      hintText: 'Buscar por título',
+                                      prefixIcon: const Icon(Icons.search),
+                                      suffixIcon: _busqueda.text.isEmpty
+                                          ? null
+                                          : IconButton(
+                                              tooltip: 'Limpiar búsqueda',
+                                              onPressed: () =>
+                                                  setState(_busqueda.clear),
+                                              icon: const Icon(Icons.close),
+                                            ),
+                                    ),
+                                    onChanged: (_) => setState(() {}),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Wrap(
+                                    spacing: 8,
+                                    runSpacing: 4,
+                                    children: [
+                                      ChoiceChip(
+                                        label: const Text('Todos'),
+                                        selected: _filtro == null,
+                                        onSelected: (_) =>
+                                            setState(() => _filtro = null),
+                                      ),
+                                      for (final estado in Estado.values)
+                                        ChoiceChip(
+                                          label: Text(estado.etiqueta),
+                                          selected: _filtro == estado,
+                                          onSelected: (_) =>
+                                              setState(() => _filtro = estado),
+                                        ),
+                                    ],
+                                  ),
+                                  if (_guardando)
+                                    const Padding(
+                                      padding: EdgeInsets.only(top: 12),
+                                      child: LinearProgressIndicator(),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          if (visibles.isEmpty)
+                            SliverFillRemaining(
+                              hasScrollBody: false,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                  24,
+                                  24,
+                                  24,
+                                  112,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      _elementos.isEmpty
+                                          ? Icons.auto_stories_outlined
+                                          : Icons.search_off,
+                                      size: 64,
+                                      color: tema.colorScheme.primary,
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      _elementos.isEmpty
+                                          ? 'Tu próxima historia empieza aquí'
+                                          : 'No hay coincidencias',
+                                      textAlign: TextAlign.center,
+                                      style: tema.textTheme.titleLarge,
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      _elementos.isEmpty
+                                          ? 'Haz sitio a esa película, serie o videojuego\nque tienes en mente.'
+                                          : 'Prueba otro título o cambia el filtro.',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(height: 24),
+                                    if (_elementos.isEmpty)
+                                      FilledButton.icon(
+                                        onPressed: _anadir,
+                                        icon: const Icon(Icons.add),
+                                        label: const Text('Añadir el primero'),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          SliverPadding(
+                            padding: const EdgeInsets.fromLTRB(20, 4, 20, 104),
+                            sliver: SliverList.builder(
+                              itemCount: visibles.length,
+                              itemBuilder: (context, index) => TarjetaElemento(
+                                key: ValueKey(visibles[index].id),
+                                elemento: visibles[index],
+                                onTap: () => _abrirDetalle(visibles[index]),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                )
-              : ListView.builder(
-                  padding: const EdgeInsets.all(20),
-                  itemCount: _elementos.length,
-                  itemBuilder: (context, index) => TarjetaElemento(
-                    key: ValueKey(_elementos[index].id),
-                    elemento: _elementos[index],
-                    onTap: () => _abrirDetalle(_elementos[index]),
+                    ),
                   ),
                 ),
-        ),
+              ),
       ),
     );
   }
