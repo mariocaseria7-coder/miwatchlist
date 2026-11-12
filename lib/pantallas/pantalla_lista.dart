@@ -1,55 +1,52 @@
 import 'package:flutter/material.dart';
 
 import '../modelos/elemento.dart';
+import '../servicios/almacen.dart';
 import '../widgets/tarjeta_elemento.dart';
 import 'pantalla_formulario.dart';
 import 'pantalla_detalle.dart';
 
 /// Es la propietaria de la colección completa y coordina sus cambios.
 class PantallaLista extends StatefulWidget {
-  const PantallaLista({super.key});
+  const PantallaLista({super.key, this.almacen});
+  final Almacen? almacen;
   @override
   State<PantallaLista> createState() => _PantallaListaState();
 }
 
 class _PantallaListaState extends State<PantallaLista> {
-  List<Elemento> _elementos = [
-    Elemento(
-      id: '1',
-      titulo: 'Dune: Parte 2',
-      tipo: Tipo.pelicula,
-      estado: Estado.pendiente,
-      fechaAlta: DateTime(2026, 11, 1),
-    ),
-    Elemento(
-      id: '2',
-      titulo: 'The Bear',
-      tipo: Tipo.serie,
-      estado: Estado.enCurso,
-      valoracion: 4,
-      fechaAlta: DateTime(2026, 11, 2),
-    ),
-    Elemento(
-      id: '3',
-      titulo: 'Hollow Knight',
-      tipo: Tipo.videojuego,
-      estado: Estado.enCurso,
-      valoracion: 5,
-      fechaAlta: DateTime(2026, 11, 3),
-    ),
-    Elemento(
-      id: '4',
-      titulo: 'Interstellar',
-      tipo: Tipo.pelicula,
-      estado: Estado.terminado,
-      valoracion: 5,
-      fechaAlta: DateTime(2026, 11, 4),
-    ),
-  ];
+  List<Elemento> _elementos = [];
+  late final Almacen _almacen;
   final _busqueda = TextEditingController();
   Estado? _filtro;
-  bool _cargando = false;
+  bool _cargando = true;
   bool _guardando = false;
+  bool _errorCarga = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _almacen = widget.almacen ?? Almacen();
+    _cargar();
+  }
+
+  /// Inicia la lectura fuera de initState y evita perder datos si falla el acceso.
+  Future<void> _cargar() async {
+    setState(() {
+      _cargando = true;
+      _errorCarga = false;
+    });
+    try {
+      final elementos = await _almacen.cargar();
+      if (!mounted) return;
+      setState(() => _elementos = elementos);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _errorCarga = true);
+    } finally {
+      if (mounted) setState(() => _cargando = false);
+    }
+  }
 
   @override
   void dispose() {
@@ -59,9 +56,27 @@ class _PantallaListaState extends State<PantallaLista> {
 
   /// Reemplaza la colección completa después de validar una operación.
   Future<bool> _guardar(List<Elemento> propuesta) async {
-    if (_guardando || _cargando) return false;
-    setState(() => _elementos = propuesta);
-    return true;
+    if (_guardando || _cargando || _errorCarga) return false;
+    setState(() => _guardando = true);
+    try {
+      await _almacen.guardar(propuesta);
+      if (!mounted) return false;
+      setState(() => _elementos = propuesta);
+      return true;
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'No se pudo guardar. Tus datos anteriores se conservan. Vuelve a intentarlo.',
+            ),
+          ),
+        );
+      }
+      return false;
+    } finally {
+      if (mounted) setState(() => _guardando = false);
+    }
   }
 
   /// El formulario devuelve null cuando se cierra sin guardar.
@@ -112,7 +127,7 @@ class _PantallaListaState extends State<PantallaLista> {
               e.titulo.toLowerCase().contains(consulta),
         )
         .toList();
-    final ocupado = _cargando || _guardando;
+    final ocupado = _cargando || _guardando || _errorCarga;
     return PopScope(
       canPop: !_guardando,
       child: Scaffold(
@@ -124,7 +139,27 @@ class _PantallaListaState extends State<PantallaLista> {
                 icon: const Icon(Icons.add),
                 label: const Text('Añadir'),
               ),
-        body: _cargando
+        body: _errorCarga
+            ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'No se pudo abrir tu colección.',
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 16),
+                      FilledButton(
+                        onPressed: _cargar,
+                        child: const Text('Reintentar'),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : _cargando
             ? const Center(child: CircularProgressIndicator())
             : SafeArea(
                 child: Center(

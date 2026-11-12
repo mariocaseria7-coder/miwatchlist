@@ -70,3 +70,26 @@ corregido tras flutter analyze.
 1. ¿Cómo distingue el formulario alta y edición? Pendiente.
 2. ¿Cómo se identifica el elemento que hay que reemplazar? Pendiente.
 3. ¿Qué devuelve showDialog y cómo se comprueba? Pendiente.
+
+## Fase 5 · Filtro y búsqueda
+
+**Herramienta usada:** Codex.
+**Prompts principales:** implementación del plan aprobado.
+**Qué me dio la IA:** ChoiceChip y búsqueda combinados sobre una lista calculada.
+**Acepté / modifiqué / descarté / errores / aprendí:** pendiente de revisión personal.
+**Preguntas de comprensión (sin IA):**
+1. ¿Por qué no se filtra modificando la lista original? Pendiente.
+2. ¿Cómo encuentra dune el título Dune? Pendiente.
+3. ¿Qué ocurre al combinar Terminado con un título pendiente? Pendiente.
+
+## Fase 6 · Persistencia
+
+**Herramienta usada:** Codex.
+**Prompts principales:** implementación del plan aprobado.
+**Qué me dio la IA:** SharedPreferencesAsync, carga inicial y escritura antes de
+confirmar cambios. JSON inválido produce lista vacía; errores de acceso ofrecen reintento.
+**Acepté / modifiqué / descarté / errores / aprendí:** pendiente de revisión personal.
+**Preguntas de comprensión (sin IA):**
+1. ¿Por qué cargar devuelve Future? Pendiente.
+2. ¿Cómo se carga sin hacer initState async? Pendiente.
+3. ¿Dónde están los datos y qué pasa al desinstalar? Pendiente.
