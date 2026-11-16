@@ -70,9 +70,17 @@ class TarjetaElemento extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          elemento.titulo,
-                          style: Theme.of(context).textTheme.titleMedium,
+                        Row(
+                          children: [
+                            Icon(icono, size: 18, color: colores.primary),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                elemento.titulo,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 4),
                         Text(

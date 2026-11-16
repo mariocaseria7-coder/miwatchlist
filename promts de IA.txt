@@ -1,0 +1,219 @@
+PROMPTS DE IA — MI WATCHLIST
+Inicio de este registro: 16/11/2026
+Herramienta de esta conversación: Codex (OpenAI).
+
+FINALIDAD
+Guardar en un único archivo los prompts reales disponibles de esta conversación
+y las sugerencias para continuar por partes. Servirá de apoyo al preparar la
+bitácora al final; no sustituye las reflexiones personales.
+
+CRITERIO DEL REGISTRO
+- REAL: texto enviado por el alumno. Conservar su redacción original.
+- CONTEXTO: descripción de una captura o extracto de un registro de terminal;
+  no es una transcripción completa del mensaje original.
+- SUGERIDO, NO UTILIZADO: propuesta de la IA. No presentarla como prompt real.
+- FICTICIO: ejemplo de petición en primera persona, creado por la IA a petición
+  del alumno. No demuestra que esa petición se enviara durante el desarrollo.
+- No se dispone aquí de los prompts anteriores que originaron el código existente.
+  No se reconstruyen ni se atribuyen al alumno los ejemplos del enunciado.
+- En próximos turnos de trabajo se añadirán las nuevas peticiones a este archivo.
+  Este archivo no se actualiza por sí solo fuera de las conversaciones de trabajo.
+
+PROMPTS REALES DISPONIBLES — ORDEN DE LA CONVERSACIÓN
+
+R01 · Preparar la ejecución en el móvil
+necesito que me ayudes, quiero abrir la app en el movil, tengo el movil en modo desarrollador, tengo el movil conectado por cable, y tengo android studio abierto, que hago ahora
+
+R02 · Abrir el proyecto
+tengo que abrir este proyecto en android studio primero, donde se hacia
+
+R03 · Seleccionar el dispositivo y ejecutar
+vale estoy en este punto, con el proyecto abierto en android studio y tambien en vs code y a la derecha sale mi movil xiaomi ahora que
+CONTEXTO: captura de Android Studio con la carpeta exterior MiWatchlist abierta
+y el Xiaomi visible en Device Manager.
+
+R04 · Encontrar la terminal
+me sale eso
+CONTEXTO: captura del menú View > Tool Windows de Android Studio, sin Terminal
+visible entre las opciones mostradas.
+
+R05 · Primer error de instalación desde VS Code
+lo intente arrancar en vscode que recuerdo que es como dijo el profe y sale esto:
+CONTEXTO (extracto del registro adjunto):
+flutter run -d 9L7TIRWWAQHIWGMN
+Built build\app\outputs\flutter-apk\app-debug.apk
+Failure [INSTALL_FAILED_USER_RESTRICTED: Install canceled by user]
+
+R06 · Móvil no detectado
+CONTEXTO: el alumno envió únicamente el registro de terminal. Extracto:
+No supported devices found with name or id matching '9L7TIRWWAQHIWGMN'.
+The following devices were found:
+Windows (desktop)
+Chrome (web)
+Edge (web)
+
+R07 · Segundo intento de instalación
+CONTEXTO: el alumno envió únicamente el registro de terminal. Extracto:
+flutter run -d 9L7TIRWWAQHIWGMN
+Built build\app\outputs\flutter-apk\app-debug.apk
+Failure [INSTALL_FAILED_USER_RESTRICTED: Install canceled by user]
+
+R08 · Tercer intento de instalación
+CONTEXTO: el alumno envió únicamente el registro de terminal. Extracto:
+flutter run -d 9L7TIRWWAQHIWGMN
+Built build\app\outputs\flutter-apk\app-debug.apk
+Failure [INSTALL_FAILED_USER_RESTRICTED: Install canceled by user]
+
+R09 · Revisar el enunciado y organizar el trabajo
+el proyecto que estamos haciendo es un proyect entregable y que tendre que exponer y defender en clase el archivo que te he pasado son todo lo que hay que hacer y los requisitos y consejos que debemos tner y que seguiremos, quiero primero hacer todo lo relacionado con el codigo y programar y al final haremos la documentacion, bitacora, capturas etc etc, pero por ejemplo quiero que crees un unico archivo txt que se llamara promts de IA donde se guardaran los prompts que te haga o los que recominedes que haga para luego poner en la documentacion como pide, analiza el proyecto y empecemos poco a poco
+CONTEXTO: archivo facilitado por el alumno: enunciado.md.
+
+RESULTADO DE LA IA PARA R09 (registro técnico, no reflexión del alumno)
+- Leído el enunciado y revisados modelo, almacenamiento, pantallas, componentes,
+  tema, dependencias, pruebas y preparación de la entrega.
+- El código existente contiene implementaciones de R1–R13. Esto no sustituye
+  la comprobación manual ni la comprensión necesaria para defenderlas.
+- flutter analyze --no-pub: sin problemas.
+- flutter test --no-pub: 26 pruebas pasadas en esta revisión.
+- dart format --output=none --set-exit-if-changed lib test: 18 archivos,
+  ninguno necesita cambios de formato.
+- Único archivo añadido: este registro. No se modificó el código de la app.
+- Pendiente comprobar la instalación y uso real en el Xiaomi: el último registro
+  enviado por el alumno mostraba INSTALL_FAILED_USER_RESTRICTED.
+- Orden acordado: programación y revisión por partes; documentación al final.
+- Primer bloque propuesto: entender y comprobar el modelo Elemento existente.
+
+R10 · Empezar la revisión del modelo
+venga empecemos
+CONTEXTO: continuación de R09; primer bloque del modelo existente.
+RESULTADO DE LA IA (no reflexión del alumno): revisados los campos, enums,
+constructor y pruebas existentes de Elemento. Explicación introductoria de esos
+campos y de las validaciones, sin modificar el código ni redactar respuestas
+personales para la bitácora. No se repitieron las pruebas: no cambió la app.
+
+R11 · Completar la programación y preparar ejemplos de prompts por fases
+no quiero hacer yo nada del codigo quiero que segun lo que habia y segun lo que pide lo hagas tu todo y ya yo luego reviso el codigo y te planteare dudas, pero quiero que hagas tambien prompts buenos ficticios como si te lo hubiera pedido yo paso a paso yl os agregues al txt
+CONTEXTO: el alumno cambia el orden de trabajo: la IA completa primero la
+programación y el alumno revisará el código después. Solicita ejemplos ficticios
+de prompts por fases; se identifican expresamente como tales a continuación.
+RESULTADO DE LA IA (registro técnico, no reflexión del alumno):
+- Revisadas las implementaciones existentes frente a R1–R13; se conservaron
+  modelo, almacenamiento, navegación, validaciones, componentes y tema.
+- Corregida la tarjeta para conservar visible el icono del tipo junto al título,
+  también cuando una portada sustituye al icono de la miniatura (R1).
+- Añadidos los diez ejemplos ficticios F01–F10, separados del historial real.
+- Formato del archivo modificado correcto; flutter analyze --no-pub sin problemas.
+- flutter test --no-pub: 26 pruebas pasadas después del ajuste.
+- flutter build apk --debug --no-pub: compilación correcta. Copia actualizada
+  en entrega/mi-watchlist-debug.apk, con SHA256SUMS.txt correspondiente.
+- No se modificaron bitácora, README, capturas ni respuestas de comprensión.
+- No había ningún dispositivo Android conectado según adb devices; no se ha
+  verificado esta versión en el Xiaomi ni se da por resuelto su bloqueo previo.
+- El ZIP antiguo no se regeneró: el empaquetado final queda para la documentación.
+
+EJEMPLOS FICTICIOS DE PROMPTS — NO SON UN HISTORIAL REAL
+Los textos F01–F10 están escritos en primera persona para ilustrar peticiones
+pequeñas con contexto, objetivo, restricciones y explicación. No se utilizaron
+para construir las fases anteriores y no deben declararse como prompts reales.
+No se crea un prompt para el boceto de fase 0: el enunciado lo pide sin IA.
+
+F01 · FICTICIO · Fase 1: modelo de datos
+Estoy haciendo Mi Watchlist para Desarrollo de Interfaces con Flutter y Dart.
+Quiero trabajar solo el modelo en lib/modelos/elemento.dart. Crea una clase
+inmutable Elemento con id String, titulo String, tipo y estado como enums,
+valoracion int de 0 a 5, notas String? y fechaAlta DateTime. Los tipos son pelicula,
+serie y videojuego; los estados, pendiente, enCurso y terminado. El título debe
+tener entre 1 y 60 caracteres después de trim(). Añade toJson, fromJson y copyWith,
+conservando id y fecha al copiar. Usa nombres claros y ningún paquete nuevo.
+Explícame la representación de los enums y cómo quitar unas notas con copyWith.
+No hagas pantallas ni redactes mis comentarios personales.
+
+F02 · FICTICIO · Fase 2: lista, tarjeta y estado vacío
+Ya tengo Elemento. Implementa la lista principal con construcción de elementos
+bajo demanda y una TarjetaElemento en su propio archivo que reciba elemento y
+onTap. Debe mostrar título, icono según el tipo, estado y estrellas. Crea también
+SelectorEstrellas en un archivo separado; por ahora será de solo lectura y
+recibirá valor. Si la colección está vacía, muestra un mensaje y un botón para
+añadir el primero. Usa temporalmente cuatro ejemplos en memoria para verificar
+los tres tipos y estados; no los dejes precargados en la versión final. Mantén
+los componentes simples y explícame cómo funciona el callback de la tarjeta.
+
+F03 · FICTICIO · Fase 3: alta y validación
+Ya tengo la lista y los componentes. Añade un FloatingActionButton que abra
+PantallaFormulario mediante Navigator.push. El formulario necesita Form,
+GlobalKey<FormState>, controladores para título y notas, desplegables para tipo
+y estado, y estrellas interactivas mediante onChanged. No permitas títulos
+vacíos, de solo espacios o de más de 60 caracteres tras trim(). Guarda con
+Navigator.pop(context, elemento), y añade el resultado a la lista con setState
+solo si no es null. Genera id y fecha al crear y libera los controladores en
+dispose. No añadas gestores de estado. Explica el recorrido del dato al guardar.
+
+F04 · FICTICIO · Fase 4: detalle, edición y borrado
+Ya puedo dar de alta elementos. Crea PantallaDetalle con sus datos y botones
+Editar y Borrar. Reutiliza PantallaFormulario mediante Elemento? inicial para
+editar con los campos rellenos. Conserva id, fechaAlta y posición en la lista;
+cancelar no debe modificar el elemento original. Para borrar, pide confirmación
+con AlertDialog y muestra un SnackBar después del borrado correcto. Aplica los
+cambios en la colección principal por id, usando callbacks y Navigator.
+Explícame cómo se distingue una edición confirmada de una cancelada.
+
+F05 · FICTICIO · Fase 5: filtro y búsqueda combinados
+Ya funcionan alta, detalle, edición y borrado. Añade búsqueda por título sin
+distinguir mayúsculas y minúsculas y ChoiceChip para Todos, Pendiente,
+Viendo/Jugando y Terminado. Guarda la búsqueda y el filtro con setState y calcula
+una lista visible con where, sin eliminar elementos de la colección original.
+Combina ambas condiciones. Si no hay resultados, muestra un mensaje distinto
+del estado de colección vacía. Comprueba que buscar un pendiente con el filtro
+Terminado no muestra coincidencias y que quitar el filtro recupera el elemento.
+Explica la condición que combina la búsqueda con el estado.
+
+F06 · FICTICIO · Fase 6: persistencia y errores
+Mi colección todavía vive en memoria. Implementa Almacen en servicios/almacen.dart
+con Future<List<Elemento>> cargar() y Future<void> guardar(List<Elemento>).
+Usa únicamente shared_preferences, guarda toda la lista como un String JSON con
+la clave watchlist y recupera los elementos mediante fromJson. Carga al arrancar
+y muestra un CircularProgressIndicator mientras esperas. Guarda tras alta,
+edición y borrado. Sin datos o con JSON dañado, devuelve una lista vacía; si falla
+el acceso al almacenamiento, ofrece reintentar y evita sobrescribir los datos
+anteriores. Explica async, await y las comprobaciones de mounted que utilices.
+
+F07 · FICTICIO · Fase 7: estadísticas
+La colección ya se guarda. Añade PantallaEstadisticas accesible desde la AppBar
+de la lista. Usa siempre la colección completa, aunque haya búsqueda o filtro.
+Muestra total, recuentos por estado con barras hechas con widgets, valoración
+media excluyendo los ceros y tipo más frecuente. Evita divisiones entre cero y
+presenta un mensaje claro si no hay datos o valoraciones. Si varios tipos empatan,
+muéstralos. No añadas paquetes de gráficos. Explica los cálculos con un ejemplo.
+
+F08 · FICTICIO · Fase 7: tema y usabilidad
+Ya están las funciones principales. Define un tema propio con ThemeData y
+ColorScheme.fromSeed y aplícalo a toda la app. Reutiliza colores y medidas comunes
+sin crear una arquitectura nueva. Revisa contraste, textos, botones, mensajes
+vacíos y que el formulario se pueda desplazar con el teclado abierto. Conserva
+los controles Material y sus etiquetas accesibles. No añadas modo oscuro ni
+otras ampliaciones. Explica dónde cambiaría el color principal para toda la app.
+
+F09 · FICTICIO · Fase 8: pruebas y compilación, sin documentación todavía
+Tengo implementados R1–R13 y quiero cerrar la programación. Revisa cada requisito
+contra el código real. En elemento_test.dart prueba la conversión JSON y que
+copyWith solo cambia lo indicado. En formulario_test.dart prueba que Guardar con
+título vacío muestra un error; cubre también espacios y el límite del título.
+Usa las pruebas existentes de edición, filtros, persistencia y estadísticas para
+comprobar los casos importantes sin duplicarlas. Ejecuta formato, flutter analyze,
+flutter test y flutter build apk --debug. Corrige fallos reales con el menor
+cambio posible e informa de las comprobaciones que no puedas completar.
+No generes todavía bitácora, capturas ni respuestas de comprensión.
+
+F10 · FICTICIO · Revisión de un añadido: portadas
+La app ya incorpora un enlace opcional de portada para películas, series y juegos.
+Revisa ese añadido sin cambiar la estructura ni añadir paquetes. El enlace debe
+ser opcional, validarse y poder quitarse al editar. Los JSON antiguos sin imagenUrl
+deben seguir cargando. Si la imagen falla, muestra un contenido de reserva.
+Mantén visible el icono del tipo en la tarjeta aunque haya una portada y conserva
+la miniatura actual. Comprueba que este añadido no rompa los requisitos básicos.
+Explica que se guarda el enlace y que mostrar la imagen requiere Internet.
+
+PENDIENTE PARA EL CIERRE DOCUMENTAL
+Conservar los prompts originales de las conversaciones anteriores, si existen.
+Las respuestas de comprensión, los comentarios personales y el boceto sin IA
+los debe realizar el alumno. No inventar aprendizajes, fases ni verificaciones.
