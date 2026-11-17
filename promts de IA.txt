@@ -111,6 +111,66 @@ RESULTADO DE LA IA (registro técnico, no reflexión del alumno):
   verificado esta versión en el Xiaomi ni se da por resuelto su bloqueo previo.
 - El ZIP antiguo no se regeneró: el empaquetado final queda para la documentación.
 
+R12 · REAL · 17/11/2026 · Rediseño, tema y categorías
+quiero hacer varias cosas para mejorar la app, quiero cambiar el diseño entero, primero que haya un boton para poder alternar entre modo oscuro o claro, que tambian hay una opcion de descargar la APK o ir a la pagina web, y quiero usar un diseño mas atractivo, te mando una foto de la pagina nada mas abrir, ahi tiene que salir lo de la apk o pagina web, quiero usar una tipografia mas bonita y no la predeterminada y que cuando se vayan añadiendo watchlist salgan todas ahi ordenadas  y por categorias
+CONTEXTO: captura de la pantalla inicial anterior, con colección vacía.
+
+R13 · REAL · 17/11/2026 · Publicación en GitHub y dependencias solicitadas
+Mi proyecto Flutter ya está en GitHub: https://github.com/mariocaseria7-coder/miwatchlist (la rama principal es master). Quiero que te encargues de todo el proceso de publicación para que mi profesor pueda abrir la web o descargar la APK desde la pantalla de inicio de la app. Haz lo siguiente:
+
+1. Antes de nada, revisa que el repositorio no contenga secretos (claves de API, tokens, contraseñas, .env, google-services.json con claves privadas, keystores) porque voy a hacerlo público. Si encuentras algo, avísame antes de seguir. Revisa también que .gitignore esté bien.
+
+2. Crea .github/workflows/publish.yml que se ejecute en cada push a la rama master (y también manualmente con workflow_dispatch) y que:
+   a) Instale Flutter (stable), ejecute flutter pub get y compile la web con `flutter build web --release --base-href /miwatchlist/`, y la despliegue en GitHub Pages (actions/upload-pages-artifact + actions/deploy-pages).
+   b) Compile la APK con `flutter build apk --release`, la renombre a app-release.apk y la publique en una GitHub Release con tag fijo (por ejemplo "latest"), reemplazando el archivo anterior en cada ejecución, para que este enlace siempre funcione: https://github.com/mariocaseria7-coder/miwatchlist/releases/latest/download/app-release.apk
+   c) Tenga los permisos necesarios: contents: write, pages: write, id-token: write.
+
+3. Crea o actualiza lib/config/app_links.dart con las URLs reales, sin TODOs:
+   - webUrl: https://mariocaseria7-coder.github.io/miwatchlist/
+   - apkUrl: https://github.com/mariocaseria7-coder/miwatchlist/releases/latest/download/app-release.apk
+   En la pantalla de inicio añade los botones "Descargar APK" e "Ir a la web" usando url_launcher (con la dependencia y los permisos/queries de Android necesarios). Si la app se está ejecutando en web, oculta el botón "Ir a la web" o haz que no tenga sentido mostrarlo.
+
+4. Revisa que la app funcione en web (paquetes incompatibles, almacenamiento local, CORS, dart:io, etc.) y avísame de cualquier problema antes de seguir.
+
+5. Mantén el rediseño que te pedí: botón de modo claro/oscuro con preferencia guardada, tipografía con google_fonts, diseño más atractivo según la imagen de la pantalla de inicio, y watchlists ordenadas y agrupadas por categorías.
+
+6. Haz commit y push a master. Si no puedes hacer push, dame los comandos exactos.
+
+7. Al terminar, dime los pasos manuales que me quedan (hacer el repo público, Settings → Pages → Source: GitHub Actions), cómo ver si el workflow ha terminado bien en la pestaña Actions, y cuánto tarda en estar todo disponible.
+CONTEXTO: respuesta del alumno a la pregunta sobre las direcciones públicas.
+
+R14 · REAL · 17/11/2026 · Criterio de orden
+Por título, de A a Z
+CONTEXTO: respuesta del alumno a la pregunta sobre el orden dentro de cada categoría.
+
+RESULTADO TÉCNICO DE LA IA PARA R12–R14 (no reflexión del alumno)
+- Tema global claro/oscuro con preferencia temaOscuro guardada, sin modificar
+  la clave watchlist ni el formato de los elementos ya guardados.
+- Rediseño con Manrope, tarjetas en rejilla adaptable, categorías y orden por
+  título. Se conservan búsqueda, estados, altas, detalle, edición y borrado.
+- URLs públicas centralizadas y apertura con url_launcher. En web se oculta
+  el botón Ir a la web. Se incluyen las queries HTTPS de Android.
+- google_fonts 9 produjo un error real: utiliza un TextTheme de material_ui
+  incompatible con el de flutter/material empleado aquí. Se fijó 8.2.1 y se
+  incluyeron cinco pesos de Manrope con su licencia, sin descarga de fuentes
+  en tiempo de ejecución.
+- Antes de publicar, se revisaron 167 archivos y los 11 commits disponibles,
+  incluidos los contenidos del historial. No se detectaron secretos con los
+  patrones y nombres examinados. Se reforzó .gitignore para datos sensibles.
+- Se comprobó por la API de GitHub que el repositorio ya es público y que
+  Pages ya usa workflow como origen. No se cambió la visibilidad.
+- Formato correcto, análisis limpio y 32 pruebas pasadas, incluidos persistencia
+  del tema, errores al guardar, agrupación, orden y tamaño móvil pequeño.
+- Revisión visual con imágenes renderizadas por Flutter en claro y oscuro,
+  escritorio y móvil. No se generaron nuevas capturas de entrega en docs/.
+- Workflow validado con actionlint. Compilación web correcta con /miwatchlist/.
+- Compilación local flutter build apk --release correcta: app-release.apk,
+  aproximadamente 50 MB. Se prepara el commit y push a master solicitados;
+  el resultado remoto se comunicará al comprobar GitHub Actions.
+- Límites comunicados: datos separados entre dispositivos; posibles bloqueos
+  CORS en portadas externas; APK educativa con firma de desarrollo, cuya clave
+  puede cambiar entre compilaciones en distintos equipos.
+
 EJEMPLOS FICTICIOS DE PROMPTS — NO SON UN HISTORIAL REAL
 Los textos F01–F10 están escritos en primera persona para ilustrar peticiones
 pequeñas con contexto, objetivo, restricciones y explicación. No se utilizaron

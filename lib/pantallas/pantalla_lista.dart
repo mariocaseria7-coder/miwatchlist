@@ -5,14 +5,16 @@ import '../estilos/estilos_app.dart';
 import '../modelos/elemento.dart';
 import '../servicios/almacen.dart';
 import '../widgets/tarjeta_elemento.dart';
+import '../widgets/cabecera_coleccion.dart';
 import 'pantalla_formulario.dart';
 import 'pantalla_detalle.dart';
 import 'pantalla_estadisticas.dart';
 
 /// Es la propietaria de la colección completa y coordina sus cambios.
 class PantallaLista extends StatefulWidget {
-  const PantallaLista({super.key, this.almacen});
+  const PantallaLista({super.key, this.almacen, this.onCambiarTema});
   final Almacen? almacen;
+  final VoidCallback? onCambiarTema;
   @override
   State<PantallaLista> createState() => _PantallaListaState();
 }
@@ -22,6 +24,7 @@ class _PantallaListaState extends State<PantallaLista> {
   late final Almacen _almacen;
   final _busqueda = TextEditingController();
   Estado? _filtro;
+  Tipo? _categoria;
   bool _cargando = true;
   bool _guardando = false;
   bool _errorCarga = false;
@@ -122,21 +125,59 @@ class _PantallaListaState extends State<PantallaLista> {
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context);
+    final colores = tema.colorScheme;
     final consulta = _busqueda.text.trim().toLowerCase();
-    final visibles = _elementos
-        .where(
-          (e) =>
-              (_filtro == null || e.estado == _filtro) &&
-              e.titulo.toLowerCase().contains(consulta),
-        )
-        .toList();
+    final visibles =
+        _elementos
+            .where(
+              (e) =>
+                  (_filtro == null || e.estado == _filtro) &&
+                  (_categoria == null || e.tipo == _categoria) &&
+                  e.titulo.toLowerCase().contains(consulta),
+            )
+            .toList()
+          ..sort(
+            (a, b) => a.titulo.toLowerCase().compareTo(b.titulo.toLowerCase()),
+          );
+    final grupos = {
+      for (final tipo in Tipo.values)
+        tipo: visibles.where((e) => e.tipo == tipo).toList(),
+    };
     final ocupado = _cargando || _guardando || _errorCarga;
+    final oscuro = tema.brightness == Brightness.dark;
     return PopScope(
       canPop: !_guardando,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Mi Watchlist'),
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: colores.secondaryContainer,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  Icons.bookmarks_rounded,
+                  size: 22,
+                  color: colores.onSecondaryContainer,
+                ),
+              ),
+              const SizedBox(width: 10),
+              const Flexible(
+                child: Text('Mi Watchlist', overflow: TextOverflow.ellipsis),
+              ),
+            ],
+          ),
           actions: [
+            IconButton(
+              tooltip: oscuro ? 'Activar modo claro' : 'Activar modo oscuro',
+              onPressed: widget.onCambiarTema,
+              icon: Icon(
+                oscuro ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
+              ),
+            ),
             IconButton(
               tooltip: 'Estadísticas',
               icon: const Icon(Icons.bar_chart_rounded),
@@ -158,7 +199,7 @@ class _PantallaListaState extends State<PantallaLista> {
             ? null
             : FloatingActionButton.extended(
                 onPressed: _anadir,
-                icon: const Icon(Icons.add),
+                icon: const Icon(Icons.add_rounded),
                 label: const Text('Añadir'),
               ),
         body: _errorCarga
@@ -190,54 +231,118 @@ class _PantallaListaState extends State<PantallaLista> {
                     child: AbsorbPointer(
                       absorbing: _guardando,
                       child: CustomScrollView(
+                        key: const ValueKey('coleccion'),
                         slivers: [
-                          SliverToBoxAdapter(
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                24,
-                                16,
-                                24,
-                                12,
-                              ),
+                          SliverPadding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            sliver: SliverToBoxAdapter(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'TU COLECCIÓN',
-                                    style: EstilosApp.etiqueta(context),
+                                  const CabeceraColeccion(),
+                                  const Divider(height: 1),
+                                  const SizedBox(height: 28),
+                                  Wrap(
+                                    spacing: 14,
+                                    runSpacing: 8,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Mi colección',
+                                        style: tema.textTheme.headlineSmall
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 12,
+                                          vertical: 5,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: colores.primaryContainer,
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          '${_elementos.length} elementos',
+                                          style: TextStyle(
+                                            color: colores.onPrimaryContainer,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(height: 8),
+                                  const SizedBox(height: 6),
                                   Text(
-                                    'Historias por descubrir.',
-                                    style: tema.textTheme.headlineMedium,
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    '${_elementos.length} elementos · Películas, series y videojuegos',
+                                    'Tus favoritos, cada uno en su sitio.',
                                     style: EstilosApp.textoSecundario(context),
                                   ),
-                                  const SizedBox(height: 24),
+                                  const SizedBox(height: 22),
+                                  Wrap(
+                                    spacing: 8,
+                                    runSpacing: 8,
+                                    children: [
+                                      ChoiceChip(
+                                        label: Text(
+                                          'Todo · ${_elementos.length}',
+                                        ),
+                                        avatar: const Icon(
+                                          Icons.grid_view_rounded,
+                                          size: 18,
+                                        ),
+                                        selected: _categoria == null,
+                                        onSelected: (_) =>
+                                            setState(() => _categoria = null),
+                                      ),
+                                      for (final tipo in Tipo.values)
+                                        ChoiceChip(
+                                          key: ValueKey(
+                                            'categoria-${tipo.name}',
+                                          ),
+                                          avatar: Icon(
+                                            EstilosApp.iconoTipo(tipo),
+                                            size: 18,
+                                          ),
+                                          label: Text(
+                                            '${tipo.categoria} · ${_elementos.where((e) => e.tipo == tipo).length}',
+                                          ),
+                                          selected: _categoria == tipo,
+                                          onSelected: (_) =>
+                                              setState(() => _categoria = tipo),
+                                        ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 20),
                                   TextField(
                                     key: const ValueKey('buscar'),
                                     controller: _busqueda,
                                     decoration: InputDecoration(
-                                      hintText: 'Buscar por título',
-                                      prefixIcon: const Icon(Icons.search),
+                                      hintText: 'Buscar tu próxima historia...',
+                                      prefixIcon: const Icon(
+                                        Icons.search_rounded,
+                                      ),
                                       suffixIcon: _busqueda.text.isEmpty
                                           ? null
                                           : IconButton(
                                               tooltip: 'Limpiar búsqueda',
                                               onPressed: () =>
                                                   setState(_busqueda.clear),
-                                              icon: const Icon(Icons.close),
+                                              icon: const Icon(
+                                                Icons.close_rounded,
+                                              ),
                                             ),
                                     ),
                                     onChanged: (_) => setState(() {}),
                                   ),
-                                  const SizedBox(height: 16),
+                                  const SizedBox(height: 14),
                                   Wrap(
                                     spacing: 8,
                                     runSpacing: 4,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
                                     children: [
                                       ChoiceChip(
                                         label: const Text('Todos'),
@@ -252,6 +357,25 @@ class _PantallaListaState extends State<PantallaLista> {
                                           onSelected: (_) =>
                                               setState(() => _filtro = estado),
                                         ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.sort_by_alpha_rounded,
+                                        size: 16,
+                                        color: colores.onSurfaceVariant,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Expanded(
+                                        child: Text(
+                                          'Ordenados por título · A–Z',
+                                          style: EstilosApp.textoSecundario(
+                                            context,
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   if (_guardando)
@@ -269,21 +393,28 @@ class _PantallaListaState extends State<PantallaLista> {
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                   24,
-                                  24,
+                                  40,
                                   24,
                                   112,
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
-                                      _elementos.isEmpty
-                                          ? Icons.auto_stories_outlined
-                                          : Icons.search_off,
-                                      size: 64,
-                                      color: tema.colorScheme.primary,
+                                    Container(
+                                      padding: const EdgeInsets.all(22),
+                                      decoration: BoxDecoration(
+                                        color: colores.primaryContainer,
+                                        borderRadius: BorderRadius.circular(28),
+                                      ),
+                                      child: Icon(
+                                        _elementos.isEmpty
+                                            ? Icons.bookmarks_outlined
+                                            : Icons.search_off_rounded,
+                                        size: 44,
+                                        color: colores.primary,
+                                      ),
                                     ),
-                                    const SizedBox(height: 20),
+                                    const SizedBox(height: 22),
                                     Text(
                                       _elementos.isEmpty
                                           ? 'Tu próxima historia empieza aquí'
@@ -291,35 +422,115 @@ class _PantallaListaState extends State<PantallaLista> {
                                       textAlign: TextAlign.center,
                                       style: tema.textTheme.titleLarge,
                                     ),
-                                    const SizedBox(height: 12),
+                                    const SizedBox(height: 10),
                                     Text(
                                       _elementos.isEmpty
-                                          ? 'Haz sitio a esa película, serie o videojuego\nque tienes en mente.'
-                                          : 'Prueba otro título o cambia el filtro.',
+                                          ? 'Esa película pendiente, la serie que te recomendaron,\nel juego que no te quieres perder. Guárdalos aquí.'
+                                          : 'Prueba otro título, estado o categoría.',
                                       textAlign: TextAlign.center,
+                                      style: EstilosApp.textoSecundario(
+                                        context,
+                                      ),
                                     ),
-                                    const SizedBox(height: 24),
+                                    const SizedBox(height: 22),
                                     if (_elementos.isEmpty)
                                       FilledButton.icon(
                                         onPressed: _anadir,
-                                        icon: const Icon(Icons.add),
+                                        icon: const Icon(Icons.add_rounded),
                                         label: const Text('Añadir el primero'),
                                       ),
                                   ],
                                 ),
                               ),
                             ),
-                          SliverPadding(
-                            padding: const EdgeInsets.fromLTRB(20, 4, 20, 104),
-                            sliver: SliverList.builder(
-                              itemCount: visibles.length,
-                              itemBuilder: (context, index) => TarjetaElemento(
-                                key: ValueKey(visibles[index].id),
-                                elemento: visibles[index],
-                                onTap: () => _abrirDetalle(visibles[index]),
+                          for (final tipo in Tipo.values)
+                            if (grupos[tipo]!.isNotEmpty) ...[
+                              SliverPadding(
+                                padding: const EdgeInsets.fromLTRB(
+                                  20,
+                                  28,
+                                  20,
+                                  16,
+                                ),
+                                sliver: SliverToBoxAdapter(
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        EstilosApp.iconoTipo(tipo),
+                                        color: colores.primary,
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Flexible(
+                                        child: Text(
+                                          tipo.categoria,
+                                          style: tema.textTheme.titleLarge,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Text(
+                                        '${grupos[tipo]!.length}',
+                                        style: EstilosApp.textoSecundario(
+                                          context,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      Expanded(
+                                        child: Divider(
+                                          color: colores.outlineVariant,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
+                              SliverPadding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                ),
+                                sliver: SliverLayoutBuilder(
+                                  builder: (context, medidas) {
+                                    final columnas =
+                                        medidas.crossAxisExtent >= 960
+                                        ? 3
+                                        : medidas.crossAxisExtent >= 620
+                                        ? 2
+                                        : 1;
+                                    final escala =
+                                        MediaQuery.textScalerOf(context)
+                                            .scale(14) /
+                                        14;
+                                    return SliverGrid.builder(
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: columnas,
+                                            mainAxisSpacing: 18,
+                                            crossAxisSpacing: 18,
+                                            mainAxisExtent:
+                                                320 +
+                                                (escala - 1).clamp(
+                                                      0,
+                                                      double.infinity,
+                                                    ) *
+                                                    150,
+                                          ),
+                                      itemCount: grupos[tipo]!.length,
+                                      itemBuilder: (context, index) {
+                                        final elemento = grupos[tipo]![index];
+                                        return TarjetaElemento(
+                                          key: ValueKey(elemento.id),
+                                          elemento: elemento,
+                                          onTap: () => _abrirDetalle(elemento),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          if (visibles.isNotEmpty)
+                            const SliverToBoxAdapter(
+                              child: SizedBox(height: 112),
                             ),
-                          ),
                         ],
                       ),
                     ),

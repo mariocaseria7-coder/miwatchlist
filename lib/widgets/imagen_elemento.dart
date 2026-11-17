@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../modelos/elemento.dart';
+import '../estilos/estilos_app.dart';
 
 /// Presenta una portada remota y mantiene una cabecera legible si no está disponible.
 class ImagenElemento extends StatelessWidget {
@@ -17,6 +18,7 @@ class ImagenElemento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colores = Theme.of(context).colorScheme;
+    final oscuro = Theme.of(context).brightness == Brightness.dark;
     final fondo = Container(
       height: alto,
       width: double.infinity,
@@ -24,28 +26,25 @@ class ImagenElemento extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [colores.primary, const Color(0xFF252347)],
+          colors: [
+            colores.primaryContainer,
+            oscuro
+                ? colores.surfaceContainerHighest
+                : colores.surfaceContainerLow,
+          ],
         ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            switch (tipo) {
-              Tipo.pelicula => Icons.movie_outlined,
-              Tipo.serie => Icons.tv_rounded,
-              Tipo.videojuego => Icons.sports_esports_rounded,
-            },
-            color: colores.onPrimary,
-            size: 48,
-          ),
+          Icon(EstilosApp.iconoTipo(tipo), color: colores.primary, size: 44),
           const SizedBox(height: 8),
           Text(
             tipo == Tipo.videojuego
                 ? 'TU PRÓXIMA AVENTURA'
                 : 'TU PRÓXIMA HISTORIA',
             style: TextStyle(
-              color: colores.onPrimary,
+              color: colores.onPrimaryContainer,
               fontWeight: FontWeight.w600,
               letterSpacing: 2,
               fontSize: 11,
@@ -80,13 +79,16 @@ class ImagenElemento extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             fondo,
-            const Align(
+            Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 child: Text(
                   'Imagen no disponible',
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: TextStyle(
+                    color: colores.onPrimaryContainer,
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ),

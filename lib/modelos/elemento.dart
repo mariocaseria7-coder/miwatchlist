@@ -1,11 +1,12 @@
 /// Tipos de contenido que se pueden guardar en la colección.
 enum Tipo {
-  pelicula('Película'),
-  serie('Serie'),
-  videojuego('Videojuego');
+  pelicula('Película', 'Películas'),
+  serie('Serie', 'Series'),
+  videojuego('Videojuego', 'Videojuegos');
 
-  const Tipo(this.etiqueta);
+  const Tipo(this.etiqueta, this.categoria);
   final String etiqueta;
+  final String categoria;
 }
 
 /// Progreso de un elemento, independiente de su valoración.

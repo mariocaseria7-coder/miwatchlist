@@ -1,0 +1,84 @@
+name: Publicar web y APK
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Comprobar y compilar
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Instalar dependencias
+        run: flutter pub get
+
+      - name: Comprobar código y pruebas
+        run: |
+          dart format --output=none --set-exit-if-changed lib test
+          flutter analyze
+          flutter test
+
+      - name: Compilar web para GitHub Pages
+        run: flutter build web --release --base-href /miwatchlist/ --no-web-resources-cdn
+
+      - name: Compilar APK
+        run: flutter build apk --release
+
+      - name: Publicar la APK con enlace permanente
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if gh release view latest > /dev/null 2>&1; then
+            gh api --method PATCH "repos/$GH_REPO/git/refs/tags/latest" \
+              -f sha="$GITHUB_SHA" -F force=true
+            gh release edit latest --latest --title "Mi Watchlist · última versión" \
+              --notes "APK generada desde el commit $GITHUB_SHA."
+          else
+            gh release create latest --target "$GITHUB_SHA" --latest \
+              --title "Mi Watchlist · última versión" \
+              --notes "APK generada desde el commit $GITHUB_SHA."
+          fi
+          gh release upload latest build/app/outputs/flutter-apk/app-release.apk --clobber
+
+      - name: Preparar el sitio
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: build/web
+
+  deploy:
+    name: Desplegar en GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Desplegar
+        id: deployment
+        uses: actions/deploy-pages@v5

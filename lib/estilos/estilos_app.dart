@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 
+import '../modelos/elemento.dart';
+
 /// Comparte las medidas y superficies que se repiten entre pantallas.
 abstract final class EstilosApp {
   static const margenPantalla = EdgeInsets.all(24);
   static const margenTarjeta = EdgeInsets.all(16);
   static const anchoContenido = BoxConstraints(maxWidth: 600);
-  static const anchoColeccion = BoxConstraints(maxWidth: 760);
+  static const anchoColeccion = BoxConstraints(maxWidth: 1160);
   static const radioPanel = BorderRadius.all(Radius.circular(24));
+
+  static IconData iconoTipo(Tipo tipo) => switch (tipo) {
+    Tipo.pelicula => Icons.movie_outlined,
+    Tipo.serie => Icons.tv_rounded,
+    Tipo.videojuego => Icons.sports_esports_outlined,
+  };
 
   /// Resuelve los colores desde el tema para conservar contraste y coherencia.
   static BoxDecoration panelDestacado(BuildContext context) => BoxDecoration(

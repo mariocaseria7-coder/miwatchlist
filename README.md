@@ -101,9 +101,30 @@ completa, independientemente de la búsqueda y el filtro.
 dañado producen una lista vacía. Un fallo de acceso ofrece reintento; un fallo de
 escritura conserva la colección anterior. No hay sincronización ni exportación.
 
-Dependencia funcional: `shared_preferences` 2.5.6. Herramientas de desarrollo:
+Dependencias funcionales: `shared_preferences`, `google_fonts` 8.2.1 y
+`url_launcher`. Manrope se incluye con su licencia en `assets/fonts/`, sin
+descargar fuentes al abrir la aplicación. Herramientas de desarrollo:
 `flutter_test` y `flutter_lints`. Los paquetes transitivos del almacenamiento se
 resuelven automáticamente y quedan fijados en `pubspec.lock`.
+
+## Web y APK públicas
+
+- [Abrir Mi Watchlist en la web](https://mariocaseria7-coder.github.io/miwatchlist/).
+- [Descargar la última APK](https://github.com/mariocaseria7-coder/miwatchlist/releases/latest/download/app-release.apk).
+
+El workflow `.github/workflows/publish.yml` publica ambas versiones con cada push
+a `master`, o desde **Actions → Publicar web y APK → Run workflow**. Comprueba
+formato, análisis y pruebas antes de compilar. Pages debe usar **GitHub Actions**
+como origen. La APK se reemplaza en la Release `latest` y la web usa la ruta
+`/miwatchlist/`. Las URLs se mantienen en `lib/config/app_links.dart`.
+
+La colección se agrupa por tipo y se ordena por título; categoría, estado y
+búsqueda se pueden combinar. El botón de tema conserva la preferencia entre
+arranques. Los datos de Android y del navegador siguen siendo independientes.
+
+La APK release conserva la firma de desarrollo configurada para este proyecto
+educativo. No es una firma de producción y puede cambiar entre ejecuciones del
+servidor de compilación; no se guarda ningún keystore en el repositorio.
 
 ## Pruebas y compilación
 

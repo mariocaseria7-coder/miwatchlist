@@ -20,80 +20,82 @@ class TarjetaElemento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colores = Theme.of(context).colorScheme;
-    final icono = switch (elemento.tipo) {
-      Tipo.pelicula => Icons.movie_outlined,
-      Tipo.serie => Icons.tv_rounded,
-      Tipo.videojuego => Icons.sports_esports_outlined,
-    };
+    final icono = EstilosApp.iconoTipo(elemento.tipo);
     return Card.outlined(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: EdgeInsets.zero,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (elemento.tipo == Tipo.videojuego ||
-                (elemento.imagenUrl?.trim().isNotEmpty ?? false))
-              ImagenElemento(
-                tipo: elemento.tipo,
-                url: elemento.imagenUrl,
-                alto: 144,
-              ),
-            Padding(
-              padding: EstilosApp.margenTarjeta,
-              child: Row(
-                children: [
-                  Container(
-                    width: 48,
-                    height: 48,
-                    alignment: Alignment.center,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      color: colores.primaryContainer,
-                      borderRadius: BorderRadius.circular(14),
+            Stack(
+              children: [
+                ImagenElemento(
+                  tipo: elemento.tipo,
+                  url: elemento.imagenUrl,
+                  alto: 140,
+                ),
+                Positioned(
+                  top: 12,
+                  left: 12,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
                     ),
-                    child: (elemento.imagenUrl?.trim().isNotEmpty ?? false)
-                        ? Image.network(
-                            elemento.imagenUrl!,
-                            width: 48,
-                            height: 48,
-                            fit: BoxFit.cover,
-                            semanticLabel: 'Miniatura de ${elemento.titulo}',
-                            errorBuilder: (context, error, stackTrace) =>
-                                Icon(icono, color: colores.onPrimaryContainer),
-                          )
-                        : Icon(icono, color: colores.onPrimaryContainer),
+                    decoration: BoxDecoration(
+                      color: colores.surfaceContainerLowest,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      elemento.etiquetaEstado,
+                      style: Theme.of(context).textTheme.labelSmall
+                          ?.copyWith(fontWeight: FontWeight.w700),
+                    ),
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+              ],
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(18),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Icon(icono, size: 18, color: colores.primary),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                elemento.titulo,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
+                        Icon(icono, size: 16, color: colores.primary),
+                        const SizedBox(width: 6),
                         Text(
-                          '${elemento.tipo.etiqueta} · ${elemento.etiquetaEstado}',
-                          style: EstilosApp.textoSecundario(context),
+                          elemento.tipo.etiqueta,
+                          style: EstilosApp.textoSecundario(context)
+                              ?.copyWith(fontSize: 12),
                         ),
-                        const SizedBox(height: 8),
-                        SelectorEstrellas(valor: elemento.valoracion),
                       ],
                     ),
-                  ),
-                  const Icon(Icons.chevron_right_rounded),
-                ],
+                    const SizedBox(height: 8),
+                    Text(
+                      elemento.titulo,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleMedium
+                          ?.copyWith(fontSize: 18),
+                    ),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        SelectorEstrellas(valor: elemento.valoracion),
+                        const Spacer(),
+                        Icon(
+                          Icons.arrow_outward_rounded,
+                          size: 19,
+                          color: colores.onSurfaceVariant,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

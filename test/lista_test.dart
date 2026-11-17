@@ -154,6 +154,73 @@ void main() {
     expect(find.byType(FloatingActionButton), findsNothing);
     almacen.lectura!.complete([]);
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.text('Añadir el primero'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.text('Añadir el primero'), findsOneWidget);
   });
+
+  testWidgets(
+    'agrupa y ordena sin modificar los datos; combina categoría y estado',
+    (tester) async {
+      final almacen = AlmacenMemoria([
+        crear(
+          'juego',
+          'Zelda',
+          Estado.pendiente,
+        ).copyWith(tipo: Tipo.videojuego),
+        crear('blade', 'Blade Runner', Estado.pendiente),
+        crear('arrival', 'Arrival', Estado.terminado),
+        crear('serie', 'Severance', Estado.enCurso).copyWith(tipo: Tipo.serie),
+      ]);
+      await montar(tester, almacen);
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('arrival')),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      final peliculas = tester
+          .widgetList<TarjetaElemento>(find.byType(TarjetaElemento))
+          .where((tarjeta) => tarjeta.elemento.tipo == Tipo.pelicula);
+      expect(peliculas.map((tarjeta) => tarjeta.elemento.id), [
+        'arrival',
+        'blade',
+      ]);
+      expect(almacen.elementos.map((e) => e.id), [
+        'juego',
+        'blade',
+        'arrival',
+        'serie',
+      ]);
+
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('categoria-videojuego')),
+        -200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await pulsar(tester, find.byKey(const ValueKey('categoria-videojuego')));
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('juego')),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(find.byType(TarjetaElemento), findsOneWidget);
+      expect(find.text('Zelda'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.widgetWithText(ChoiceChip, 'Terminado'),
+        -200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await pulsar(tester, find.widgetWithText(ChoiceChip, 'Terminado'));
+      await tester.scrollUntilVisible(
+        find.text('No hay coincidencias'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(find.byType(TarjetaElemento), findsNothing);
+      expect(almacen.elementos, hasLength(4));
+    },
+  );
 }
