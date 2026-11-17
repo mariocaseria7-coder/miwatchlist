@@ -504,6 +504,10 @@ class _PantallaListaState extends State<PantallaLista> {
                                         : medidas.crossAxisExtent >= 620
                                         ? 2
                                         : 1;
+                                    final anchoTarjeta =
+                                        (medidas.crossAxisExtent -
+                                            (columnas - 1) * 18) /
+                                        columnas;
                                     final escala =
                                         MediaQuery.textScalerOf(context)
                                             .scale(14) /
@@ -515,7 +519,10 @@ class _PantallaListaState extends State<PantallaLista> {
                                             mainAxisSpacing: 18,
                                             crossAxisSpacing: 18,
                                             mainAxisExtent:
-                                                320 +
+                                                anchoTarjeta /
+                                                    EstilosApp
+                                                        .proporcionPortada +
+                                                180 +
                                                 (escala - 1).clamp(
                                                       0,
                                                       double.infinity,

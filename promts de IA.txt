@@ -258,6 +258,46 @@ RESULTADO TÉCNICO DE LA IA PARA R16 (no reflexión del alumno)
   package_info_plus incluida.
 - Se prepara el commit y push autorizados y se comprobará la publicación remota.
 
+R17 · REAL · 17/11/2026 · Encuadre manual de portadas por enlace
+Quiero poder encuadrar manualmente la imagen de portada cuando la añado por enlace, como cuando eliges una foto de perfil y la mueves y haces zoom dentro del círculo. Haz lo siguiente:
+
+1. Editor de encuadre: en la pantalla de "Nuevo elemento" (y en la de editar, si existe), cuando haya una imagen por enlace cargada correctamente, muestra el marco de la portada con la proporción EXACTA con la que se muestra después en las tarjetas de la colección. Dentro de ese marco el usuario debe poder:
+   - Arrastrar la imagen para mover qué parte se ve.
+   - Hacer zoom (pellizco en móvil, rueda del ratón en web y un deslizador de zoom visible para que funcione también en escritorio).
+   - Pulsar un botón "Restablecer" que devuelva la imagen a su encuadre original (centrada, zoom 1).
+   Ponle un pequeño texto de ayuda como "Arrastra para mover y haz zoom para encuadrar". La imagen nunca debe dejar huecos vacíos dentro del marco: el zoom mínimo es el que cubre todo el marco (como BoxFit.cover) y el movimiento queda limitado a los bordes de la imagen.
+
+2. Guardar el encuadre: NO recortes ni descargues la imagen. Guarda solo los parámetros del encuadre (por ejemplo, zoom y desplazamiento normalizado en X e Y entre -1 y 1) como campos nuevos y opcionales del modelo, y aplícalos al mostrar la imagen. Actualiza la serialización (JSON) para que:
+   - Los elementos ya guardados, que no tienen esos campos, sigan cargando sin errores y se muestren con el encuadre por defecto (centrado, zoom 1, igual que ahora).
+   - El modelo siga siendo inmutable y las pruebas existentes sigan pasando. Añade pruebas para el nuevo campo, incluida la lectura de datos antiguos sin él.
+
+3. Mostrar el encuadre: usa el mismo encuadre en todos los sitios donde se vea la portada (tarjetas de la colección, pantalla de detalle si existe, y la vista previa del formulario), de modo que lo que ves mientras encuadras sea exactamente lo que verás después. Si cambia el tamaño de la pantalla (móvil, escritorio), la imagen debe mantener el mismo encuadre relativo.
+
+4. Casos límite: si el usuario cambia el enlace de la imagen, reinicia el encuadre. Si quita la imagen, se borra el encuadre. Si la imagen no carga, no muestres el editor y deja el mensaje de error actual.
+
+5. Diseño: usa el tema, el color de acento y la tipografía actuales, con esquinas redondeadas igual que las tarjetas, y que funcione bien en modo claro y oscuro. No toques otras funciones ni pantallas.
+
+Cuando termines: ejecuta flutter analyze y flutter test y arregla lo que falle. Comprueba que el arrastre y el zoom funcionan en la versión web (ratón y rueda) y que no hay problemas de CORS al mostrar la imagen. Después haz commit y push a master para que GitHub Actions vuelva a publicar la web y la APK, y avísame cuando pueda comprobarlo.
+
+RESULTADO TÉCNICO DE LA IA PARA R17 (no reflexión del alumno)
+- Encuadre opcional e inmutable con zoom 1–5 y coordenadas X/Y entre -1 y 1.
+  JSON antiguo compatible; cambiar o quitar la imagen elimina el encuadre anterior.
+- Marco común 16:9 en edición, tarjetas y detalle, con geometría compartida:
+  zoom mínimo cover, desplazamiento limitado y conservación del punto del gesto.
+- Editor visible solo tras decodificar la imagen: arrastre, pellizco, rueda,
+  deslizador y Restablecer; mantiene tema, tipografía y esquinas existentes.
+- Guardado únicamente de URL y parámetros, sin generar ni almacenar recortes.
+- flutter analyze sin incidencias y flutter test con 55 pruebas pasadas.
+  Tres pruebas adicionales pasadas en Chrome: gestos completos y CORS permitido,
+  CORS bloqueado y 404; comprobado el servidor sintético de fixtures.
+- En Windows se suministraron al runner sus archivos CanvasKit locales del SDK
+  para corregir su error 404, sin alterar aserciones ni la seguridad CORS.
+- GitHub Actions incorpora las tres pruebas Chrome antes de publicar.
+- No se ha probado en un móvil físico. Un servidor externo debe permitir CORS
+  para mostrar sus imágenes en web; no se añade un proxy ni se promete acceso
+  a enlaces que el servidor bloquee.
+- Se prepara el commit y push autorizados y se comprobará la publicación remota.
+
 EJEMPLOS FICTICIOS DE PROMPTS — NO SON UN HISTORIAL REAL
 Los textos F01–F10 están escritos en primera persona para ilustrar peticiones
 pequeñas con contexto, objetivo, restricciones y explicación. No se utilizaron

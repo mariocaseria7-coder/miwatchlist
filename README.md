@@ -198,16 +198,31 @@ pendientes. Las ampliaciones opcionales no forman parte de esta versión.
 
 El apartado **Imagen de portada** aparece siempre al crear o editar un elemento,
 sea película, serie o videojuego.
-Pega un enlace directo a una imagen (preferentemente HTTPS) y pulsa **Ver imagen**
-para previsualizarla. Puedes quitarla o sustituirla al editar. Guardar conserva el
-enlace junto con el elemento; cancelar descarta los cambios.
+Pega un enlace directo a una imagen (preferentemente HTTPS): la vista previa
+aparece al cargar. Arrastra para encuadrar y usa el pellizco, la rueda del ratón
+o el deslizador para ampliar entre 1× y 5×. **Restablecer** centra la imagen con
+zoom 1. Puedes quitarla o sustituirla al editar; cambiar el enlace reinicia el
+encuadre. Guardar conserva el enlace y el encuadre; cancelar descarta los cambios.
 
-La misma imagen aparece en la cabecera de la tarjeta, en la miniatura junto al
-título (en lugar del mando) y en el detalle. Se guarda el enlace, no una copia
-local: necesita Internet y que el servidor permita mostrarla. Si no está disponible
-se muestra una cabecera de reserva. Los elementos anteriores siguen funcionando.
+La vista previa, las tarjetas y el detalle comparten un marco 16:9 y el mismo
+encuadre relativo al cambiar el tamaño de pantalla. Solo se guardan el enlace,
+zoom y desplazamientos normalizados; no se recorta ni se guarda una copia de la
+imagen. Necesita Internet y, en web, que el servidor permita CORS y HTTPS. Si no
+carga, aparece la cabecera de reserva sin editor. Los datos antiguos, sin encuadre,
+se muestran centrados con zoom 1.
 La selección desde galería no está incluida: esta versión mantiene los paquetes
 permitidos del enunciado.
 
 Las capturas anteriores documentan la revisión previa; los elementos con imagen tienen
 una cabecera visual con portada o degradado.
+
+Para repetir las pruebas de ratón, rueda, pellizco y CORS en Chrome, inicia
+`python tool/servidor_portadas_prueba.py` en una terminal y ejecuta en otra:
+
+```bash
+flutter test --platform chrome test/encuadre_web_test.dart
+```
+
+El servidor usa únicamente una imagen sintética de pruebas en localhost. Las
+pruebas verifican CORS permitido, CORS bloqueado y respuesta 404 sin desactivar
+la seguridad de Chrome. GitHub Actions también ejecuta esta comprobación.

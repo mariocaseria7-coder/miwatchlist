@@ -9,6 +9,7 @@ abstract final class EstilosApp {
   static const anchoContenido = BoxConstraints(maxWidth: 600);
   static const anchoColeccion = BoxConstraints(maxWidth: 1160);
   static const radioPanel = BorderRadius.all(Radius.circular(24));
+  static const proporcionPortada = 16 / 9;
 
   static IconData iconoTipo(Tipo tipo) => switch (tipo) {
     Tipo.pelicula => Icons.movie_outlined,

@@ -44,6 +44,13 @@ jobs:
           flutter analyze
           flutter test
 
+      - name: Comprobar encuadre y CORS en Chrome
+        run: |
+          python3 tool/servidor_portadas_prueba.py &
+          servidor=$!
+          trap 'kill "$servidor"' EXIT
+          flutter test --platform chrome test/encuadre_web_test.dart
+
       - name: Compilar web para GitHub Pages
         run: flutter build web --release --base-href /miwatchlist/ --no-web-resources-cdn
 

@@ -1,3 +1,5 @@
+import 'encuadre.dart';
+
 /// Tipos de contenido que se pueden guardar en la colección.
 enum Tipo {
   pelicula('Película', 'Películas'),
@@ -29,8 +31,12 @@ class Elemento {
     this.valoracion = 0,
     this.notas,
     this.imagenUrl,
+    Encuadre? encuadre,
     required this.fechaAlta,
-  }) : titulo = titulo.trim() {
+  }) : titulo = titulo.trim(),
+       encuadre = imagenUrl == null || imagenUrl.trim().isEmpty
+           ? null
+           : encuadre {
     if (id.isEmpty || this.titulo.isEmpty || this.titulo.length > 60) {
       throw ArgumentError('El id y el título deben ser válidos.');
     }
@@ -50,6 +56,7 @@ class Elemento {
   final int valoracion;
   final String? notas;
   final String? imagenUrl;
+  final Encuadre? encuadre;
   final DateTime fechaAlta;
 
   String get etiquetaEstado => estado == Estado.enCurso
@@ -65,6 +72,7 @@ class Elemento {
     'valoracion': valoracion,
     'notas': notas,
     'imagenUrl': imagenUrl,
+    if (encuadre != null) 'encuadre': encuadre!.toJson(),
     'fechaAlta': fechaAlta.toIso8601String(),
   };
 
@@ -77,6 +85,9 @@ class Elemento {
     valoracion: json['valoracion'] as int,
     notas: json['notas'] as String?,
     imagenUrl: json['imagenUrl'] as String?,
+    encuadre: json['encuadre'] == null
+        ? null
+        : Encuadre.fromJson(json['encuadre'] as Map<String, dynamic>),
     fechaAlta: DateTime.parse(json['fechaAlta'] as String),
   );
 
@@ -90,6 +101,7 @@ class Elemento {
     int? valoracion,
     Object? notas = _sinCambio,
     Object? imagenUrl = _sinCambio,
+    Object? encuadre = _sinCambio,
   }) => Elemento(
     id: id,
     titulo: titulo ?? this.titulo,
@@ -100,6 +112,11 @@ class Elemento {
     imagenUrl: identical(imagenUrl, _sinCambio)
         ? this.imagenUrl
         : imagenUrl as String?,
+    encuadre: identical(encuadre, _sinCambio)
+        ? (!identical(imagenUrl, _sinCambio) && imagenUrl != this.imagenUrl
+              ? null
+              : this.encuadre)
+        : encuadre as Encuadre?,
     fechaAlta: fechaAlta,
   );
 }

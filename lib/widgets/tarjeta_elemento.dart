@@ -34,7 +34,7 @@ class TarjetaElemento extends StatelessWidget {
                 ImagenElemento(
                   tipo: elemento.tipo,
                   url: elemento.imagenUrl,
-                  alto: 140,
+                  encuadre: elemento.encuadre,
                 ),
                 Positioned(
                   top: 12,

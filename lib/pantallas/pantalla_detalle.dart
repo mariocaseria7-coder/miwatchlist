@@ -108,7 +108,7 @@ class _PantallaDetalleState extends State<PantallaDetalle> {
                         child: ImagenElemento(
                           tipo: _elemento.tipo,
                           url: _elemento.imagenUrl,
-                          alto: 220,
+                          encuadre: _elemento.encuadre,
                         ),
                       ),
                       const SizedBox(height: 16),

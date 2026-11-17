@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../estilos/estilos_app.dart';
 
 import '../modelos/elemento.dart';
+import '../modelos/encuadre.dart';
 import '../widgets/selector_estrellas.dart';
 import '../widgets/imagen_elemento.dart';
 
@@ -20,6 +21,7 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
   late final TextEditingController _notas;
   late final TextEditingController _imagen;
   String? _vistaPrevia;
+  Encuadre? _encuadre;
   late Tipo _tipo;
   late Estado _estado;
   late int _valoracion;
@@ -31,6 +33,7 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
     _notas = TextEditingController(text: widget.inicial?.notas ?? '');
     _imagen = TextEditingController(text: widget.inicial?.imagenUrl ?? '');
     _vistaPrevia = widget.inicial?.imagenUrl;
+    _encuadre = widget.inicial?.encuadre;
     _tipo = widget.inicial?.tipo ?? Tipo.pelicula;
     _estado = widget.inicial?.estado ?? Estado.pendiente;
     _valoracion = widget.inicial?.valoracion ?? 0;
@@ -59,6 +62,7 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
         valoracion: _valoracion,
         notas: notas.isEmpty ? null : notas,
         imagenUrl: _imagen.text.trim().isNotEmpty ? _imagen.text.trim() : null,
+        encuadre: _encuadre,
         fechaAlta: widget.inicial?.fechaAlta ?? ahora,
       ),
     );
@@ -177,7 +181,9 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
                                 child: ImagenElemento(
                                   tipo: _tipo,
                                   url: _vistaPrevia,
-                                  alto: ancho ? 180 : 140,
+                                  encuadre: _encuadre,
+                                  onEncuadreChanged: (valor) =>
+                                      setState(() => _encuadre = valor),
                                 ),
                               ),
                               const SizedBox(height: 18),
@@ -193,6 +199,9 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
                                 ),
                                 validator: _validarImagen,
                                 onChanged: (valor) => setState(() {
+                                  if (valor.trim() != (_vistaPrevia ?? '')) {
+                                    _encuadre = null;
+                                  }
                                   _vistaPrevia =
                                       valor.trim().isNotEmpty &&
                                           _validarImagen(valor) == null
@@ -223,6 +232,7 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
                                       onPressed: () => setState(() {
                                         _imagen.clear();
                                         _vistaPrevia = null;
+                                        _encuadre = null;
                                       }),
                                       icon: const Icon(
                                         Icons.close_rounded,

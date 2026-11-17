@@ -1,100 +1,274 @@
+import 'dart:math' as math;
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../modelos/elemento.dart';
 import '../estilos/estilos_app.dart';
+import '../modelos/elemento.dart';
+import '../modelos/encuadre.dart';
+import 'geometria_portada.dart';
 
-/// Presenta una portada remota y mantiene una cabecera legible si no está disponible.
-class ImagenElemento extends StatelessWidget {
+/// Comparte el marco y el encuadre; solo muestra controles al recibir un callback.
+class ImagenElemento extends StatefulWidget {
   const ImagenElemento({
     super.key,
     required this.tipo,
     this.url,
-    this.alto = 160,
+    this.encuadre,
+    this.onEncuadreChanged,
   });
   final Tipo tipo;
   final String? url;
-  final double alto;
+  final Encuadre? encuadre;
+  final ValueChanged<Encuadre>? onEncuadreChanged;
 
   @override
-  Widget build(BuildContext context) {
+  State<ImagenElemento> createState() => _ImagenElementoState();
+}
+
+class _ImagenElementoState extends State<ImagenElemento> {
+  ImageStream? _stream;
+  ImageInfo? _imagen;
+  bool _error = false;
+  late Encuadre _inicio;
+  late Offset _focoInicial;
+  late final _listener = ImageStreamListener(
+    (imagen, _) {
+      if (!mounted) {
+        imagen.dispose();
+        return;
+      }
+      setState(() {
+        _imagen?.dispose();
+        _imagen = imagen;
+      });
+    },
+    onError: (Object error, StackTrace? stack) {
+      if (mounted) setState(() => _error = true);
+    },
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _cargar();
+  }
+
+  @override
+  void didUpdateWidget(ImagenElemento oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.url?.trim() != widget.url?.trim()) _cargar();
+  }
+
+  void _cargar() {
+    _stream?.removeListener(_listener);
+    _stream = null;
+    _imagen?.dispose();
+    _imagen = null;
+    _error = false;
+    final url = widget.url?.trim();
+    if (url != null && url.isNotEmpty) {
+      _stream = NetworkImage(url).resolve(ImageConfiguration.empty)
+        ..addListener(_listener);
+    }
+  }
+
+  @override
+  void dispose() {
+    _stream?.removeListener(_listener);
+    _imagen?.dispose();
+    super.dispose();
+  }
+
+  Widget _fondo(BuildContext context) {
     final colores = Theme.of(context).colorScheme;
-    final oscuro = Theme.of(context).brightness == Brightness.dark;
-    final fondo = Container(
-      height: alto,
-      width: double.infinity,
+    return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            colores.primaryContainer,
-            oscuro
-                ? colores.surfaceContainerHighest
-                : colores.surfaceContainerLow,
-          ],
+          colors: [colores.primaryContainer, colores.surfaceContainerLow],
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(EstilosApp.iconoTipo(tipo), color: colores.primary, size: 44),
-          const SizedBox(height: 8),
-          Text(
-            tipo == Tipo.videojuego
-                ? 'TU PRÓXIMA AVENTURA'
-                : 'TU PRÓXIMA HISTORIA',
-            style: TextStyle(
-              color: colores.onPrimaryContainer,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 2,
-              fontSize: 11,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              EstilosApp.iconoTipo(widget.tipo),
+              color: colores.primary,
+              size: 40,
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            Text(
+              _error
+                  ? 'Imagen no disponible'
+                  : widget.tipo == Tipo.videojuego
+                  ? 'TU PRÓXIMA AVENTURA'
+                  : 'TU PRÓXIMA HISTORIA',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: colores.onPrimaryContainer,
+                fontSize: 11,
+                letterSpacing: 1,
+              ),
+            ),
+          ],
+        ),
       ),
     );
-    if (url == null || url!.trim().isEmpty) return fondo;
-    return SizedBox(
-      height: alto,
-      width: double.infinity,
-      child: Image.network(
-        url!,
-        height: alto,
-        width: double.infinity,
-        fit: BoxFit.cover,
-        semanticLabel: 'Portada',
-        loadingBuilder: (context, child, progreso) => progreso == null
-            ? child
-            : Stack(
-                fit: StackFit.expand,
-                children: [
-                  fondo,
-                  const Align(
-                    alignment: Alignment.bottomCenter,
-                    child: LinearProgressIndicator(),
-                  ),
-                ],
-              ),
-        errorBuilder: (context, error, stack) => Stack(
-          fit: StackFit.expand,
-          children: [
-            fondo,
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  'Imagen no disponible',
-                  style: TextStyle(
-                    color: colores.onPrimaryContainer,
-                    fontSize: 12,
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final encuadre = widget.encuadre ?? Encuadre();
+    final info = _imagen;
+    final editable =
+        info != null && !_error && widget.onEncuadreChanged != null;
+    final imagen = info == null
+        ? null
+        : Size(info.image.width.toDouble(), info.image.height.toDouble());
+    return LayoutBuilder(
+      builder: (context, medidas) {
+        final marco = Size(
+          medidas.maxWidth,
+          medidas.maxWidth / EstilosApp.proporcionPortada,
+        );
+        void zoom(double valor, Offset foco) {
+          if (!editable) return;
+          widget.onEncuadreChanged!(
+            transformarEncuadre(
+              imagen!,
+              marco,
+              encuadre,
+              zoom: valor,
+              focoInicial: foco,
+              focoActual: foco,
+            ),
+          );
+        }
+
+        Widget contenido;
+        if (info == null || _error) {
+          contenido = Stack(
+            fit: StackFit.expand,
+            children: [
+              _fondo(context),
+              if (!_error && _stream != null)
+                const Align(
+                  alignment: Alignment.bottomCenter,
+                  child: LinearProgressIndicator(),
+                ),
+            ],
+          );
+        } else {
+          final rect = rectanguloPortada(imagen!, marco, encuadre);
+          contenido = Semantics(
+            label: 'Portada',
+            image: true,
+            child: Stack(
+              fit: StackFit.expand,
+              clipBehavior: Clip.hardEdge,
+              children: [
+                Positioned.fromRect(
+                  rect: rect,
+                  child: RawImage(
+                    image: info.image,
+                    fit: BoxFit.fill,
+                    filterQuality: FilterQuality.medium,
                   ),
                 ),
+              ],
+            ),
+          );
+        }
+        if (editable) {
+          contenido = MouseRegion(
+            cursor: SystemMouseCursors.move,
+            child: Listener(
+              onPointerSignal: (evento) {
+                if (evento is PointerScrollEvent) {
+                  GestureBinding.instance.pointerSignalResolver.register(
+                    evento,
+                    (_) {
+                      zoom(
+                        encuadre.zoom * math.exp(-evento.scrollDelta.dy / 300),
+                        evento.localPosition,
+                      );
+                    },
+                  );
+                }
+              },
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onScaleStart: (detalle) {
+                  _inicio = widget.encuadre ?? Encuadre();
+                  _focoInicial = detalle.localFocalPoint;
+                },
+                onScaleUpdate: (detalle) => widget.onEncuadreChanged!(
+                  transformarEncuadre(
+                    imagen!,
+                    marco,
+                    _inicio,
+                    zoom: _inicio.zoom * detalle.scale,
+                    focoInicial: _focoInicial,
+                    focoActual: detalle.localFocalPoint,
+                  ),
+                ),
+                child: contenido,
               ),
             ),
+          );
+        }
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ClipRRect(
+              borderRadius: EstilosApp.radioPanel,
+              child: AspectRatio(
+                key: const ValueKey('marco-portada'),
+                aspectRatio: EstilosApp.proporcionPortada,
+                child: contenido,
+              ),
+            ),
+            if (editable) ...[
+              const SizedBox(height: 12),
+              Text(
+                'Arrastra para mover y haz zoom para encuadrar',
+                style: EstilosApp.textoSecundario(context),
+              ),
+              Row(
+                children: [
+                  const Icon(Icons.zoom_out_rounded, size: 20),
+                  Expanded(
+                    child: Slider(
+                      key: const ValueKey('zoom-portada'),
+                      min: 1,
+                      max: Encuadre.zoomMaximo,
+                      value: encuadre.zoom,
+                      semanticFormatterCallback: (valor) =>
+                          'Zoom ${valor.toStringAsFixed(1)}',
+                      onChanged: (valor) =>
+                          zoom(valor, marco.center(Offset.zero)),
+                    ),
+                  ),
+                  Text('${encuadre.zoom.toStringAsFixed(1)}×'),
+                ],
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton.icon(
+                  key: const ValueKey('restablecer-portada'),
+                  onPressed: () => widget.onEncuadreChanged!(Encuadre()),
+                  icon: const Icon(Icons.restart_alt_rounded, size: 18),
+                  label: const Text('Restablecer'),
+                ),
+              ),
+            ],
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 }
