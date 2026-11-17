@@ -1,108 +1,55 @@
-# Plan de implementación por módulos · registro de la base inicial
+# Estructura y flujo de la implementación actual
 
-Este documento conserva el alcance inicial M00–M08. La descripción vigente de
-funciones, dependencias y ampliaciones está en [memoria.md](memoria.md).
-Los límites indicados al final eran los objetivos iniciales, no una declaración
-de cumplimiento de la versión ampliada actual.
+**Mario Rodriguez · Desarrollo de Interfaces · Revisión 17/11/2026**
 
-Cada módulo tiene una responsabilidad, unos contratos y una comprobación de cierre.
-La aplicación ya tiene la base funcional implementada: este documento organiza su
-construcción, revisión y mantenimiento en entregas pequeñas.
+Este documento describe la organización existente. No reproduce el plan inicial
+como si representara sesiones de clase realizadas o una interfaz que ya cambió.
 
-Orden de trabajo: **M00 → M01 → M02 → M03 → M04 → M05 → M06 → M07 → M08**.
-Al terminar cada módulo, ejecutar el análisis, probar su flujo y completar su entrada
-de bitácora. Las revisiones y respuestas personales siguen siendo tarea del alumno.
+## Mapa de archivos de lib/
 
-## M00 · Preparación y diseño personal
+| Ubicación | Responsabilidad |
+| --- | --- |
+| main.dart | Arranque, carga del tema, MaterialApp y cambio de preferencia. |
+| config/app_links.dart | URLs públicas de distribución. |
+| modelos/elemento.dart | Campos, enums, validación, JSON, copias y fechas. |
+| modelos/encuadre.dart | Zoom y posición relativos e inmutables. |
+| servicios/almacen.dart | Carga y guardado JSON local. |
+| servicios/enlaces_app.dart | Apertura de enlaces y gestión de errores. |
+| servicios/sugerencia.dart | Candidatos pendientes y elección aleatoria. |
+| estilos/tema_app.dart | Paleta, Manrope y temas de componentes. |
+| estilos/estilos_app.dart | Medidas, proporción, iconos y paneles. |
+| pantallas/pantalla_lista.dart | Colección, filtros, navegación y operaciones. |
+| pantallas/pantalla_formulario.dart | Alta y edición mediante estado local. |
+| pantallas/pantalla_detalle.dart | Consulta y solicitudes de edición/borrado. |
+| pantallas/pantalla_estadisticas.dart | Cálculo y representación de estadísticas. |
+| pantallas/pantalla_acerca.dart | Información, versión y enlaces. |
+| widgets/tarjeta_elemento.dart | Resumen de elemento y callbacks. |
+| widgets/selector_estrellas.dart | Valoración de lectura o interactiva. |
+| widgets/imagen_elemento.dart | Carga, reserva, editor y visualización de portada. |
+| widgets/geometria_portada.dart | Cálculos de cover, zoom y límites. |
+| widgets/cabecera_coleccion.dart | Presentación inicial y distribución. |
+| widgets/dialogo_sugerencia.dart | Presentación y acciones del pendiente sorteado. |
 
-- **Objetivo:** disponer del proyecto Flutter y decidir qué muestra cada pantalla.
-- **Trabajo:** comprobar el entorno Android, dibujar lista, formulario, detalle y
-  estadísticas con sus flechas de navegación; respetar las carpetas del enunciado.
-- **Entrega:** `docs/boceto.png`, realizado personalmente sin IA.
-- **Cierre:** proyecto ejecutable y boceto propio disponible. El boceto sigue pendiente.
+## Recorrido de una modificación
 
-## M01 · Modelo de datos
+1. Un widget solicita una acción mediante callback o abre el formulario.
+2. El formulario devuelve un Elemento o null al cerrarse.
+3. La lista crea una propuesta de colección, identificando por id al editar.
+4. Almacen espera la escritura; solo el éxito confirma la propuesta en la interfaz.
+5. Ante un fallo se mantienen los datos anteriores y se comunica el error.
 
-- **Objetivo:** representar los elementos sin depender de la interfaz.
-- **Archivo:** `lib/modelos/elemento.dart`.
-- **Contrato:** `Elemento`, `Tipo`, `Estado`, `toJson`, `fromJson` y `copyWith`.
-  Conservar id y fecha al editar; permitir conservar, sustituir o eliminar notas.
-- **Cierre:** serialización reversible, título válido y valoración de 0 a 5.
-  Verificar con `test/elemento_test.dart`.
+El detalle conserva su copia visible hasta recibir confirmación del padre. Las
+estadísticas usan la colección completa. El sorteo recibe candidatos en una lista
+no modificable y comunica Empezar al propietario, sin escribir por su cuenta.
 
-## M02 · Colección y componentes (R1, R2, R12)
+## Separación de responsabilidades
 
-- **Objetivo:** mostrar elementos y distinguir una colección vacía.
-- **Archivos:** pantalla de lista, `TarjetaElemento` y `SelectorEstrellas`.
-- **Contratos:** tarjeta con `elemento` y `onTap`; estrellas con `valor` y
-  `onChanged` opcional. La lista mantiene la colección completa.
-- **Cierre:** iconos por tipo, estado, estrellas y botón para añadir el primer
-  elemento. Los componentes comunican acciones mediante callbacks.
+Los modelos no conocen las pantallas. El almacenamiento no conoce las tarjetas.
+Los widgets reciben datos y callbacks. Se utiliza StatefulWidget/setState y Navigator,
+sin gestores de estado adicionales. Los estilos se definen centralmente y se
+consumen desde las pantallas.
 
-## M03 · Formulario y alta (R3, R4)
-
-- **Objetivo:** crear un elemento válido desde el botón flotante.
-- **Archivo:** `lib/pantallas/pantalla_formulario.dart`.
-- **Contrato:** recibe `Elemento? inicial` y devuelve `Elemento?` mediante
-  `Navigator.pop`: un elemento al guardar y null al cancelar.
-- **Cierre:** validar el título después de trim, entre 1 y 60 caracteres; elegir
-  tipo, estado, estrellas y notas. Liberar controladores. Verificar con las pruebas
-  de formulario, incluyendo extremos de longitud y notas vacías.
-
-## M04 · Detalle, edición y borrado (R5, R6, R7)
-
-- **Objetivo:** consultar todos los datos y modificar la colección por id.
-- **Archivos:** detalle, formulario reutilizado y callbacks de la lista.
-- **Contratos:** `onActualizar(Elemento)` y `onBorrar()` devuelven `Future<bool>`.
-  La pantalla confirma el cambio cuando el padre indica que ha guardado con éxito.
-- **Cierre:** cancelar conserva los datos; editar mantiene id, fecha y posición;
-  borrar exige confirmación y muestra un aviso. Comprobar el flujo en `lista_test`.
-
-## M05 · Búsqueda y filtros (R8, R9)
-
-- **Objetivo:** encontrar elementos sin modificar la colección original.
-- **Archivo:** pantalla de lista.
-- **Contrato:** búsqueda por título sin distinguir mayúsculas y filtro de estado
-  aplicados juntos sobre una lista calculada con `where`.
-- **Cierre:** mostrar los resultados esperados y distinguir «No hay coincidencias»
-  del estado de colección vacía. Las estadísticas reciben siempre la lista completa.
-
-## M06 · Almacenamiento local (R10)
-
-- **Objetivo:** recuperar los datos al abrir la app y guardar cada modificación.
-- **Archivo:** `lib/servicios/almacen.dart`.
-- **Contratos:** `Future<List<Elemento>> cargar()` y
-  `Future<void> guardar(List<Elemento>)`. Guardar un String JSON en `watchlist`
-  mediante `SharedPreferencesAsync`, con enums por nombre y fechas ISO 8601.
-- **Cierre:** indicador durante la carga, JSON dañado recuperado como lista vacía,
-  cambios confirmados tras escribir y datos anteriores conservados si falla.
-  Probar almacenamiento y reiniciar Android tras altas, ediciones y borrados.
-
-## M07 · Estilos y estadísticas (R11, R13)
-
-- **Objetivo:** aplicar una apariencia común y resumir toda la colección.
-- **Archivos:** `lib/estilos/tema_app.dart`, `lib/estilos/estilos_app.dart` y
-  pantalla de estadísticas. Consultar la [guía de estilos](estilos.md).
-- **Contratos:** `TemaApp.claro` configura MaterialApp; `EstilosApp` comparte
-  medidas y superficies; `ResumenEstadisticas` calcula total, recuentos, media y
-  tipos más frecuentes.
-- **Cierre:** controles coherentes, barras seguras con colección vacía, media sin
-  incluir ceros y empates visibles. Probar pantallas con el tema real y revisar
-  el formulario en móvil pequeño con el teclado abierto.
-
-## M08 · Validación y entrega
-
-- **Objetivo:** preparar una versión verificable y defendible.
-- **Entregas:** pruebas, README con capturas, bitácora honesta, boceto personal y
-  APK. Mantener los comentarios propios y preparar la defensa sin IA.
-- **Comprobaciones:** `dart format lib test`, `flutter analyze`, `flutter test` y
-  `flutter build apk --debug`. Registrar las limitaciones reales del entorno en
-  `docs/validacion.md`, sin atribuir una validación antigua a cambios nuevos.
-- **Empaquetado:** `python tool/empaquetar.py` copia el APK y genera el ZIP sin
-  `build` ni caches. Ejecutarlo tras compilar los últimos cambios.
-
-## Límites comunes
-
-Usar `StatefulWidget`, `setState`, `Navigator` y widgets Material. Dependencia
-funcional: `shared_preferences`; no añadir gestores de estado ni bibliotecas
-de diseño. Mantener las ampliaciones opcionales fuera de estos módulos.
+El modelo se explica en [memoria.md](memoria.md), los casos de prueba en
+[validacion.md](validacion.md) y los flujos de uso en [manual_usuario.md](manual_usuario.md).
+Las capturas nuevas se añaden manualmente; no hay un generador dentro del proyecto
+que sobrescriba los archivos que aporte Mario.

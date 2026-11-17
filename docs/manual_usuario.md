@@ -1,87 +1,97 @@
-# Manual de uso · Mi Watchlist
+# Manual de usuario
 
-Mario Rodriguez · Desarrollo de Interfaces · Versión 1.0.0+1 · 17/11/2026.
+**Mi Watchlist · Mario Rodriguez · Desarrollo de Interfaces · 1.0.0+1**
 
-## Abrir o instalar
+## Abrir la app
 
-Puedes abrir la [web](https://mariocaseria7-coder.github.io/miwatchlist/) sin cuenta.
-Para Android, descarga la [APK](https://github.com/mariocaseria7-coder/miwatchlist/releases/latest/download/app-release.apk),
-ábrela y permite la instalación desde el navegador si Android lo solicita. Se trata
-de una distribución educativa fuera de Google Play. Si el teléfono informa de una
-firma incompatible con una instalación anterior, conserva tus datos antes de decidir
-qué hacer: la app no tiene exportación ni sincronización, y desinstalar puede borrarlos.
-La carpeta entrega del proyecto contiene además la APK de depuración local.
+Usa la [web](https://mariocaseria7-coder.github.io/miwatchlist/) o descarga la
+[APK Android](https://github.com/mariocaseria7-coder/miwatchlist/releases/latest/download/app-release.apk).
+Android puede solicitar permiso de instalación al navegador porque no se distribuye
+por Google Play. No hace falta cuenta. Una instalación nueva comienza vacía.
 
-## Añadir un elemento
+La APK pública usa firma de desarrollo, que puede variar entre compilaciones. Si
+se informa de firma incompatible con otra instalación, no desinstales sin considerar
+la pérdida de datos: la app no dispone de exportación ni sincronización.
 
-1. Pulsa Añadir o Añadir el primero si la colección está vacía.
-2. Escribe un título de 1 a 60 caracteres; los espacios de los extremos no cuentan.
-3. Elige Película, Serie o Videojuego y Pendiente, Viendo/Jugando o Terminado.
-4. Si quieres, añade estrellas, notas, favorito y un enlace directo a una portada.
-5. Pulsa Guardar en el pie de pantalla. Cancelar o volver no guarda el formulario.
+## Añadir un título
 
-Los títulos pueden repetirse. Cero estrellas significa sin valorar; Quitar valoración
-vuelve a ese valor. El corazón es un favorito independiente de las estrellas.
+Pulsa Añadir o Añadir el primero. Escribe de 1 a 60 caracteres después de quitar
+espacios exteriores y elige tipo y estado. Puedes añadir valoración, notas, favorito
+y portada. Guardar valida y confirma; Cancelar o volver descarta el formulario.
 
-## Organizar y encontrar
+Las estrellas valoran de 1 a 5. Quitar valoración vuelve a cero, que significa sin
+valorar. El corazón es un favorito independiente de la puntuación. Los títulos
+pueden repetirse y las notas no son obligatorias.
 
-La colección se muestra por categorías y dentro de cada una por título A–Z. Puedes
-combinar búsqueda, categoría, estado y Favoritos. La búsqueda no distingue mayúsculas.
-Si no hay resultados, cambia esos filtros; no se borran elementos al filtrar.
-El corazón de la tarjeta marca o desmarca favoritos sin abrir el detalle.
-Las notas tienen hasta dos líneas en tarjetas; para leerlas completas abre el detalle.
+## Portada y encuadre
 
-## Portadas y encuadre
+Pega un enlace directo a una imagen. Al cargar aparece el editor. Arrastra para
+moverla y usa pellizco, rueda o deslizador para ampliar. Restablecer centra y vuelve
+al zoom mínimo. El marco coincide con el de las tarjetas y no deja huecos.
 
-Pega un enlace http/https directo a una imagen; para la web pública es preferible HTTPS
-y el servidor debe permitir CORS. Cuando carga aparece el editor. Arrastra la imagen,
-usa pellizco en móvil, rueda en web o el deslizador. Restablecer centra y deja zoom 1.
-No deja huecos porque mantiene cubierta la zona. El marco 16:9 y el encuadre se comparten
-con las tarjetas, el detalle y la sugerencia aleatoria.
+Cambiar la URL reinicia el encuadre; Quitar imagen elimina ambos. Ver imagen solicita
+la vista previa del enlace. Si falla, aparece la reserva sin editor. Para la web
+pública usa HTTPS y un servidor que permita CORS. La app no puede autorizar un servidor
+externo por su cuenta. Se guarda el enlace y el encuadre, no una imagen recortada.
 
-Cambiar el enlace reinicia el encuadre. Quitar imagen borra enlace y encuadre. No se
-almacena una copia de la imagen. Si falla, aparece Imagen no disponible y no hay editor;
-comprueba el enlace o elige otro servidor. La app no puede autorizar CORS por su cuenta.
+## Buscar y organizar
+
+La colección se agrupa por Películas, Series y Videojuegos y ordena títulos A–Z.
+Busca un fragmento del título sin preocuparte por las mayúsculas. Puedes combinar
+búsqueda, categoría, estado y Favoritos. Todos cambia el filtro de estado; no limpia
+por sí solo los otros filtros.
+
+El corazón de la tarjeta marca o desmarca favorito sin abrir el detalle. Las notas
+se muestran resumidas; para leerlas completas abre el detalle. No hay coincidencias
+indica que los filtros no encuentran resultados, no que se hayan borrado tus datos.
 
 ## Editar, terminar y borrar
 
-Toca una tarjeta y pulsa Editar. El formulario carga sus datos. Al guardar conserva
-la identidad y la fecha de alta. Cancelar mantiene lo anterior.
+Toca una tarjeta y pulsa Editar. Los datos aparecen cargados; Guardar conserva la
+identidad y fecha de alta. Cancelar deja lo anterior.
 
-Al pasar a Terminado se asigna hoy; aparece un selector para cambiar esa fecha hasta
-hoy inclusive. La tarjeta la muestra abreviada en español. Al regresar a otro estado
-se borra. Los registros antiguos pueden carecer de fecha de terminado.
+Al elegir Terminado se asigna hoy. El calendario permite cambiar la fecha hasta hoy,
+no al futuro. La tarjeta la muestra si existe. Cambiar a otro estado la borra. Un
+registro antiguo puede carecer de ella; al editarlo terminado y guardar se completa
+con hoy si seguía ausente.
 
-Borrar abre una confirmación. Solo se elimina tras confirmar y guardar correctamente.
-No hay deshacer borrado. Si se muestra un fallo de guardado, los datos anteriores se
-conservan y puedes reintentar.
+Borrar pide confirmación. Cancelar conserva el elemento; confirmar lo elimina tras
+el guardado. No existe Deshacer. Un error de escritura conserva los datos previos
+y permite volver a intentarlo.
 
 ## ¿Qué veo hoy?
 
-Pulsa el botón junto a los filtros de categoría. Elige Películas, Series, Videojuegos
-o Cualquiera; cada opción indica sus pendientes. Se usa toda tu colección, aunque
-haya búsqueda o filtros activos. Las categorías con cero pendientes aparecen atenuadas;
-al abrirlas puedes añadir uno con esa categoría preseleccionada.
+El botón junto a las categorías abre Películas, Series, Videojuegos y Cualquiera con
+sus recuentos de pendientes. Cuenta toda la colección aunque haya búsqueda o filtros
+activos. Las categorías a cero se atenúan y ofrecen Añadir uno con el tipo elegido.
 
-La sugerencia muestra portada, título y notas. Otra opción elige un pendiente distinto
-del anterior si hay más de uno; con uno queda desactivado. Ver detalle no cambia el
-estado. Empezar lo pasa a Viendo o Jugando y guarda; si falla, ofrece reintentar.
+La sugerencia incluye portada, título y notas. Otra opción evita el elemento anterior
+si hay otro; con uno queda desactivada. Ver detalle no cambia su estado. Empezar lo
+pasa a Viendo o Jugando y guarda. Si falla, puedes reintentar desde el diálogo.
 
-## Estadísticas, tema e información
+## Estadísticas, tema y Acerca de
 
-El icono de barras abre estadísticas de toda la colección: total, recuentos por estado,
-media de elementos valorados y tipos más frecuentes. Un filtro no reduce estas cifras.
-El botón de sol/luna alterna tema y recuerda la elección. El icono de información abre
-Acerca de, que explica el uso e incluye la versión y los enlaces de distribución.
-Los campos de autor/asignatura dentro de Acerca de conservan los TODO del código;
-esta revisión de documentación no modifica pantallas.
+El icono de barras muestra total, distribución por estados, media de valorados y
+tipos frecuentes. Usa toda la colección, no solo lo filtrado. La ausencia de
+valoraciones o elementos no provoca una media o un ganador ficticio.
 
-## Datos y problemas frecuentes
+El sol/luna alterna claro y oscuro y recuerda la elección. El icono de información
+abre Acerca de y su versión instalada. Esa pantalla todavía conserva TODO en autor
+y asignatura; esta documentación sí identifica a Mario. Los enlaces web/APK abren
+el navegador, no actualizan automáticamente una APK ya instalada.
 
-- Android y cada navegador guardan colecciones separadas; no se sincronizan.
-- Borrar datos, desinstalar o navegar en una sesión privada puede perder la colección.
-- Sin Internet puedes consultar datos locales, pero una portada remota puede no cargar.
-  No se promete que una primera apertura web funcione sin conexión.
-- Si no aparece una novedad web, recarga la página; en escritorio puedes usar Ctrl+F5.
-- Una lista vacía puede ser nueva, el resultado de filtros o una recuperación ante JSON
-  dañado; un fallo de acceso ofrece reintento. No hay recuperación automática de copias.
+## Conservación de datos y problemas frecuentes
+
+Android y cada navegador/origen guardan colecciones distintas. Borrar datos del
+sitio, usar modo privado, cambiar de navegador o desinstalar puede perder o separar
+la colección. Las portadas necesitan Internet; no se garantiza una primera apertura
+web sin conexión. Un fallo de acceso a preferencias ofrece reintento.
+
+Si una novedad publicada no aparece en web, recarga; en escritorio puedes usar Ctrl+F5.
+Si una imagen no carga, comprueba el enlace o usa otro origen. Para un Xiaomi conectado
+por USB, INSTALL_FAILED_USER_RESTRICTED indica rechazo de instalación en el teléfono.
+
+## Capturas
+
+Mario incorporará las imágenes de la versión que utiliza. El recorrido propuesto
+está en [capturas/README.md](capturas/README.md). Este manual no incrusta capturas anteriores.

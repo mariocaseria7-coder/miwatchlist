@@ -1,54 +1,57 @@
-# Estado de la entrega
+# Preparación de la entrega
 
 **Mario Rodriguez · Desarrollo de Interfaces · 17/11/2026**
 
-## Material preparado
+## Qué contiene esta revisión
 
-- Proyecto Flutter completo y versión web publicada.
-- README con funciones, ejecución, capturas, dependencias y enlaces.
-- Memoria técnica, manual, estilos, guía de defensa y registro de validación.
-- Bitácora por fases con registro técnico y revisiones posteriores.
-- Archivo único promts de IA.txt, con reales y ficticios claramente separados.
-- Capturas actuales reproducibles con datos de demostración aislados.
-- APK debug regenerado y ZIP sin build, caches ni credenciales locales.
+README y documentos se han redactado de nuevo desde la implementación actual:
+memoria, manual, estructura, estilos, validación, bitácora y guía de defensa.
+El registro de prompts se conserva como historial y añade la petición de reescritura.
+El código de la aplicación permanece sin cambios.
 
-La integridad y el contenido del ZIP se comprueban al empaquetar; el APK se acompaña
-de SHA256SUMS.txt. El ZIP se guarda fuera del proyecto en
-`../entrega/mi-watchlist-proyecto.zip` y el APK dentro en `entrega/mi-watchlist-debug.apk`.
+Mario se encargará de las capturas nuevas. Las imágenes anteriores y su generador
+están en una copia local fuera del proyecto:
+`../entrega/capturas-anteriores-42e0c7c/`. No se incluyen en el ZIP ni se enlazan como
+pruebas del estado actual. El índice de imágenes está en capturas/README.md.
 
-## Pendientes personales y académicos
+## Pendientes antes de presentar
 
-- [ ] Añadir el boceto propio sin IA a docs/boceto.png. No hay una imagen artificial
-  que lo sustituya. Si se dibuja ahora, fecharlo como reconstrucción posterior.
-- [ ] Completar por fase las decisiones personales, aprendizajes y preguntas de
-  comprensión. La IA ha preparado hechos técnicos, no experiencias del alumno.
-- [ ] Revisar el código y redactar comentarios propios tras comprenderlo.
-- [ ] Ensayar la demostración y un cambio en directo sin IA.
-- [ ] Revisar con el profesor los tres paquetes funcionales adicionales y el número
-  de ampliaciones: el enunciado solo permite shared_preferences/intl y propone máximo dos.
+- [ ] Añadir las capturas actuales y enlazarlas en README.
+- [ ] Añadir el boceto propio a docs/boceto.png. Si se dibuja ahora, indicar que es
+  posterior al desarrollo y no presentarlo como un boceto inicial que ya existía.
+- [ ] Completar revisión personal, aprendizajes y preguntas de cada fase.
+- [ ] Leer el código y escribir los comentarios propios después de comprenderlo.
+- [ ] Ensayar demostración y cambio en directo sin IA.
+- [ ] Revisar con el profesor los paquetes adicionales y el número de ampliaciones.
 
-No se marca esta entrega como totalmente ajustada al enunciado hasta resolver estos puntos.
-No se ha acreditado una prueba reciente en el móvil físico.
+El enunciado limita paquetes a shared_preferences e intl opcional y propone máximo
+dos ampliaciones. La memoria declara las diferencias reales, sin inventar una
+aceptación docente. La documentación técnica no marca como hechas las tareas personales.
 
-## Comprobación antes de enviar
+## Generar el entregable
 
-1. Abrir README.md y recorrer sus enlaces y capturas.
-2. Probar alta, persistencia al volver a abrir, cancelación, borrado confirmado,
-   búsqueda con filtros y estadísticas vacías en el dispositivo elegido.
-3. Completar las casillas personales anteriores sin convertirlas en afirmaciones ficticias.
-4. Si cambia código o documentos, ejecutar las comprobaciones apropiadas y regenerar:
+El enunciado permite ZIP o repositorio, junto con APK debug o versión web. Los
+enlaces públicos están en README. Localmente se dispone de entrega/mi-watchlist-debug.apk
+y entrega/SHA256SUMS.txt.
+
+Después de cambios en código:
 
 ```bash
 flutter build apk --debug
 python tool/empaquetar.py
 ```
 
-5. Abrir el ZIP y comprobar que contiene los documentos personales añadidos y el APK.
-   También puede entregarse el enlace al repositorio, según la opción del enunciado.
+Si solo se añaden capturas o texto, basta volver a ejecutar el empaquetador con el
+APK debug existente. Si falta el compilado, el script indica que hay que generarlo.
+El ZIP queda en `../entrega/mi-watchlist-proyecto.zip` sin build ni caches. El script
+verifica integridad y excluye credenciales locales.
 
-## Publicación del repositorio
+El ZIP de esta revisión contiene los documentos nuevos, pero aún no tiene las
+capturas nuevas ni el boceto. Abrirlo de nuevo antes de entregar y verificar esos
+archivos después de incorporarlos.
 
-La documentación se versiona junto al proyecto. El código funcional de referencia
-es 20b87b4; un commit exclusivamente documental no modifica el comportamiento de la
-app. El workflow compila y publica al subir a master. El ZIP local se genera con el
-script indicado y no se publica como adjunto de una Release automáticamente.
+## GitHub
+
+Los documentos se versionan con el proyecto. Cada push a master activa el workflow
+que comprueba, compila y publica web/APK release. El ZIP local no se adjunta a una
+Release de forma automática. Un cambio documental no modifica la lógica de la app.

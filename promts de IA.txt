@@ -361,6 +361,14 @@ defensa, capturas de widgets con datos aislados, APK debug y empaquetado.
 Se distinguen las evidencias técnicas de las reflexiones y boceto propios pendientes.
 Se declaran los paquetes adicionales y las ampliaciones respecto al enunciado.
 
+R21 · REAL · 17/11/2026 · Rehacer documentación y aportar capturas personalmente
+yo me encargare de añadir capturas nuevas ya que las que hay estan obsoletas, son de una version anterior de la app, y creo que el resto de la documentacion tambien, asi que me gustaria que rehicieras toda la documentacion de nuevo
+RESULTADO TÉCNICO DE LA IA: revisión directa de lib, test, pubspec y workflow;
+reescritura de todos los documentos de entrega sin conservar bloques históricos
+como descripción vigente. Las imágenes anteriores y su generador se apartan en
+una copia local fuera del proyecto. Mario incorporará las capturas nuevas.
+Se conserva el historial real de prompts, separado de los ejemplos ficticios.
+
 EJEMPLOS FICTICIOS DE PROMPTS — NO SON UN HISTORIAL REAL
 Los textos F01–F10 están escritos en primera persona para ilustrar peticiones
 pequeñas con contexto, objetivo, restricciones y explicación. No se utilizaron

@@ -1,173 +1,156 @@
-# Memoria técnica · Mi Watchlist
+# Memoria del proyecto
 
-**Mario Rodriguez · Desarrollo de Interfaces**
-Versión 1.0.0+1 · 17/11/2026 · Código de referencia `20b87b4`.
+**Mi Watchlist · Mario Rodriguez · Desarrollo de Interfaces**
 
-## 1. Objetivo y alcance
+Versión 1.0.0+1. Revisión desde el código actual: 17/11/2026.
 
-Organizar películas, series y videojuegos en un solo lugar, distinguiendo lo pendiente,
-lo que se está viendo o jugando y lo terminado. Es un proyecto individual educativo
-en Flutter/Dart, con interfaz adaptable para Android y navegador y persistencia local.
+## Objetivo y alcance
 
-No se implementan cuentas, sincronización, recomendaciones externas, importación,
-exportación de colecciones ni selección desde galería. «¿Qué veo hoy?» es una elección
-aleatoria de pendientes propios; no consulta catálogos ni servicios de recomendación.
+Mi Watchlist reúne películas, series y videojuegos que una persona quiere ver o
+jugar, tiene en curso o ha terminado. Permite añadir información personal, localizar
+los títulos y consultar un resumen de su colección. Se ejecuta en Android y web.
 
-## 2. Requisitos y trazabilidad
+No hay cuentas, catálogo externo, importación, exportación, sincronización ni copia
+de seguridad. La sugerencia aleatoria usa pendientes propios, no recomendaciones
+obtenidas de un servicio. Los datos de Android y del navegador son independientes.
 
-| Requisito | Implementación real | Evidencia principal |
+## Pantallas
+
+Inicio presenta distribución, colección, categorías, búsqueda, filtros y alta. Las
+tarjetas incluyen portada, tipo, título, estado, estrellas, favorito, resumen de notas
+y fecha de terminado si existe. La colección se agrupa por tipo y se ordena por título
+con comparación de cadenas en minúsculas, sin ordenación lingüística especial de acentos.
+
+El formulario sirve para crear y editar. Recibe inicial si se edita y tipoInicial
+para preseleccionar la categoría de una sugerencia vacía. En ancho muestra dos
+columnas; en móvil una. Guardar y Cancelar están en un pie fijo.
+
+Detalle muestra los campos básicos, notas completas, fecha de alta, id y portada
+cuando corresponde. Incluye edición y borrado confirmado. Los campos añadidos
+favorito y fecha de terminado se consultan en tarjetas y edición; no tienen filas
+propias en el detalle actual.
+
+Estadísticas usa toda la colección. Acerca de explica la app y lee la versión.
+Dentro de esa pantalla aún hay TODO para autor/asignatura: esta revisión documental
+no modifica esos textos de la aplicación.
+
+## Modelo y JSON
+
+Elemento es inmutable: sus campos son final y copyWith construye otra instancia.
+
+| Campo | Tipo | Regla |
 | --- | --- | --- |
-| R1 Lista con icono, estado y estrellas | pantalla_lista.dart y tarjeta_elemento.dart; cuadrícula adaptable agrupada | lista_test.dart, mejoras_coleccion_test.dart |
-| R2 Estado vacío y alta | Mensaje y Añadir el primero | lista_test.dart, captura vacia.png |
-| R3 FAB para alta | Añadir abre el formulario | lista_test.dart |
-| R4 Validación | Título tras trim de 1–60; errores claros y valoración 0–5 | formulario_test.dart, elemento_test.dart |
-| R5 Detalle | Tipo, título, estado, valoración, notas completas, fecha de alta, id y portada cuando corresponde | lista_test.dart, captura detalle.png |
-| R6 Edición reutilizada | Formulario con inicial; conserva identidad y fecha de alta; cancelar devuelve null | lista_test.dart, imagen_juego_test.dart |
-| R7 Borrado confirmado | AlertDialog, guardado y aviso tras éxito | lista_test.dart |
-| R8 Filtro por estado | ChoiceChip y lista visible calculada | lista_test.dart |
-| R9 Búsqueda combinada | trim/toLowerCase/contains junto al resto de filtros | lista_test.dart |
-| R10 Persistencia | SharedPreferencesAsync, String JSON watchlist | almacen_test.dart |
-| R11 Estadísticas | Total, barras, media sin ceros y todos los tipos empatados | estadisticas_test.dart |
-| R12 Componentes | TarjetaElemento y SelectorEstrellas separados, con parámetros/callbacks | Código de widgets y pruebas de formularios/lista |
-| R13 Tema | ThemeData y ColorScheme.fromSeed compartidos | diseno_test.dart, formulario_diseno_test.dart |
-
-La tabla señala archivos dentro de `lib/` y `test/`. El detalle muestra los campos
-básicos del enunciado. Los campos añadidos favorito y fecha de terminado se consultan
-en tarjetas y edición; el detalle no tiene filas propias para esos dos campos.
-La fase orientativa pedía ListView.builder y desplegables: la versión final usa
-SliverGrid y chips adaptables. No se presenta como una implementación literal de esos ejemplos.
-
-## 3. Organización y flujo de datos
-
-```text
-lib/
-  main.dart                         arranque, carga y persistencia del tema
-  config/app_links.dart             URLs públicas
-  modelos/elemento.dart             datos, enums, JSON, copias y fechas
-  modelos/encuadre.dart             zoom y posición inmutables
-  servicios/almacen.dart            carga y guardado de la colección
-  servicios/sugerencia.dart         pendientes y selección aleatoria
-  servicios/enlaces_app.dart        apertura de enlaces públicos
-  estilos/tema_app.dart              temas claro/oscuro y Manrope
-  estilos/estilos_app.dart           medidas, proporción e iconos compartidos
-  pantallas/                        lista, formulario, detalle, estadísticas y Acerca de
-  widgets/                          tarjetas, estrellas, portada, cabecera y diálogo de sugerencia
-```
-
-`PantallaLista` es propietaria de la colección y de búsqueda, categoría, estado y
-filtro de favoritos. Calcula `visibles` sin alterar los datos originales. Agrupa por
-Tipo y ordena alfabéticamente mediante `toLowerCase().compareTo`; no es ordenación
-lingüística específica para acentos. La cuadrícula crea las tarjetas necesarias.
-
-El formulario trabaja sobre controladores y estado local. Guardar valida el Form y
-hace `Navigator.pop(context, elemento)`; cancelar devuelve null. La lista espera el
-resultado y solicita escritura a Almacen. Solo tras guardar con éxito sustituye su
-colección. Detalle solicita actualizar y borrar mediante callbacks `Future<bool>`.
-Así, un error de escritura no muestra como confirmado un cambio que no se ha guardado.
-
-```mermaid
-flowchart LR
-    Formulario -->|Elemento o null| Lista
-    Detalle -->|callbacks por id| Lista
-    Sugerencia -->|Empezar| Lista
-    Lista -->|guardar propuesta| Almacen
-    Almacen -->|JSON local| Preferencias
-    Almacen -->|éxito| Lista
-    Lista -->|colección completa| Estadisticas
-```
-
-## 4. Modelo y serialización
-
-| Campo | Tipo | Valor y comportamiento |
-| --- | --- | --- |
-| id | String | Identidad; generado desde microsegundos al crear. |
-| titulo | String | trim, longitud 1–60. No se exige que los títulos sean únicos. |
-| tipo | Tipo | pelicula, serie, videojuego; JSON por name. |
-| estado | Estado | pendiente, enCurso, terminado; JSON por name. |
+| id | String | Identidad conservada en edición. |
+| titulo | String | trim y longitud 1–60. Puede repetirse. |
+| tipo | Tipo | pelicula, serie o videojuego. |
+| estado | Estado | pendiente, enCurso o terminado. |
 | valoracion | int | 0–5; cero significa sin valorar. |
-| notas | String? | Opcional; nota vacía al guardar se convierte en null. |
-| fechaAlta | DateTime | Creación; se conserva en edición; ISO 8601 en JSON. |
-| imagenUrl | String? | URL opcional http/https validada en formulario. |
-| encuadre | Encuadre? | Objeto JSON con zoom 1–5 y x/y entre -1 y 1. |
+| notas | String? | Opcional; texto vacío al guardar pasa a null. |
+| fechaAlta | DateTime | Creación; se conserva en edición. |
+| imagenUrl | String? | URL de portada opcional. |
+| encuadre | Encuadre? | Zoom 1–5 y x/y entre -1 y 1. |
 | favorito | bool | false si falta en datos antiguos. |
-| fechaTerminado | DateTime? | ISO 8601; null si falta o el estado no es terminado. |
+| fechaTerminado | DateTime? | Opcional; ausente en estados distintos de terminado. |
 
-Los campos son final. `copyWith` crea otra instancia y conserva id y fechaAlta.
-Los parámetros opcionales que pueden borrarse distinguen omisión de null mediante
-un valor centinela. Si cambia la URL se reinicia el encuadre; quitarla lo elimina.
-No se guarda una imagen recortada ni un archivo de portada: solo URL y parámetros.
+JSON conserva enums por name y fechas ISO 8601. fromJson reconstruye los tipos.
+Los campos opcionales nuevos pueden faltar en datos antiguos. No se inventa una
+fecha histórica al cargar un elemento terminado sin fecha.
 
-La transición a terminado mediante copyWith asigna hoy si cambia desde otro estado.
-El formulario aplica la misma regla y permite una fecha manual hasta hoy. Volver a
-otro estado elimina la fecha. Leer un JSON antiguo terminado no inventa una fecha
-histórica; queda ausente. Editar y guardar ese registro desde el formulario puede
-asignar hoy si todavía carecía de fecha. Los rótulos usan meses abreviados en español.
+Los parámetros anulables de copyWith distinguen omisión de null con un centinela:
+omitir conserva; pasar null elimina. Cambiar o quitar imagenUrl reinicia su encuadre;
+sin URL no se conserva un encuadre huérfano.
 
-## 5. Persistencia y errores
+Al pasar por copyWith desde otro estado a terminado se asigna hoy. El formulario
+aplica esa transición y permite una fecha manual hasta hoy. Volver a otro estado
+la borra; cambiar solo título o favorito la conserva. Guardar desde el formulario
+un registro antiguo terminado sin fecha puede completarla con hoy. El calendario
+impide elegir fechas futuras; no existe una política general de rechazo de fechas
+futuras introducidas directamente en JSON. Los rótulos usan meses abreviados en español.
 
-`Almacen.cargar` lee `watchlist`, decodifica la lista y usa Elemento.fromJson. Si no
-hay datos, el JSON está dañado o contiene ids duplicados, devuelve una lista vacía.
-Un fallo de acceso al almacenamiento se propaga para ofrecer reintento. El JSON
-corrupto no se repara ni se exporta automáticamente.
+## Datos y estado de interfaz
 
-`guardar` serializa toda la colección y espera setString. La lista bloquea operaciones
-simultáneas durante la escritura. Un fallo conserva la colección anterior y muestra
-un aviso. El tema se guarda por separado en `temaOscuro`, con restauración del valor
-anterior si falla su escritura. Los datos no se envían a un servidor propio; los
-servidores de portadas sí reciben la petición de imagen cuando se visualizan.
+PantallaLista posee colección y filtros. Calcula visibles mediante where, sin
+modificar la colección original. La búsqueda usa trim, toLowerCase y contains.
+Categoría, estado y favoritos se combinan; las operaciones identifican elementos por id.
 
-En Android son preferencias del espacio privado de la aplicación; en web pertenecen
-al almacenamiento local del navegador y origen. Desinstalar, borrar datos del sitio
-o usar otro navegador/dispositivo puede eliminar o separar la colección. No hay copia
-de seguridad ni sincronización implementada.
+El formulario edita controladores y estado local. Guardar valida y devuelve Elemento
+con Navigator.pop; cancelar devuelve null. La lista espera Navigator.push y construye
+una propuesta de colección. Almacen.guardar espera la escritura; solo el éxito
+confirma el cambio en pantalla. Un fallo mantiene la colección previa y muestra aviso.
+El detalle solicita actualizar o borrar con callbacks Future<bool> y espera confirmación.
 
-## 6. Ampliaciones implementadas
+Almacen usa SharedPreferencesAsync y una cadena JSON bajo watchlist. JSON ausente,
+inválido o con ids duplicados produce una colección vacía. Un error de acceso se
+propaga para ofrecer reintento. No se repara automáticamente contenido corrupto.
+El tema se guarda por separado en temaOscuro y se restaura el anterior si falla su escritura.
 
-- Favoritos independientes de la valoración, animación y filtro combinado.
-- Fecha de terminado y vista previa de notas en tarjetas.
-- Portadas comunes 16:9 con geometría compartida, arrastre, pellizco, rueda,
-  deslizador y Restablecer. Cover y límites impiden huecos; el encuadre es relativo.
-- Selección aleatoria entre pendientes propios de una categoría o cualquiera.
-  Con más de un candidato se excluye el id anterior. Con uno, Otra opción queda
-  desactivado. Con cero se ofrece añadir. Empezar pasa a enCurso y espera guardado.
-- Orden A–Z por categoría, tema recordado, Acerca de y enlaces de distribución.
+El almacenamiento pertenece a la aplicación Android o al navegador y origen web.
+Borrar datos, desinstalar o usar otro navegador puede perder o separar la colección.
+Los servidores de portada reciben peticiones al visualizar sus imágenes; no se envía
+la colección a un servidor propio.
 
-Las estadísticas reciben todos los elementos; favoritos, filtros y recomendaciones
-no reducen su entrada. La media excluye ceros y evita dividir entre cero; los empates
-de tipos más frecuentes se muestran completos.
+## Portadas y geometría
 
-## 7. Diseño y compatibilidad
+El formulario valida URL http/https con host. Guarda el enlace y los parámetros,
+no una copia recortada. El editor aparece tras cargar la imagen y permite arrastre,
+pellizco, rueda, deslizador y Restablecer. Zoom 1 significa cubrir el marco centrado.
 
-Material 3, semilla coral #FF7A59, superficies cálidas y tipografía Manrope incluida.
-La variante clara utiliza un primario más oscuro para legibilidad. El ancho de colección
-se limita a 1160 y el de detalle/estadísticas a 600 píxeles lógicos. El formulario usa
-dos columnas desde 860; el guardado permanece en el pie, ajustándose al teclado.
-Los componentes leen el tema actual en ambos modos.
+Encuadre valida límites y números finitos. geometria_portada.dart calcula cover y
+limita movimiento para evitar huecos. ImagenElemento comparte el marco 16:9 en
+formulario, tarjetas, detalle y sugerencia. La posición relativa se mantiene al
+cambiar el ancho. Un fallo muestra reserva y oculta el editor.
 
-Las portadas requieren Internet y, en la web HTTPS, enlaces seguros con CORS permitido.
-Si no cargan, se conserva el mensaje de reserva y se oculta el editor. No se evita
-CORS mediante proxy ni desactivando la seguridad. Las fuentes se incluyen localmente.
+La web pública usa HTTPS: las portadas requieren un origen seguro y CORS permitido.
+No existe proxy ni se desactiva la seguridad para mostrar imágenes bloqueadas.
 
-## 8. Dependencias y diferencias con la propuesta docente
+## Sorteo y estadísticas
 
-Además de shared_preferences, la aplicación usa google_fonts, url_launcher y
-package_info_plus. No están en la lista cerrada de paquetes del enunciado; no consta
-aprobación del profesor. La versión también incluye más ampliaciones de las dos
-orientativas. La documentación declara estas diferencias para que se puedan valorar.
-No se ha eliminado código ni cambiado el alcance funcional al redactar esta memoria.
+pendientesDe filtra por pendiente y tipo opcional. elegirPendiente utiliza Random
+entre candidatos. Con más de uno excluye el id anterior; evita repetición inmediata,
+no garantiza que un título no vuelva a aparecer durante toda la sesión.
 
-Los comentarios iniciales y gran parte de la implementación los generó Codex. Los
-prompts ficticios están separados de los reales. La documentación no certifica que
-el alumno haya comprendido el código, realizado personalmente el boceto o contestado
-las preguntas de comprensión: esas evidencias se completan por el alumno.
+El selector usa todos los pendientes aunque haya filtros activos. Las categorías
+vacías están atenuadas, pero se pueden abrir para ofrecer alta con tipo preseleccionado.
+Con uno, Otra opción se desactiva. Ver detalle no cambia estado. Empezar crea una
+copia enCurso y espera el guardado; el diálogo solo cierra con éxito.
 
-## 9. Validación, distribución y límites
+ResumenEstadisticas recibe la colección completa, cuenta por estado y tipo y calcula
+media solo de valoraciones mayores que cero. Evita dividir sin valorados. Los empates
+de tipos frecuentes se muestran completos; una lista vacía no inventa un ganador.
 
-La revisión funcional documentada pasó 66 pruebas habituales y tres pruebas Chrome
-específicas de portadas en GitHub Actions. El historial detallado y la revisión de
-la documentación se recogen en validacion.md. El APK debug local y las capturas se
-regeneran para esta entrega. No se afirma una prueba reciente en el Xiaomi físico.
+## Relación con requisitos
 
-El workflow publica web y APK release en cada push a master. La web se sirve bajo
-/miwatchlist/ y la Release latest mantiene el enlace de descarga. Esta automatización
-no sustituye la comprobación del profesor ni las tareas personales del enunciado.
+| Requisito | Implementación | Pruebas principales en test/ |
+| --- | --- | --- |
+| R1 Lista, tipo, estado y estrellas | PantallaLista / TarjetaElemento | lista_test.dart |
+| R2 Estado vacío | PantallaLista | lista_test.dart |
+| R3 FAB de alta | Lista / Formulario | lista_test.dart |
+| R4 Validación | Formulario / Elemento | formulario_test.dart, elemento_test.dart |
+| R5 Detalle básico | PantallaDetalle | lista_test.dart |
+| R6 Edición reutilizada | PantallaFormulario(inicial) | lista_test.dart, imagen_juego_test.dart |
+| R7 Borrado confirmado | PantallaDetalle | lista_test.dart |
+| R8 Filtro de estado | ChoiceChip / visibles | lista_test.dart |
+| R9 Búsqueda combinada | PantallaLista | lista_test.dart |
+| R10 JSON local | Almacen | almacen_test.dart |
+| R11 Estadísticas | ResumenEstadisticas | estadisticas_test.dart |
+| R12 Componentes propios | TarjetaElemento / SelectorEstrellas | Tests de lista/formulario |
+| R13 Tema propio | TemaApp / EstilosApp | diseno_test.dart, formulario_diseno_test.dart |
+
+El código está en lib/modelos, servicios, pantallas, widgets y estilos. La guía de
+estructura detalla archivos. Las ampliaciones tienen tests adicionales de encuadre,
+favoritos, fechas, Acerca de y sugerencias. Los ejemplos orientativos de ListView.builder
+y desplegables se han sustituido por cuadrícula adaptable y chips.
+
+## Diseño y alcance académico
+
+Material 3, semilla coral #FF7A59 y Manrope local. Estado con StatefulWidget/setState
+y Navigator. shared_preferences gestiona datos; google_fonts configura tipografía,
+url_launcher abre enlaces y package_info_plus obtiene la versión.
+
+Estos tres últimos paquetes están fuera de la lista cerrada shared_preferences/intl
+del enunciado. También se han implementado más ampliaciones de las dos propuestas.
+Se declara la diferencia; no consta una excepción aprobada por el profesor.
+
+Las capturas nuevas las incorporará Mario. Esta memoria no certifica su existencia,
+la realización personal del boceto ni respuestas de comprensión. La bitácora separa
+el registro técnico de esas aportaciones individuales.

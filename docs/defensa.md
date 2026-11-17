@@ -1,58 +1,52 @@
-# Preparación de la defensa · Mario Rodriguez
+# Preparación de la defensa
 
-Desarrollo de Interfaces · Mi Watchlist · 17/11/2026.
+**Mario Rodriguez · Desarrollo de Interfaces · Mi Watchlist**
 
-Esta guía está redactada con IA para organizar el ensayo. No constituye respuestas
-personales a las preguntas de comprensión ni acredita que se haya realizado el ensayo.
+Esta guía organiza un ensayo. No acredita comprensión ni reemplaza respuestas
+personales a las preguntas del enunciado.
 
 ## Demostración de dos minutos
 
-| Tiempo | Acción que enseñar |
+| Tiempo aproximado | Acción |
 | --- | --- |
-| 0:00–0:25 | Abrir la app, añadir un título válido y comprobar que uno vacío muestra error. |
-| 0:25–0:50 | Abrir detalle, editar estado/notas, cancelar una edición y confirmar que no cambia. |
-| 0:50–1:10 | Combinar búsqueda con estado; quitar filtros; enseñar favorito y categorías. |
-| 1:10–1:30 | Estadísticas de toda la colección y cambio de tema. |
-| 1:30–2:00 | Cerrar/abrir y verificar persistencia; borrar un ejemplo con confirmación. |
+| 0:00–0:25 | Inicio, alta y error al intentar guardar un título vacío. |
+| 0:25–0:50 | Detalle, edición y cancelación sin modificar datos. |
+| 0:50–1:10 | Combinar búsqueda, estado, categoría y favoritos. |
+| 1:10–1:35 | Estadísticas completas y alternancia de tema. |
+| 1:35–2:00 | Reabrir para comprobar persistencia y borrar con confirmación. |
 
-Si queda tiempo, mostrar encuadre o ¿Qué veo hoy?. Las funciones básicas tienen prioridad.
-Prepara ejemplos desechables: un borrado confirmado es permanente. No dependas de una
-portada externa para demostrar lo esencial.
+Si queda tiempo, enseñar encuadre o sorteo. Preparar elementos desechables y no
+depender de portadas externas para demostrar lo básico.
 
-## Cuatro minutos para explicar código
+## Explicar código al azar
 
-Recorre uno de estos caminos con el código abierto, usando tus palabras:
+Practicar con los archivos abiertos y palabras propias:
 
-1. Formulario → Navigator.pop → resultado de push en lista → Almacen.guardar → setState.
-2. Elemento → toJson/fromJson → preferencias locales → carga inicial.
-3. Tarjeta → callback → actualización por id → guardado y manejo de errores.
-4. Filtros → lista calculada → cuadrícula, frente a estadísticas con colección completa.
-5. Sugerencia → pendientes de categoría → Random → exclusión del id anterior → Empezar.
+- Guardar en Formulario → Elemento → Navigator.pop → resultado esperado por Lista.
+- Propuesta de colección → Almacen.guardar → confirmación o conservación tras fallo.
+- JSON → enums/fechas → lectura compatible cuando faltan campos opcionales.
+- Callback de tarjeta → operación por id → copia inmutable.
+- Filtros visibles frente a colección completa para estadísticas y sorteo.
+- URL → encuadre relativo → geometría y límites compartidos.
+- Cambio de estado → fecha de terminado → calendario sin futuro.
 
-Archivos a localizar: main.dart, modelos/elemento.dart, servicios/almacen.dart,
-pantallas/pantalla_lista.dart, pantalla_formulario.dart y widgets/selector_estrellas.dart.
-Incluye los archivos de ampliaciones: el profesor puede preguntar por cualquier línea.
+Incluir main.dart, servicios, modelos y ampliaciones: el profesor puede señalar
+cualquier línea, no solo la parte básica.
 
-## Ensayo de cambio sin IA · cuatro minutos
+## Cambio en directo sin IA
 
-Trabaja en una copia local o rama para no alterar la versión publicada. Elige al azar:
-
-- Cambiar el límite del título y revisar las pruebas que dependen de él.
-- Cambiar la paleta y comprobar los dos temas y el contraste.
-- Mostrar el total de elementos en la cabecera.
-- Añadir un estado y localizar enums, etiquetas, filtros y estadísticas afectados.
-
-Realiza el cambio sin ayuda y explica por qué hay que revisar más de un lugar.
-Después comprueba formato, análisis y pruebas. No se han preparado soluciones para
-copiar durante el examen.
+En una copia o rama, elegir un cambio pequeño: límite del título, color del tema,
+total en cabecera o estado adicional. Localizar todos los lugares afectados,
+realizarlo sin ayuda y ejecutar formato, análisis y pruebas. Anotar después lo que
+se consiguió y las dudas. No se incluyen soluciones para copiar durante la defensa.
 
 ## Revisión personal
 
-- [ ] Puedo localizar cada campo y explicar por qué es final.
-- [ ] Sé seguir un callback, un Future y la comprobación de mounted.
-- [ ] Distingo la colección original de la lista filtrada.
-- [ ] Puedo explicar el encuadre y las transiciones de fecha sin memorizar un texto.
-- [ ] He respondido por mi cuenta las preguntas de la bitácora.
+- [ ] He seguido los flujos de alta, edición, borrado y persistencia.
+- [ ] Distingo una copia inmutable del estado local de la interfaz.
+- [ ] Sé explicar Future, await, callbacks, mounted y dispose donde aparecen.
+- [ ] He contestado sin IA las preguntas de la bitácora.
 - [ ] He ensayado un cambio completo sin IA.
+- [ ] He probado la demostración en el equipo de la exposición.
 
-Estas casillas solo deben marcarse después de realizar la actividad personalmente.
+Marcar únicamente después de realizar la actividad.
