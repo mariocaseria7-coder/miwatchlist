@@ -32,24 +32,28 @@ class SelectorEstrellas extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Wrap(
+          spacing: 2,
           children: List.generate(
             5,
             (i) => IconButton(
               tooltip: '${i + 1} de 5 estrellas',
               isSelected: i < valor,
+              style: IconButton.styleFrom(
+                minimumSize: const Size(48, 52),
+                padding: const EdgeInsets.all(6),
+              ),
               onPressed: () => onChanged!(i + 1),
               icon: Icon(
                 i < valor ? Icons.star_rounded : Icons.star_outline_rounded,
                 color: color,
-                size: 32,
+                size: 36,
               ),
             ),
           ),
         ),
-        TextButton.icon(
+        TextButton(
           onPressed: valor == 0 ? null : () => onChanged!(0),
-          icon: const Icon(Icons.restart_alt, size: 18),
-          label: Text(valor == 0 ? 'Sin valorar' : 'Quitar valoración'),
+          child: const Text('Quitar valoración'),
         ),
       ],
     );

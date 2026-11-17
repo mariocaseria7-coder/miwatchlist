@@ -57,10 +57,9 @@ void main() {
             find.byKey(const ValueKey('titulo')),
             'Nuevo elemento',
           );
-          await tester.ensureVisible(find.byKey(const ValueKey('tipo')));
-          await tester.tap(find.byKey(const ValueKey('tipo')));
-          await tester.pumpAndSettle();
-          await tester.tap(find.text(tipo.etiqueta).last);
+          final selectorTipo = find.byKey(ValueKey('tipo-${tipo.name}'));
+          await tester.ensureVisible(selectorTipo);
+          await tester.tap(selectorTipo);
           await tester.pumpAndSettle();
         }
         final campo = find.byKey(const ValueKey('imagenUrl'));

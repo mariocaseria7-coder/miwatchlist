@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 /// Comparte tipografía, colores y controles entre los dos modos de la app.
 abstract final class TemaApp {
-  static const colorSemilla = Color(0xFF7761D9);
+  static const colorSemilla = Color(0xFFFF7A59);
   static ThemeData get claro => _crear(Brightness.light);
   static ThemeData get oscuro => _crear(Brightness.dark);
 
@@ -15,34 +15,38 @@ abstract final class TemaApp {
           seedColor: colorSemilla,
           brightness: brillo,
         ).copyWith(
-          primary: oscuro ? const Color(0xFFC5B3FF) : const Color(0xFF6449BF),
-          onPrimary: oscuro ? const Color(0xFF221A38) : Colors.white,
+          primary: oscuro ? colorSemilla : const Color(0xFFAD3D25),
+          onPrimary: oscuro ? const Color(0xFF371207) : Colors.white,
           primaryContainer: oscuro
-              ? const Color(0xFF302942)
-              : const Color(0xFFECE6FA),
+              ? const Color(0xFF5A2B20)
+              : const Color(0xFFFFDBD0),
           onPrimaryContainer: oscuro
-              ? const Color(0xFFE8DEFF)
-              : const Color(0xFF39266C),
-          secondaryContainer: const Color(0xFFDEF1A8),
-          onSecondaryContainer: const Color(0xFF283016),
-          surface: oscuro ? const Color(0xFF16161B) : const Color(0xFFF7F6F2),
+              ? const Color(0xFFFFDBD0)
+              : const Color(0xFF571B0D),
+          secondaryContainer: oscuro
+              ? const Color(0xFF4D3526)
+              : const Color(0xFFFFE8D8),
+          onSecondaryContainer: oscuro
+              ? const Color(0xFFFFDDBF)
+              : const Color(0xFF58321E),
+          surface: oscuro ? const Color(0xFF191715) : const Color(0xFFFAF7F4),
           surfaceContainerLowest: oscuro
-              ? const Color(0xFF1F1F26)
-              : Colors.white,
+              ? const Color(0xFF24201D)
+              : const Color(0xFFFFFDFB),
           surfaceContainerLow: oscuro
-              ? const Color(0xFF24242C)
-              : const Color(0xFFEFEEE8),
+              ? const Color(0xFF2D2622)
+              : const Color(0xFFF3EBE5),
           surfaceContainerHighest: oscuro
-              ? const Color(0xFF34343E)
-              : const Color(0xFFE6E4DD),
-          onSurface: oscuro ? const Color(0xFFF2F0F7) : const Color(0xFF25242C),
+              ? const Color(0xFF3C322C)
+              : const Color(0xFFE9DDD4),
+          onSurface: oscuro ? const Color(0xFFF9EEE8) : const Color(0xFF2E241F),
           onSurfaceVariant: oscuro
-              ? const Color(0xFFB9B6C5)
-              : const Color(0xFF66636F),
-          outline: oscuro ? const Color(0xFF696573) : const Color(0xFF8A8595),
+              ? const Color(0xFFCEBEB4)
+              : const Color(0xFF695950),
+          outline: oscuro ? const Color(0xFFA88C7B) : const Color(0xFF8C7467),
           outlineVariant: oscuro
-              ? const Color(0xFF38363F)
-              : const Color(0xFFE1DED7),
+              ? const Color(0xFF4B3B32)
+              : const Color(0xFFDCCBC0),
         );
     final base = ThemeData(
       useMaterial3: true,

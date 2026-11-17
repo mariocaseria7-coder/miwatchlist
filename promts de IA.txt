@@ -175,6 +175,45 @@ RESULTADO TÉCNICO DE LA IA PARA R12–R14 (no reflexión del alumno)
   CORS en portadas externas; APK educativa con firma de desarrollo, cuya clave
   puede cambiar entre compilaciones en distintos equipos.
 
+R15 · REAL · 17/11/2026 · Coral y rediseño del formulario, solo diseño
+Quiero dos cambios en la app. No toques la lógica, el modelo de datos ni las validaciones (por ejemplo, el título sigue siendo de 1 a 60 caracteres sin espacios en los extremos), solo el diseño.
+
+1. COLOR (toda la app)
+Sustituye el morado/lavanda actual por un color de acento nuevo: coral/naranja cálido (#FF7A59 como base). Hazlo desde el tema (ThemeData / ColorScheme) en un único sitio, sin colores sueltos repartidos por los widgets. Genera la variante para modo oscuro y la de modo claro, comprobando que el contraste sea legible en ambos. Aplícalo a todo lo que ahora es morado: botón flotante "Añadir", botones principales, chips seleccionados, iconos de las secciones, estrellas de valoración, enlaces de texto, bordes y fondos con degradado, y también el icono del logo de la cabecera, para que todo combine. Revisa que no quede ningún morado en ninguna pantalla.
+
+2. PANTALLA "NUEVO ELEMENTO" (y la de editar, si es la misma)
+Rediséñala para que sea más moderna y cómoda:
+- En pantalla ancha (web/escritorio), usa dos columnas: a la izquierda la portada con vista previa; a la derecha los campos. En móvil, una sola columna.
+- La portada: haz el bloque más compacto, con una vista previa de la imagen real en cuanto se pega un enlace válido. Muestra "Ver imagen" y "Quitar imagen" solo cuando haya un enlace escrito.
+- Tipo (Película / Serie / Videojuego) como botones segmentados o chips con su icono, igual que los filtros de la pantalla de inicio, en lugar de un desplegable.
+- Estado (Pendiente / Viendo-Jugando / Terminado) también como chips, no como desplegable.
+- Valoración con estrellas más grandes y claras, y un botón pequeño de "Quitar valoración" en lugar del texto "Sin valorar" con ese icono.
+- Quita el texto de ayuda técnico bajo el título ("Entre 1 y 60 caracteres, sin espacios en los extremos"). Mantén la validación y muestra el mensaje de error solo cuando el usuario se equivoque.
+- Mantén "Notas (opcional)" pero con mejor espaciado.
+- El botón "Guardar" debe estar siempre visible (fijo en la parte inferior de la pantalla), sin tener que hacer scroll.
+- Respeta el modo claro y oscuro, y la tipografía actual.
+
+Cuando termines: ejecuta flutter analyze y flutter test y arregla lo que falle. Después haz commit y push a master para que GitHub Actions vuelva a publicar la web y la APK, y dime cuándo puedo comprobarlo.
+
+RESULTADO TÉCNICO DE LA IA PARA R15 (no reflexión del alumno)
+- Paleta cálida centralizada en TemaApp con semilla #FF7A59, variantes claro y
+  oscuro, superficies, degradados, botones, iconos y logo derivados del tema.
+- Formulario compartido de alta y edición: dos columnas en ancho, una en móvil,
+  chips de tipo y estado, portada automática y acciones de imagen condicionales.
+- Estrellas interactivas de mayor tamaño y botón Quitar valoración sin icono.
+- Barra fija Guardar/Cancelar por encima del teclado; los avisos flotantes se
+  colocan por encima de la barra para no impedir los reintentos de guardado.
+- Se conserva el método de guardado, los controladores, identidad, fechas,
+  persistencia y validación del título. La validación de enlaces se reutiliza
+  con las mismas reglas para decidir cuándo mostrar la vista previa.
+- Análisis sin problemas y 38 pruebas pasadas. Comprobados contraste mínimo
+  4,5:1 de las parejas de texto examinadas, columnas, botón fijo con teclado,
+  vista previa, altas, edición y errores de almacenamiento existentes.
+- Revisión visual con renders de Flutter en móvil y escritorio, claro y oscuro.
+  Las imágenes de comprobación no se añaden a las capturas finales de docs/.
+- Se prepara el commit y push autorizados; la publicación se verificará en
+  GitHub Actions y mediante las direcciones públicas existentes.
+
 EJEMPLOS FICTICIOS DE PROMPTS — NO SON UN HISTORIAL REAL
 Los textos F01–F10 están escritos en primera persona para ilustrar peticiones
 pequeñas con contexto, objetivo, restricciones y explicación. No se utilizaron
