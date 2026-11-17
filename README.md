@@ -72,7 +72,7 @@ No se presentan como capturas de un móvil físico. [Registro completo](docs/cap
 Reconstrucción posterior con IA de las cuatro pantallas y sus rutas; no es un
 boceto inicial realizado personalmente sin IA. [Procedencia](docs/boceto.md).
 
-![Boceto documental con procedencia visible](docs/boceto.png)
+![Boceto de las pantallas y navegación](docs/boceto.png)
 
 ## Ejecutar y comprobar
 
@@ -132,5 +132,5 @@ Tras añadir capturas o revisar texto hay que volver a ejecutarlo. El ZIP incluy
 las capturas nuevas y el boceto documental de esta revisión.
 
 Quedan las reflexiones y respuestas propias de la bitácora y la revisión personal
-de comentarios. El boceto adjunto está identificado como IA y no acredita el boceto
+de comentarios. La procedencia de IA del boceto consta en docs/boceto.md; no acredita el boceto
 personal sin IA de la fase 0 del enunciado.

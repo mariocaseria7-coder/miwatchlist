@@ -17,7 +17,7 @@ Las imágenes anteriores permanecen apartadas en ../entrega/capturas-anteriores-
 ## Pendientes antes de presentar
 
 - [x] Generar capturas nuevas de la interfaz actual y enlazarlas en README.
-- [x] Incorporar el boceto de apoyo con autoría de IA visible.
+- [x] Incorporar el boceto de apoyo y documentar su procedencia en boceto.md.
 - [ ] Resolver el requisito de boceto personal sin IA: la reconstrucción adjunta
   no acredita esa actividad de fase 0. No atribuirle una procedencia distinta.
 - [ ] Completar revisión personal, aprendizajes y preguntas de cada fase.

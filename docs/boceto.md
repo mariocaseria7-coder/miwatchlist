@@ -8,7 +8,8 @@
 
 Esta figura se ha elaborado con IA a petición de Mario después de implementar la
 aplicación. Es una reconstrucción esquemática, no una captura de la app ni un dibujo
-personal realizado antes de programar. La imagen incluye esa identificación.
+personal realizado antes de programar. La imagen se presenta sin avisos de procedencia;
+esta explicación y la bitácora conservan la información de su elaboración.
 
 El enunciado pide un boceto de fase 0 sin IA. Este archivo sirve de apoyo para
 explicar el diseño, pero su existencia no acredita ese requisito. Si se incorpora

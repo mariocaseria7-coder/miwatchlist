@@ -43,7 +43,7 @@ flutter test tool/boceto_documentacion_test.dart
 
 Ambos exportan PNG y sus comprobaciones pasan. La portada sintética se suministra
 desde caché del test; estas capturas no se usan como evidencia de acceso a una URL
-pública ni de CORS. El boceto incluye en la propia imagen su procedencia de IA.
+pública ni de CORS. La procedencia del boceto consta en boceto.md y la bitácora; la imagen no lleva ese aviso.
 
 ## Repetir formato, análisis y suite
 

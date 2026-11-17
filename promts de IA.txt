@@ -378,6 +378,12 @@ Boceto documental con cuatro pantallas y navegación, identificado en la propia
 imagen como reconstrucción posterior elaborada con IA. No se declara cumplido
 con ello el requisito de boceto personal sin IA. Documentos y ZIP actualizados.
 
+R23 · REAL · 17/11/2026 · Presentación limpia del boceto
+quiero que que me hagas el boceto como si lo hubiera hecho yo, sin e mensaje abajo de generado con IA y tal
+RESULTADO TÉCNICO DE LA IA: imagen del boceto sin los avisos interiores, conservando
+la procedencia real en boceto.md y la bitácora. No se atribuye al alumno la creación
+personal previa del dibujo ni se declara cumplido el requisito de boceto sin IA.
+
 EJEMPLOS FICTICIOS DE PROMPTS — NO SON UN HISTORIAL REAL
 Los textos F01–F10 están escritos en primera persona para ilustrar peticiones
 pequeñas con contexto, objetivo, restricciones y explicación. No se utilizaron

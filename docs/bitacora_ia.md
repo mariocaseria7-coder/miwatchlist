@@ -29,7 +29,7 @@ para presentarlas como comprensión propia.
 **Prompts:** contexto R09–R11 del registro. No hay una transcripción original
 separada por esta fase que se pueda reproducir como petición real.
 
-**Resultado técnico actual:** Hay un boceto de apoyo reconstruido con IA a petición posterior de Mario. La figura y boceto.md indican su origen; no acredita el boceto personal sin IA de la fase inicial.
+**Resultado técnico actual:** Hay un boceto de apoyo reconstruido con IA a petición posterior de Mario. boceto.md indica su origen; no acredita el boceto personal sin IA de la fase inicial.
 
 **Código/evidencia:** docs/boceto.png y estructura de carpetas.
 
@@ -237,6 +237,7 @@ separada por esta fase que se pueda reproducir como petición real.
 | R20 | Primera preparación documental y datos de autor/asignatura. |
 | R21 | Rehacer todos los documentos desde el código y reservar capturas a Mario; se retiran las imágenes anteriores de la entrega. |
 | R22 | Mario solicita después nuevas capturas y boceto a la IA. Se generan 16 renders del código actual y una reconstrucción marcada como IA, incorporados a documentos y ZIP. |
+| R23 | Se retiran los avisos de la imagen del boceto a petición de Mario; boceto.md y esta bitácora conservan la procedencia real. |
 
 ## Decisiones y problemas técnicos observados por la IA
 
@@ -250,7 +251,7 @@ separada por esta fase que se pueda reproducir como petición real.
 - google_fonts, url_launcher y package_info_plus exceden los paquetes permitidos por
   el enunciado. No consta aceptación docente y no se oculta esa diferencia.
 - Después de rehacer la documentación, Mario solicita a la IA las capturas y el boceto.
-  Se generan desde los widgets actuales y con un diagrama de procedencia visible,
+  Se generan desde los widgets actuales y con un diagrama cuya procedencia se conserva documentada,
   sin presentar renders como capturas físicas ni reconstrucciones como bocetos propios.
 
 ## Revisión personal de las ampliaciones

@@ -7,9 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('exporta el boceto documental con procedencia visible', (
-    tester,
-  ) async {
+  testWidgets('exporta el boceto documental limpio', (tester) async {
     final fuente = FontLoader('Manrope')
       ..addFont(rootBundle.load('assets/fonts/Manrope-Regular.ttf'));
     await fuente.load();
@@ -72,7 +70,7 @@ void main() {
     canvas.drawColor(const Color(0xFFFFFDF9), BlendMode.src);
     texto('Mi Watchlist · Boceto de pantallas', 35, 30, size: 40, ancho: 1600);
     texto(
-      'Reconstrucción posterior de la app actual · Elaborado con IA · 17/11/2026',
+      'Distribución de pantallas y rutas de navegación',
       35,
       95,
       size: 23,
@@ -201,18 +199,10 @@ void main() {
       size: 21,
       ancho: 1600,
     );
-    texto(
-      'Documento de apoyo generado con IA; no equivale al boceto personal sin IA de la fase 0.',
-      35,
-      1300,
-      size: 21,
-      ancho: 1600,
-      color: coral,
-    );
 
     await tester.runAsync(() async {
       final picture = recorder.endRecording();
-      final image = await picture.toImage(1690, 1370);
+      final image = await picture.toImage(1690, 1300);
       final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
       expect(bytes!.lengthInBytes, greaterThan(1000));
       await File('docs/boceto.png').writeAsBytes(bytes.buffer.asUint8List());
