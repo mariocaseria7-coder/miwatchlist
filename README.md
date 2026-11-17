@@ -101,8 +101,9 @@ completa, independientemente de la búsqueda y el filtro.
 dañado producen una lista vacía. Un fallo de acceso ofrece reintento; un fallo de
 escritura conserva la colección anterior. No hay sincronización ni exportación.
 
-Dependencias funcionales: `shared_preferences`, `google_fonts` 8.2.1 y
-`url_launcher`. Manrope se incluye con su licencia en `assets/fonts/`, sin
+Dependencias funcionales: `shared_preferences`, `google_fonts` 8.2.1,
+`url_launcher` y `package_info_plus` (versión de la app en Acerca de).
+Manrope se incluye con su licencia en `assets/fonts/`, sin
 descargar fuentes al abrir la aplicación. Herramientas de desarrollo:
 `flutter_test` y `flutter_lints`. Los paquetes transitivos del almacenamiento se
 resuelven automáticamente y quedan fijados en `pubspec.lock`.

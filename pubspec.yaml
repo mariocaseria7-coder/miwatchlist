@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: 8.2.1 # La versión 9 usa un TextTheme ajeno al Material actual.
+  package_info_plus: ^10.2.2
   shared_preferences: ^2.5.6
   url_launcher: ^6.3.3
 

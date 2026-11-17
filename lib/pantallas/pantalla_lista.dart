@@ -9,6 +9,7 @@ import '../widgets/cabecera_coleccion.dart';
 import 'pantalla_formulario.dart';
 import 'pantalla_detalle.dart';
 import 'pantalla_estadisticas.dart';
+import 'pantalla_acerca.dart';
 
 /// Es la propietaria de la colección completa y coordina sus cambios.
 class PantallaLista extends StatefulWidget {
@@ -171,6 +172,14 @@ class _PantallaListaState extends State<PantallaLista> {
             ],
           ),
           actions: [
+            IconButton(
+              tooltip: 'Acerca de',
+              icon: const Icon(Icons.info_outline),
+              onPressed: () => Navigator.push<void>(
+                context,
+                MaterialPageRoute(builder: (_) => const PantallaAcerca()),
+              ),
+            ),
             IconButton(
               tooltip: oscuro ? 'Activar modo claro' : 'Activar modo oscuro',
               onPressed: widget.onCambiarTema,

@@ -214,6 +214,50 @@ RESULTADO TÉCNICO DE LA IA PARA R15 (no reflexión del alumno)
 - Se prepara el commit y push autorizados; la publicación se verificará en
   GitHub Actions y mediante las direcciones públicas existentes.
 
+R16 · REAL · 17/11/2026 · Pantalla Acerca de basada en funciones reales
+Quiero añadir a la app un apartado "Acerca de" que explique qué es la app, para qué sirve y qué funcionalidades tiene. Haz lo siguiente:
+
+1. Antes de escribir los textos, revisa el código de lib/ y haz una lista de las funcionalidades que existen de verdad (por ejemplo: añadir películas, series y videojuegos, estados, valoración con estrellas, notas, imagen de portada por enlace, filtros, búsqueda, orden, estadísticas, modo claro/oscuro, guardado local de datos, etc.). Describe SOLO lo que la app hace realmente. No inventes funciones.
+
+2. Acceso: añade un icono de información (Icons.info_outline) en la cabecera, junto al botón de modo claro/oscuro y el de estadísticas, con un tooltip "Acerca de". Debe funcionar igual en web y en móvil. Puede abrir una pantalla propia (preferible) o un diálogo grande.
+
+3. Contenido de la pantalla, en español, con un tono cercano y claro, organizado en secciones con títulos:
+   - Qué es: una o dos frases que expliquen que Mi Watchlist es una app para guardar y organizar películas, series y videojuegos pendientes, en curso o terminados.
+   - Para qué sirve: el problema que resuelve (tener todo lo que quieres ver o jugar en un solo sitio, ordenado por categorías y estado).
+   - Funcionalidades: una cuadrícula o lista de tarjetas con icono, título corto y una línea de descripción por cada funcionalidad real encontrada en el paso 1.
+   - Cómo se usa: 3 o 4 pasos cortos y numerados (añadir un elemento, cambiar su estado, valorarlo, filtrarlo o buscarlo).
+   - Tus datos: aclarar que los datos se guardan en el propio dispositivo y que no se sincronizan entre el móvil y el navegador.
+   - Disponible en: botones para "Descargar APK" y "Abrir la web" usando AppLinks y url_launcher (si ya estás en la web, puedes mostrar solo el de la APK).
+   - Sobre el proyecto: nombre de la app, versión (léela de pubspec.yaml con package_info_plus), y una línea indicando que es un proyecto realizado con Flutter. Deja un hueco claro, marcado con TODO, para que yo ponga mi nombre y la asignatura.
+
+4. Diseño: usa el mismo tema, color de acento y tipografía del resto de la app, con tarjetas redondeadas y buen espaciado. Que se vea bien en modo claro y oscuro, y que en pantalla ancha el contenido quede centrado con un ancho máximo (como el resto de pantallas), y en móvil sea una sola columna con scroll. Que tenga el botón de volver atrás.
+
+5. No cambies la lógica, el modelo de datos ni las otras pantallas. Si necesitas una dependencia nueva (package_info_plus), añádela y comprueba que funciona en web.
+
+Cuando termines: ejecuta flutter analyze y flutter test y arregla lo que falle. Después haz commit y push a master para que GitHub Actions vuelva a publicar la web y la APK, y avísame cuando pueda comprobarlo.
+
+RESULTADO TÉCNICO DE LA IA PARA R16 (no reflexión del alumno)
+- Revisión previa de lib/: alta, detalle y edición, borrado confirmado, estados,
+  estrellas, notas, portada por enlace con vista previa, categorías, orden A–Z,
+  búsqueda y filtros combinados, estadísticas, tema recordado y guardado local.
+  Los enlaces públicos permiten descargar la APK y abrir la web.
+- No se describen cuentas, sincronización, recomendaciones, listas compartidas,
+  exportación ni deshacer borrado: no están implementados.
+- Añadida PantallaAcerca con las siete secciones solicitadas, tarjetas,
+  cuatro pasos de uso, aclaración sobre datos locales y portadas con Internet.
+- Icono Icons.info_outline con tooltip Acerca de en la cabecera. La ruta vuelve
+  a la colección conservando datos, búsqueda y estado de la pantalla anterior.
+- Versión obtenida con package_info_plus, sin un número fijo en la pantalla;
+  si no está disponible se informa. TODO visibles para autor y asignatura.
+- URLs de AppLinks abiertas mediante EnlacesApp y url_launcher; en web se
+  oculta Abrir la web. Se mantiene coral, Manrope y los dos temas existentes.
+- Análisis limpio y 45 pruebas pasadas. Verificados navegación sin cambios de
+  datos, versión obtenida del plugin, enlaces y tamaños móvil y escritorio.
+- Revisión visual con renders de Flutter; no se añaden capturas a docs/.
+- Compilación web release correcta con la ruta /miwatchlist/ y la dependencia
+  package_info_plus incluida.
+- Se prepara el commit y push autorizados y se comprobará la publicación remota.
+
 EJEMPLOS FICTICIOS DE PROMPTS — NO SON UN HISTORIAL REAL
 Los textos F01–F10 están escritos en primera persona para ilustrar peticiones
 pequeñas con contexto, objetivo, restricciones y explicación. No se utilizaron
