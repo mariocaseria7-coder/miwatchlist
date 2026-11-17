@@ -9,7 +9,12 @@ import '../widgets/imagen_elemento.dart';
 
 /// Formulario compartido que devuelve una copia solo al guardar.
 class PantallaFormulario extends StatefulWidget {
-  const PantallaFormulario({super.key, this.inicial});
+  const PantallaFormulario({
+    super.key,
+    this.inicial,
+    this.tipoInicial = Tipo.pelicula,
+  });
+  final Tipo tipoInicial;
   final Elemento? inicial;
   @override
   State<PantallaFormulario> createState() => _PantallaFormularioState();
@@ -36,7 +41,7 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
     _imagen = TextEditingController(text: widget.inicial?.imagenUrl ?? '');
     _vistaPrevia = widget.inicial?.imagenUrl;
     _encuadre = widget.inicial?.encuadre;
-    _tipo = widget.inicial?.tipo ?? Tipo.pelicula;
+    _tipo = widget.inicial?.tipo ?? widget.tipoInicial;
     _estado = widget.inicial?.estado ?? Estado.pendiente;
     _valoracion = widget.inicial?.valoracion ?? 0;
     _favorito = widget.inicial?.favorito ?? false;

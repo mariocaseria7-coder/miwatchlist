@@ -4,6 +4,8 @@ import '../estilos/estilos_app.dart';
 
 import '../modelos/elemento.dart';
 import '../servicios/almacen.dart';
+import '../servicios/sugerencia.dart';
+import '../widgets/dialogo_sugerencia.dart';
 import '../widgets/tarjeta_elemento.dart';
 import '../widgets/cabecera_coleccion.dart';
 import 'pantalla_formulario.dart';
@@ -88,10 +90,12 @@ class _PantallaListaState extends State<PantallaLista> {
   }
 
   /// El formulario devuelve null cuando se cierra sin guardar.
-  Future<void> _anadir() async {
+  Future<void> _anadir({Tipo tipo = Tipo.pelicula}) async {
     final elemento = await Navigator.push<Elemento>(
       context,
-      MaterialPageRoute(builder: (context) => const PantallaFormulario()),
+      MaterialPageRoute(
+        builder: (context) => PantallaFormulario(tipoInicial: tipo),
+      ),
     );
     if (!mounted || elemento == null) return;
     await _guardar([..._elementos, elemento]);
@@ -120,6 +124,58 @@ class _PantallaListaState extends State<PantallaLista> {
             return borrado;
           },
         ),
+      ),
+    );
+  }
+
+  Future<void> _queVeoHoy() async {
+    final categoria = await showDialog<int>(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: const Text('Elige una categoría'),
+        children: [
+          for (final indice in [0, 1, 2, -1])
+            Builder(
+              builder: (context) {
+                final tipo = indice < 0 ? null : Tipo.values[indice];
+                final total = pendientesDe(_elementos, tipo).length;
+                return ListTile(
+                  key: ValueKey('sorteo-${tipo?.name ?? "cualquiera"}'),
+                  leading: Icon(
+                    tipo == null
+                        ? Icons.casino_outlined
+                        : EstilosApp.iconoTipo(tipo),
+                  ),
+                  title: Text(tipo?.categoria ?? 'Cualquiera'),
+                  subtitle: Text('$total pendientes'),
+                  textColor: total == 0
+                      ? Theme.of(context).colorScheme.onSurfaceVariant
+                      : null,
+                  iconColor: total == 0
+                      ? Theme.of(context).colorScheme.outline
+                      : Theme.of(context).colorScheme.primary,
+                  onTap: () => Navigator.pop(context, indice),
+                );
+              },
+            ),
+        ],
+      ),
+    );
+    if (!mounted || categoria == null) return;
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => DialogoSugerencia(
+        elementos: List.unmodifiable(_elementos),
+        tipo: categoria < 0 ? null : Tipo.values[categoria],
+        onAnadir: () => _anadir(
+          tipo: categoria < 0 ? Tipo.pelicula : Tipo.values[categoria],
+        ),
+        onDetalle: _abrirDetalle,
+        onEmpezar: (elemento) => _guardar([
+          for (final e in _elementos)
+            e.id == elemento.id ? e.copyWith(estado: Estado.enCurso) : e,
+        ]),
       ),
     );
   }
@@ -325,6 +381,15 @@ class _PantallaListaState extends State<PantallaLista> {
                                               setState(() => _categoria = tipo),
                                         ),
                                     ],
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: FilledButton.tonalIcon(
+                                      onPressed: ocupado ? null : _queVeoHoy,
+                                      icon: const Icon(Icons.casino_outlined),
+                                      label: const Text('¿Qué veo hoy?'),
+                                    ),
                                   ),
                                   const SizedBox(height: 20),
                                   TextField(

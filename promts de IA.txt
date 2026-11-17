@@ -326,6 +326,31 @@ RESULTADO TÉCNICO DE LA IA PARA R18 (no reflexión del alumno)
   Se prepara el commit y push y se comprobará la publicación autorizada.
 - No se ha probado en un móvil físico.
 
+R19 · REAL · 17/11/2026 · ¿Qué veo hoy? por categorías
+Resumen fiel de la petición: revisar modelo, tarjetas e inicio y añadir un botón
+¿Qué veo hoy? junto a categorías. Selector de Películas, Series, Videojuegos y
+Cualquiera con recuentos de pendientes y opciones vacías atenuadas. Elegir al azar
+solo pendientes de la categoría, mostrar portada con su encuadre, título y notas,
+y ofrecer Otra opción sin repetición inmediata, Ver detalle y Empezar para cambiar
+a Viendo/Jugando. Si está vacío, mensaje amable y botón para añadir. Mantener
+lógica existente, tema y tipografía y comprobar web/móvil. Añadir pruebas, ejecutar
+analyze y test, corregir fallos, hacer commit/push y avisar al publicarse.
+
+RESULTADO TÉCNICO DE LA IA PARA R19 (no reflexión del alumno)
+- Modelo y JSON sin cambios. Selección mediante Random de dart:math sobre todos
+  los pendientes, independiente de búsqueda, filtros de estado y favoritos.
+- Selector con recuentos reales; categorías sin pendientes atenuadas y accesibles
+  para mostrar el mensaje vacío y abrir alta con su tipo preseleccionado.
+- Diálogo adaptable, portada compartida con encuadre, notas de dos líneas,
+  Otra opción excluyendo el id anterior y botón deshabilitado si solo hay uno.
+- Ver detalle usa la ruta existente. Empezar guarda por id con copyWith, conserva
+  los demás campos, bloquea dobles pulsaciones y ofrece reintento si falla.
+- flutter analyze limpio y 66 pruebas pasadas. Cinco pruebas nuevas cubren
+  categorías y estados, lista vacía y candidato único, no repetición, recuentos,
+  ambos temas en móvil pequeño, error/reintento de guardado, alta y detalle.
+- Corregido el dimensionado intrínseco de la portada del diálogo en escritorio.
+- Se prepara commit/push y se verificará la publicación. Sin prueba en móvil físico.
+
 EJEMPLOS FICTICIOS DE PROMPTS — NO SON UN HISTORIAL REAL
 Los textos F01–F10 están escritos en primera persona para ilustrar peticiones
 pequeñas con contexto, objetivo, restricciones y explicación. No se utilizaron
