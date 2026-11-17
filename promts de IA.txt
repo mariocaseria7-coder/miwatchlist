@@ -351,6 +351,16 @@ RESULTADO TÉCNICO DE LA IA PARA R19 (no reflexión del alumno)
 - Corregido el dimensionado intrínseco de la portada del diálogo en escritorio.
 - Se prepara commit/push y se verificará la publicación. Sin prueba en móvil físico.
 
+R20 · REAL · 17/11/2026 · Documentación final
+Vale ya tenemos hecho todo el tema de programacion, ahora quiero que te encargues de hacer el tema de documentacion
+CONTEXTO: el alumno vuelve a facilitar enunciado.md.
+Aclaraciones reales: «Desarrollo de Interfaces» y «Mario Rodriguez es mi nombre y la asignatura es Desarrollo de Interfaces».
+RESULTADO TÉCNICO DE LA IA: revisión de requisitos e historial; documentación del
+código actual, manual de uso, memoria, estilos, bitácora técnica, preparación de
+defensa, capturas de widgets con datos aislados, APK debug y empaquetado.
+Se distinguen las evidencias técnicas de las reflexiones y boceto propios pendientes.
+Se declaran los paquetes adicionales y las ampliaciones respecto al enunciado.
+
 EJEMPLOS FICTICIOS DE PROMPTS — NO SON UN HISTORIAL REAL
 Los textos F01–F10 están escritos en primera persona para ilustrar peticiones
 pequeñas con contexto, objetivo, restricciones y explicación. No se utilizaron

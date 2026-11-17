@@ -24,14 +24,19 @@ def main():
     destino.mkdir(exist_ok=True)
     archivo = destino / 'mi-watchlist-proyecto.zip'
     excluir = {'.git', '.dart_tool', 'build', '.gradle', '.idea',
-               '.plugin_symlinks', 'ephemeral', '__pycache__', 'Pods'}
+               '.plugin_symlinks', 'ephemeral', '__pycache__', 'Pods',
+               '.pub-cache', '.pub', 'coverage', '.codex', '.agents'}
     with ZipFile(archivo, 'w', compression=ZIP_DEFLATED, compresslevel=6) as zip_file:
         for ruta in sorted(proyecto.rglob('*')):
             relativo = ruta.relative_to(proyecto)
             if any(parte in excluir for parte in relativo.parts):
                 continue
-            if (not ruta.is_file() or ruta.suffix in {'.iml', '.log', '.pyc'}
-                    or ruta.name in {'local.properties', '.flutter-plugins-dependencies'}):
+            if (not ruta.is_file() or ruta.suffix.lower() in {
+                    '.iml', '.log', '.pyc', '.jks', '.keystore', '.p12', '.pfx', '.pem', '.key'}
+                    or ruta.name.startswith(('.env', 'service-account'))
+                    or ruta.name in {'local.properties', 'key.properties', 'credentials.json',
+                                     'google-services.json', 'GoogleService-Info.plist',
+                                     '.flutter-plugins-dependencies'}):
                 continue
             zip_file.write(ruta, Path(proyecto.name) / relativo)
 

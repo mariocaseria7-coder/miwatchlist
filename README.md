@@ -1,228 +1,150 @@
 # Mi Watchlist
 
-Tu colección personal de películas, series y videojuegos. Añade lo que quieres
-ver o jugar, registra tu progreso, valora con estrellas y consulta estadísticas.
-Los datos se guardan en el dispositivo, sin cuentas. Las portadas opcionales se cargan desde el enlace que añadas.
+**Autor:** Mario Rodriguez · **Asignatura:** Desarrollo de Interfaces
+**Versión:** 1.0.0+1 · **Documentación:** 17 de noviembre de 2026
+**Versión del código documentada:** `20b87b4`.
 
-Proyecto educativo de Desarrollo de Interfaces. Implementado con Flutter, Dart,
-`StatefulWidget`, `setState` y navegación con `Navigator`.
+Mi Watchlist reúne películas, series y videojuegos pendientes, en curso y terminados.
+Permite registrar notas, valoraciones y favoritos y consultar estadísticas. La colección
+se guarda localmente; no hay cuentas ni sincronización entre Android y el navegador.
 
-El [plan por módulos](docs/plan_implementacion.md) organiza el trabajo de M00 a
-M08. La [guía de estilos](docs/estilos.md) explica cómo cambiar colores,
-tipografía, controles y medidas compartidas.
+- [Abrir la web](https://mariocaseria7-coder.github.io/miwatchlist/).
+- [Descargar APK release](https://github.com/mariocaseria7-coder/miwatchlist/releases/latest/download/app-release.apk).
+- [Repositorio](https://github.com/mariocaseria7-coder/miwatchlist).
 
-## Ejecutar
+## Documentación de la entrega
 
-Entorno utilizado: Flutter 3.47.9 y Dart 3.13.7. Ejecuta los comandos desde esta
-carpeta (`miwatchlist`), donde se encuentra `pubspec.yaml`.
+| Documento | Contenido |
+| --- | --- |
+| [Memoria técnica](docs/memoria.md) | Objetivos, arquitectura, modelo, requisitos y decisiones. |
+| [Manual de uso](docs/manual_usuario.md) | Instalación y recorrido de las funciones. |
+| [Bitácora de IA](docs/bitacora_ia.md) | Fases y registro técnico, con revisión personal identificada. |
+| [Prompts](promts%20de%20IA.txt) | Peticiones reales y ejemplos ficticios separados expresamente. |
+| [Validación](docs/validacion.md) | Comprobaciones y límites de las evidencias. |
+| [Estilos](docs/estilos.md) | Tema coral, Manrope y adaptación de pantallas. |
+| [Defensa](docs/defensa.md) | Guion de demostración y ejercicios de preparación. |
+| [Lista de entrega](docs/entrega.md) | Archivos, comandos y pendientes personales. |
+| [Plan original](docs/plan_implementacion.md) | Organización histórica de la construcción por módulos. |
+
+## Funciones actuales
+
+- Alta, detalle, edición reutilizada y borrado confirmado.
+- Título de 1 a 60 caracteres tras quitar espacios exteriores; estrellas de 0 a 5.
+- Colección agrupada por categoría y ordenada por título A–Z, sin distinguir mayúsculas.
+- Búsqueda, categoría, estado y favoritos combinables.
+- Corazón de favorito en tarjetas y un interruptor en el formulario.
+- Notas completas en detalle y edición y resumen de dos líneas en tarjetas.
+- Fecha automática al pasar a Terminado, modificable hasta hoy y borrada al reabrir.
+- Portada por enlace con encuadre manual, zoom y desplazamiento; marco común 16:9.
+- «¿Qué veo hoy?» sortea pendientes por categoría, permite otra opción, ver detalle o empezar.
+- Estadísticas de toda la colección, aunque haya filtros, con media solo de valorados.
+- Tema claro/oscuro recordado, tipografía Manrope incluida y pantalla Acerca de.
+
+## Capturas actuales
+
+Son **renders de los widgets reales mediante Flutter Test**, con ejemplos aislados.
+No son fotografías del móvil ni acreditan una instalación física. La app nueva empieza vacía.
+
+| Colección clara | Colección oscura | Formulario |
+| --- | --- | --- |
+| ![Colección clara](docs/capturas/lista.png) | ![Colección oscura](docs/capturas/lista-oscura.png) | ![Formulario](docs/capturas/formulario.png) |
+
+| Edición con fecha y favorito | Detalle | Estadísticas |
+| --- | --- | --- |
+| ![Edición](docs/capturas/edicion.png) | ![Detalle](docs/capturas/detalle.png) | ![Estadísticas](docs/capturas/estadisticas.png) |
+
+| Selector de categoría | Sugerencia pendiente | Estado vacío |
+| --- | --- | --- |
+| ![Categorías](docs/capturas/categorias-azar.png) | ![Sugerencia](docs/capturas/sugerencia.png) | ![Vacía](docs/capturas/vacia.png) |
+
+![Vista de escritorio](docs/capturas/escritorio.png)
+
+Capturas adicionales: [Acerca de](docs/capturas/acerca.png) y
+[formulario a 320 píxeles lógicos](docs/capturas/movil-pequeno.png).
+Se regeneran con `flutter test tool/capturas_documentacion_test.dart`.
+
+## Ejecutar el proyecto
+
+Entorno comprobado: **Flutter 3.47.9 estable y Dart 3.13.7**. Los comandos se ejecutan
+desde la carpeta que contiene este README y `pubspec.yaml`, no desde la carpeta exterior.
 
 ```bash
 flutter pub get
 flutter devices
-flutter run -d <id-del-dispositivo-android>
+flutter run -d chrome
 ```
 
-Para arrancar un emulador ya configurado:
+Para Android, activa depuración USB, conecta y autoriza el ordenador en el teléfono,
+y ejecuta `flutter run -d <id-del-movil>`. El id se obtiene con `flutter devices`.
+En Xiaomi puede ser necesario autorizar la instalación por USB y aceptar el aviso de
+instalación. `INSTALL_FAILED_USER_RESTRICTED` indica que el teléfono rechazó instalar.
+
+## Comprobar y compilar
 
 ```bash
-flutter emulators
-flutter emulators --launch <id-del-emulador>
-```
-
-Chrome puede servir de apoyo: `flutter run -d chrome`.
-
-## Qué puedes hacer
-
-- Crear, consultar, editar y borrar elementos con confirmación.
-- Validar títulos de 1 a 60 caracteres después de eliminar espacios exteriores.
-- Distinguir película, serie y videojuego; registrar pendiente, en curso o terminado.
-- Valorar de 1 a 5 estrellas o quitar la valoración (0 = sin valorar).
-- Buscar por título sin distinguir mayúsculas y combinar la búsqueda con el filtro.
-- Consultar recuentos por estado, media de valorados y tipos más frecuentes.
-- Cerrar y volver a abrir conservando la colección.
-
-Cancelar el formulario no modifica los datos. La edición conserva identidad,
-fecha de alta y posición. Los títulos pueden repetirse. Los ejemplos de las
-capturas se crearon durante las pruebas; una instalación nueva empieza vacía.
-
-## Capturas de Android
-
-| Lista | Formulario |
-| --- | --- |
-| <img src="docs/capturas/lista.png" width="260" alt="Colección con tres elementos"> | <img src="docs/capturas/formulario.png" width="260" alt="Formulario de alta con título, estado, estrellas y notas"> |
-
-| Detalle | Estadísticas |
-| --- | --- |
-| <img src="docs/capturas/detalle.png" width="260" alt="Detalle de un elemento"> | <img src="docs/capturas/estadisticas.png" width="260" alt="Resumen de toda la colección"> |
-
-También se incluye la [captura del estado vacío](docs/capturas/vacia.png),
-conservada de la validación inicial. Las cuatro pantallas anteriores muestran
-el tema actual.
-
-## Organización
-
-```text
-lib/
-  main.dart
-  estilos/
-    tema_app.dart
-    estilos_app.dart
-  modelos/elemento.dart
-  servicios/almacen.dart
-  pantallas/
-    pantalla_lista.dart
-    pantalla_formulario.dart
-    pantalla_detalle.dart
-    pantalla_estadisticas.dart
-  widgets/
-    tarjeta_elemento.dart
-    selector_estrellas.dart
-test/
-  elemento_test.dart
-  formulario_test.dart
-  almacen_test.dart
-  estadisticas_test.dart
-  lista_test.dart
-docs/
-  bitacora_ia.md
-  defensa.md
-  validacion.md
-  capturas/
-```
-
-`PantallaLista` mantiene la colección completa y solicita los guardados a
-`Almacen`. El formulario recibe un elemento opcional y devuelve un resultado al
-guardar. El detalle solicita cambios mediante callbacks y solo los muestra tras
-guardarlos correctamente. Las estadísticas reciben una copia de la colección
-completa, independientemente de la búsqueda y el filtro.
-
-`Almacen` utiliza `SharedPreferencesAsync`: un único String JSON con clave
-`watchlist`, enums por nombre y fechas ISO 8601. Los datos ausentes o el JSON
-dañado producen una lista vacía. Un fallo de acceso ofrece reintento; un fallo de
-escritura conserva la colección anterior. No hay sincronización ni exportación.
-
-Dependencias funcionales: `shared_preferences`, `google_fonts` 8.2.1,
-`url_launcher` y `package_info_plus` (versión de la app en Acerca de).
-Manrope se incluye con su licencia en `assets/fonts/`, sin
-descargar fuentes al abrir la aplicación. Herramientas de desarrollo:
-`flutter_test` y `flutter_lints`. Los paquetes transitivos del almacenamiento se
-resuelven automáticamente y quedan fijados en `pubspec.lock`.
-
-## Web y APK públicas
-
-- [Abrir Mi Watchlist en la web](https://mariocaseria7-coder.github.io/miwatchlist/).
-- [Descargar la última APK](https://github.com/mariocaseria7-coder/miwatchlist/releases/latest/download/app-release.apk).
-
-El workflow `.github/workflows/publish.yml` publica ambas versiones con cada push
-a `master`, o desde **Actions → Publicar web y APK → Run workflow**. Comprueba
-formato, análisis y pruebas antes de compilar. Pages debe usar **GitHub Actions**
-como origen. La APK se reemplaza en la Release `latest` y la web usa la ruta
-`/miwatchlist/`. Las URLs se mantienen en `lib/config/app_links.dart`.
-El workflow fija Flutter estable 3.47.9 para reproducir el entorno verificado.
-
-La colección se agrupa por tipo y se ordena por título; categoría, estado y
-búsqueda se pueden combinar. El botón de tema conserva la preferencia entre
-arranques. Los datos de Android y del navegador siguen siendo independientes.
-
-La APK release conserva la firma de desarrollo configurada para este proyecto
-educativo. No es una firma de producción y puede cambiar entre ejecuciones del
-servidor de compilación; no se guarda ningún keystore en el repositorio.
-
-## Pruebas y compilación
-
-```bash
-dart format lib test
+dart format --output=none --set-exit-if-changed lib test
 flutter analyze
 flutter test
 flutter build apk --debug
 ```
 
-En el equipo utilizado Windows bloquea `flutter_tester.exe` mediante su política
-de control de aplicaciones. Las 19 pruebas se han ejecutado en Chrome, con una
-adaptación local para servir CanvasKit por un fallo de rutas del runner en
-Windows. Los detalles y las comprobaciones Android están en
-[docs/validacion.md](docs/validacion.md).
-
-El APK generado está en `build/app/outputs/flutter-apk/app-debug.apk`. Para la
-entrega se copia a `entrega/mi-watchlist-debug.apk`, que se conserva al excluir
-`build/`. Se trata de una compilación de depuración.
-
-Para copiar el APK y volver a crear el ZIP después de completar tus documentos:
+La suite habitual contiene **66 pruebas** en esta revisión; no incluye el generador
+de capturas ni las tres pruebas exclusivas de Chrome. Para las de Chrome:
 
 ```bash
-python tool/empaquetar.py
+python tool/servidor_portadas_prueba.py
 ```
 
-El ZIP se guarda en `../entrega/mi-watchlist-proyecto.zip` e incluye el APK. Excluye
-caches, datos locales del entorno y la carpeta `build`.
-
-Si `flutter pub get` solicita enlaces simbólicos en Windows al preparar las
-plataformas de escritorio, puedes omitir esas plataformas solo para el proceso
-actual de PowerShell al trabajar con Android:
-
-```powershell
-$env:FLUTTER_WINDOWS = 'false'
-$env:FLUTTER_LINUX = 'false'
-flutter pub get
-```
-
-No se ha cambiado la configuración global de Flutter ni la seguridad de Windows.
-
-## Requisitos del enunciado
-
-| Requisitos | Implementación |
-| --- | --- |
-| R1–R2 | Lista con tarjetas y estado vacío con botón de alta. |
-| R3–R4 | FAB y formulario validado. |
-| R5–R7 | Detalle, edición reutilizada y borrado confirmado con aviso. |
-| R8–R9 | Filtros por estado y búsqueda combinada. |
-| R10 | Persistencia JSON local y carga inicial con indicador. |
-| R11 | Total, barras por estado, media sin ceros y tipos empatados. |
-| R12 | Tarjeta y selector de estrellas en archivos independientes. |
-| R13 | Tema propio con ColorScheme.fromSeed. |
-
-## Antes de entregar al profesor
-
-El código y sus comentarios iniciales los ha generado IA. Quedan tareas que el
-enunciado exige realizar personalmente:
-
-- Dibujar las cuatro pantallas **sin IA** y guardar `docs/boceto.png`.
-- Comprender cada clase y reescribir sus comentarios `///` con tus palabras.
-- Completar las reflexiones y preguntas de la [bitácora](docs/bitacora_ia.md) sin IA.
-- Ensayar la [defensa individual](docs/defensa.md).
-
-La bitácora documenta la intervención real de IA y deja las respuestas personales
-pendientes. Las ampliaciones opcionales no forman parte de esta versión.
-
-## Imágenes para películas, series y videojuegos
-
-El apartado **Imagen de portada** aparece siempre al crear o editar un elemento,
-sea película, serie o videojuego.
-Pega un enlace directo a una imagen (preferentemente HTTPS): la vista previa
-aparece al cargar. Arrastra para encuadrar y usa el pellizco, la rueda del ratón
-o el deslizador para ampliar entre 1× y 5×. **Restablecer** centra la imagen con
-zoom 1. Puedes quitarla o sustituirla al editar; cambiar el enlace reinicia el
-encuadre. Guardar conserva el enlace y el encuadre; cancelar descarta los cambios.
-
-La vista previa, las tarjetas y el detalle comparten un marco 16:9 y el mismo
-encuadre relativo al cambiar el tamaño de pantalla. Solo se guardan el enlace,
-zoom y desplazamientos normalizados; no se recorta ni se guarda una copia de la
-imagen. Necesita Internet y, en web, que el servidor permita CORS y HTTPS. Si no
-carga, aparece la cabecera de reserva sin editor. Los datos antiguos, sin encuadre,
-se muestran centrados con zoom 1.
-La selección desde galería no está incluida: esta versión mantiene los paquetes
-permitidos del enunciado.
-
-Las capturas anteriores documentan la revisión previa; los elementos con imagen tienen
-una cabecera visual con portada o degradado.
-
-Para repetir las pruebas de ratón, rueda, pellizco y CORS en Chrome, inicia
-`python tool/servidor_portadas_prueba.py` en una terminal y ejecuta en otra:
+En otra terminal:
 
 ```bash
 flutter test --platform chrome test/encuadre_web_test.dart
 ```
 
-El servidor usa únicamente una imagen sintética de pruebas en localhost. Las
-pruebas verifican CORS permitido, CORS bloqueado y respuesta 404 sin desactivar
-la seguridad de Chrome. GitHub Actions también ejecuta esta comprobación.
+El servidor sirve únicamente una imagen sintética en localhost. Se prueban gestos,
+CORS permitido, CORS bloqueado y un 404 sin desactivar la seguridad del navegador.
+El fallo histórico del runner Windows y la verificación actual se distinguen en
+[validacion.md](docs/validacion.md).
+
+Para compilar web en la ruta pública:
+
+```bash
+flutter build web --release --base-href /miwatchlist/ --no-web-resources-cdn
+```
+
+GitHub Actions repite formato, análisis, pruebas habituales y Chrome, compila web/APK
+y publica con cada push a `master`. Pages usa GitHub Actions como origen; la Release
+`latest` reemplaza el APK. Las direcciones están en `lib/config/app_links.dart`.
+La APK release usa firma de desarrollo: no es distribución de producción ni se promete
+que la firma se conserve entre runners. El ZIP local incluye un **APK debug** diferente.
+
+## Dependencias y alcance académico
+
+| Paquete | Uso |
+| --- | --- |
+| `shared_preferences` | Colección JSON y preferencia de tema locales. |
+| `google_fonts` 8.2.1 | Estilos Manrope; archivos y licencia incluidos en assets/fonts. |
+| `url_launcher` | Abrir web y descarga de APK en el navegador. |
+| `package_info_plus` | Versión real en Acerca de, también compatible con web. |
+| `flutter_test`, `flutter_lints` | Pruebas y análisis durante desarrollo. |
+
+**Diferencia con el enunciado:** solo permite `shared_preferences` y opcionalmente
+`intl`. Los tres paquetes funcionales adicionales requieren criterio del profesor.
+También se han incorporado más ampliaciones que el máximo de dos propuesto. Se
+documenta lo implementado; no se declara una excepción académica que no consta.
+El estado sigue usando `StatefulWidget`, `setState` y `Navigator`, sin gestores externos.
+
+## Preparar el ZIP
+
+```bash
+flutter build apk --debug
+python tool/empaquetar.py
+```
+
+El script copia el APK a `entrega/mi-watchlist-debug.apk`, calcula su SHA-256 y crea
+`../entrega/mi-watchlist-proyecto.zip` sin `build`, caches ni credenciales locales.
+El repositorio o la web pública también permiten revisar el proyecto según el enunciado.
+
+Antes de considerar completa la entrega quedan el boceto propio `docs/boceto.png`,
+las reflexiones y respuestas personales de la bitácora, los comentarios propios y
+el ensayo de defensa. Estos pendientes se detallan en [entrega.md](docs/entrega.md).

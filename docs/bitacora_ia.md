@@ -1,13 +1,32 @@
-# Bitácora de IA — Mi Watchlist
+# Bitácora de IA · Mi Watchlist
 
-Este registro inicial lo ha redactado Codex. No sustituye la reflexión del alumno.
-La implementación se solicitó con el prompt «PLEASE IMPLEMENT THIS PLAN:» seguido
-del plan completo de la conversación. El enunciado original pide peticiones por
-fases: esta ejecución conjunta debe declararse y revisarse con el profesor.
+**Mario Rodriguez · Desarrollo de Interfaces**
+Revisión documental: 17/11/2026. Herramienta utilizada: Codex, de OpenAI.
 
-No se atribuyen al alumno comentarios, respuestas ni revisiones que no ha hecho.
-Los comentarios `///` del código fueron generados por IA y deben revisarse y
-reescribirse personalmente tras comprenderlos.
+Esta bitácora reúne hechos técnicos del proyecto y del historial disponible. La
+redacción la ha preparado IA. No se atribuyen al alumno aprendizajes, revisiones,
+detección personal de errores ni respuestas de comprensión que no constan.
+
+El registro original aludía a una petición conjunta «PLEASE IMPLEMENT THIS PLAN:».
+No está transcrita en el archivo actual de prompts; se conserva esa referencia
+como antecedente documental, no como cita original verificada. Los commits por
+fase acreditan cambios técnicos, no sesiones de clase ni autoría o comprensión.
+El archivo [promts de IA.txt](../promts%20de%20IA.txt) distingue peticiones reales,
+resúmenes de registros y ejemplos F01–F10 ficticios. Estos últimos no se usaron
+como prompts históricos y no se presentan como evidencia de trabajo por fases.
+
+## Cómo completar los apartados personales
+
+En cada fase, el alumno debe indicar qué aceptó tras revisarlo, qué modificó o
+descartó realmente y por qué, qué errores identificó personalmente y qué aprendió.
+Si no hubo una modificación o no recuerda un prompt, debe decirlo. Las preguntas
+se conservan sin respuestas para completarlas por cuenta propia. El boceto pedido
+sin IA y los comentarios propios no los sustituye esta documentación.
+
+## Registro original de fases · 12/11/2026
+
+Las fases siguientes describen la versión inicial; las ampliaciones del 17/11 se
+registran más abajo. Las cifras y limitaciones antiguas no describen la revisión actual.
 
 ## Fase 0 · Preparación y boceto
 
@@ -163,3 +182,64 @@ el icono de reserva si falta la imagen o falla su carga.
 **Ampliación posterior:** el usuario solicita imágenes también para películas y
 series al crear y editar. Se elimina la restricción por tipo, se conserva el enlace
 al cambiar de categoría y se reutiliza un componente de portada común.
+
+
+## Revisión documental de las fases iniciales
+
+| Fase | Commit del historial | Aclaración para la entrega |
+| --- | --- | --- |
+| 0 | 140eda1 | Preparación técnica; boceto propio no disponible. |
+| 1 | 9888ddf | Modelo y JSON; actualmente incorpora campos opcionales adicionales. |
+| 2 | a1f8684 | Tarjetas y estrellas; la versión final usa cuadrícula adaptable. |
+| 3 | a6dce96 | Formulario; ahora usa chips, columnas adaptables y pie fijo. |
+| 4 | cb20d75 | Detalle, edición y confirmación de borrado. |
+| 5 | 2765f51 | Búsqueda/filtro; ampliados con categoría y favoritos. |
+| 6 | 9ebfebf | Persistencia con escritura antes de confirmar el cambio. |
+| 7 | 80ba0a4 | Tema y estadísticas; el morado inicial fue sustituido por coral. |
+| 8 | d0187d5 | Primera validación y documentación; se actualizan en esta revisión. |
+
+## Revisiones posteriores · 16–17/11/2026
+
+Los textos íntegros disponibles o resúmenes identificados están en el archivo de
+prompts. Esta tabla enlaza su identificador; no convierte los ejemplos ficticios
+en peticiones reales.
+
+| Prompts reales | Petición y resultado técnico | Comprobación registrada |
+| --- | --- | --- |
+| R01–R08 | Ayuda para ejecutar en Xiaomi/VS Code. La compilación funcionaba, pero Android rechazaba instalar por restricción del usuario. | Registros de terminal; no acreditan instalación física posterior. |
+| R09–R11 | Revisión del enunciado y programación antes de documentos. Se mantuvo la base existente y se separaron los ejemplos ficticios solicitados. | 26 pruebas y APK debug en esa revisión. |
+| R12–R14 | Rediseño, Manrope, tema guardado, categorías A–Z y publicación web/APK. | Workflow de publicación; ajuste para fijar Flutter 3.47.9. |
+| R15 | Coral y formulario adaptable con chips y guardado fijo. | Análisis, pruebas y revisión de renders de interfaz. |
+| R16 | Acerca de con funciones verificadas y versión obtenida mediante plugin. | 45 pruebas en esa revisión. |
+| R17 | Encuadre manual, modelo compatible y geometría compartida. | 55 pruebas habituales y 3 Chrome en esa revisión. |
+| R18 | Favoritos, fecha de terminado y notas en tarjetas. | 61 pruebas habituales y publicación correcta. |
+| R19 | Sorteo de pendientes por categoría y acciones de detalle/empezar/añadir. | 66 pruebas habituales y publicación del commit 20b87b4. |
+| R20 | Preparar documentación, bitácora y capturas; autor Mario Rodriguez y asignatura Desarrollo de Interfaces. | README y documentos actualizados, capturas reproducibles y APK debug regenerado. |
+
+### Decisiones y errores técnicos observados por la IA
+
+- Se mantuvieron StatefulWidget/setState y Navigator en lugar de incorporar un gestor
+  de estado. La lista sigue siendo propietaria de la colección completa.
+- Se añadieron google_fonts, url_launcher y package_info_plus para ampliaciones.
+  Son una desviación de la lista cerrada del enunciado; no consta autorización docente.
+- Fijar la versión de Flutter evitó cambios incompatibles con el código verificado.
+- El runner de Chrome de Windows requería suministrar CanvasKit desde el SDK local;
+  las pruebas de CORS se ejecutaron sin desactivar la seguridad del navegador.
+- El encuadre comparte cálculo y límites para no dejar huecos ni depender del tamaño.
+- Los datos antiguos mantienen defaults; no se inventó una fecha histórica de terminado.
+- En el diálogo de sugerencia se corrigió el cálculo de dimensiones de la portada
+  y se ajustaron las pruebas para desplazar controles fuera de pantalla antes de pulsar.
+- Al actualizar documentos se detectaron afirmaciones obsoletas: tema morado,
+  fuente del sistema, 19 pruebas y ausencia de ampliaciones. Se sustituyen por la
+  descripción de la versión real, sin borrar los registros históricos de validación.
+
+### Revisión personal de las ampliaciones · completar por Mario
+
+**Acepté tras revisar:** pendiente de tu revisión real.
+**Modifiqué y por qué:** pendiente; no declarar cambios no realizados.
+**Descarté y por qué:** pendiente; indicar ninguno si corresponde.
+**Errores que detecté personalmente:** pendiente; distinguirlos de los detectados por IA.
+**Qué he aprendido (2–3 líneas propias por bloque):** pendiente.
+
+La lista personal de comprobación anterior sigue abierta. Esta bitácora técnica
+está preparada para revisión, pero no sustituye esas aportaciones individuales.

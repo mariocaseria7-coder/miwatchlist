@@ -1,4 +1,42 @@
-# Validación técnica — 12 de noviembre de 2026
+# Validación técnica · revisión documental del 17/11/2026
+
+**Mario Rodriguez · Desarrollo de Interfaces**
+Código funcional de referencia: 20b87b4 · Flutter 3.47.9 / Dart 3.13.7.
+
+## Evidencias de la versión actual
+
+- La revisión funcional del 17/11 pasó formato, flutter analyze y **66 pruebas**
+  habituales; el workflow de 20b87b4 completó también las tres pruebas Chrome de
+  gestos y CORS, las compilaciones web/release y el despliegue de Pages.
+- Durante la documentación se recompiló `flutter build apk --debug --no-pub`
+  correctamente para entregar la versión actual, no una APK de la revisión inicial.
+- Las doce capturas de docs/capturas se regeneran con
+  `flutter test tool/capturas_documentacion_test.dart`. Son imágenes del renderizador
+  de Flutter con datos de ejemplo aislados y las fuentes de texto/iconos cargadas;
+  no son fotos del Xiaomi ni una nueva validación de persistencia física.
+- El generador comprueba que no se produzcan excepciones y representa lista clara
+  y oscura, escritorio, alta, edición, detalle, estadísticas, vacío, selección de
+  categoría, sugerencia, Acerca de y formulario de 320 píxeles lógicos.
+- Se revisan visualmente las capturas y se comprueban enlaces locales de Markdown.
+  El empaquetado verifica integridad y contenido del ZIP y el SHA-256 del APK.
+- No se cambia código de lib/ en esta fase. El generador y el empaquetado son
+  herramientas auxiliares; la aplicación conserva el comportamiento publicado.
+
+La comprobación final de esta fase volvió a pasar flutter analyze sin incidencias,
+las 66 pruebas habituales y el generador de capturas (una prueba adicional).
+
+No se certifica una prueba nueva en móvil físico ni la comprensión personal del
+código. La bitácora identifica las aportaciones pendientes del alumno.
+
+## Registro histórico · no describe las cifras actuales
+
+Se conserva a continuación la validación del 12/11 para no reescribir la historia.
+El bloqueo nativo de Windows y las cifras de 19/26 pruebas pertenecen a esas
+revisiones. En las últimas revisiones sí han funcionado las 66 pruebas habituales
+con el ejecutable de Flutter Test; no debe mantenerse el bloqueo antiguo como
+una limitación vigente para todos los comandos.
+
+## Validación inicial — 12 de noviembre de 2026
 
 Registro de comprobaciones efectuadas por Codex. No sustituye la revisión ni la
 defensa del alumno.

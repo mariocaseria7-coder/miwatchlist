@@ -1,4 +1,9 @@
-# Plan de implementación por módulos
+# Plan de implementación por módulos · registro de la base inicial
+
+Este documento conserva el alcance inicial M00–M08. La descripción vigente de
+funciones, dependencias y ampliaciones está en [memoria.md](memoria.md).
+Los límites indicados al final eran los objetivos iniciales, no una declaración
+de cumplimiento de la versión ampliada actual.
 
 Cada módulo tiene una responsabilidad, unos contratos y una comprobación de cierre.
 La aplicación ya tiene la base funcional implementada: este documento organiza su

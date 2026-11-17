@@ -1,62 +1,58 @@
 # Estilos de Mi Watchlist
 
-La identidad visual se configura con el tema de Flutter. Las pantallas consumen
-ese tema y las medidas compartidas, sin dependencias de diseño adicionales.
+Mario Rodriguez · Desarrollo de Interfaces · Revisión 17/11/2026.
 
-## Dónde cambiar cada cosa
+## Tema y tipografía
 
-| Archivo | Responsabilidad |
+`lib/estilos/tema_app.dart` define ThemeData, Material 3 y ColorScheme.fromSeed.
+La semilla es coral #FF7A59. El primario claro se oscurece a #AD3D25 para mantener
+legibilidad; el oscuro usa la semilla sobre superficies cálidas oscuras. Los textos
+usan sus roles onSurface, onPrimary y onPrimaryContainer. Los errores usan error.
+No se usa una paleta morada en la versión actual.
+
+Manrope se configura con google_fonts 8.2.1 y se incluye en assets/fonts, con licencia
+OFL. La descarga de fuentes en ejecución está desactivada. Los tamaños parten de
+los estilos headlineMedium, titleLarge, titleMedium y bodyMedium del tema.
+
+`main.dart` aplica claro y oscuro en MaterialApp. La elección se carga y guarda
+como temaOscuro en preferencias. Los controles heredan colores y estados del tema.
+
+## Medidas y adaptación
+
+| Valor | Definición actual |
 | --- | --- |
-| `lib/estilos/tema_app.dart` | Paleta, tipografía y estilos de controles Material. |
-| `lib/estilos/estilos_app.dart` | Márgenes, anchos, paneles y textos compartidos. |
-| `lib/main.dart` | Aplicar `TemaApp.claro` a toda la aplicación. |
+| Margen de pantalla | 24 píxeles lógicos. |
+| Margen compartido de tarjeta | 16; la tarjeta actual usa padding propio de 18. |
+| Ancho máximo de colección | 1160. |
+| Ancho máximo de contenido auxiliar | 600. |
+| Radio de panel compartido | 24. |
+| Marco de portada | 16:9. |
+| Formulario ancho | Dos columnas desde 860; una en móvil. |
 
-## Identidad visual
+Las medidas están en estilos_app.dart. La cuadrícula de colección cambia entre
+una, dos y tres columnas según el ancho. La altura de cada tarjeta suma su portada
+proporcional y el espacio de texto; aumenta con el escalado del texto. Los botones
+de Guardar y Cancelar permanecen en el pie del formulario, con ajuste al teclado.
 
-- **Paleta:** morado `#7155D9` como semilla de `ColorScheme.fromSeed`.
-- **Superficies:** fondo `surface`, campos `surfaceContainerLowest` y paneles
-  destacados `primaryContainer` con texto `onPrimaryContainer`.
-- **Tipografía:** títulos de pantalla con `headlineMedium`, secciones con
-  `titleLarge`, nombres con `titleMedium` y textos auxiliares con `bodyMedium`.
-  Se utiliza la fuente del sistema y se respeta su escalado.
-- **Controles:** campos y botones con radio 14; botones de al menos 48 de alto;
-  tarjetas con radio 20, chips con radio 12 y paneles con radio 24.
-- **Avisos:** SnackBar flotante. Las acciones destructivas utilizan el color
-  semántico `error` del tema.
+## Componentes
 
-Los tamaños se expresan en píxeles lógicos de Flutter. Los controles mantienen
-sus estados nativos de foco, selección, error y desactivación.
+Las tarjetas comparten portada, tipo, título y valoración. El corazón usa una
+transición de escala con AnimatedSwitcher; es independiente de las estrellas.
+Las notas tienen máximo dos líneas y la fecha de terminado es secundaria.
 
-## Uso en las pantallas
+ImagenElemento comparte la geometría de la portada con el editor y el diálogo
+aleatorio. El degradado de reserva usa primaryContainer y surfaceContainerLow.
+Los paneles destacados combinan primaryContainer y secondaryContainer. Las
+acciones destructivas conservan el color semántico de error.
 
-```dart
-import '../estilos/estilos_app.dart';
+Para modificar la paleta se revisan la semilla y sus ajustes de contraste en
+TemaApp; no basta cambiar la semilla si se quieren alterar también los valores
+copyWith explícitos. No hace falta repartir colores por las pantallas.
 
-Container(
-  padding: EstilosApp.margenPantalla,
-  decoration: EstilosApp.panelDestacado(context),
-  child: Text(
-    'Mi colección',
-    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-      color: Theme.of(context).colorScheme.onPrimaryContainer,
-    ),
-  ),
-)
-```
+## Evidencias
 
-`margenPantalla` comparte el margen de 24 y `margenTarjeta` el de 16.
-`anchoContenido` limita formularios, detalles y estadísticas a 600;
-`anchoColeccion` limita la lista a 760. Son máximos: la interfaz se adapta
-al ancho disponible en móviles.
-
-Para cambiar el color general, editar `TemaApp.colorSemilla`. Para retocar todos
-los campos o botones, modificar su tema de componente en `TemaApp.claro`.
-Para cambiar los paneles de detalle y estadísticas a la vez, editar
-`EstilosApp.panelDestacado`.
-
-Los estilos particulares de una sola sección pueden permanecer en su widget.
-La lógica de formularios, navegación y almacenamiento continúa en sus módulos.
-
-Las tarjetas de videojuegos incorporan una portada horizontal y una cabecera
-con degradado cuando no hay imagen. Los paneles destacados combinan
-primaryContainer y secondaryContainer; las tarjetas usan una sombra suave.
+Las pruebas formulario_diseno_test.dart comprueban combinaciones de contraste,
+formulario ancho/estrecho y teclado; diseno_test.dart cubre controles de cabecera
+y recuerdo del tema. mejoras_coleccion_test.dart verifica tarjetas con notas y fecha
+en ambos modos. sugerencia_test.dart verifica el diálogo en móvil pequeño y ambos
+modos. Las capturas del README son renders actuales con datos de ejemplo.
