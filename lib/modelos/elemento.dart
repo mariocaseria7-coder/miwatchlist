@@ -29,11 +29,14 @@ class Elemento {
     required this.tipo,
     required this.estado,
     this.valoracion = 0,
+    this.favorito = false,
+    DateTime? fechaTerminado,
     this.notas,
     this.imagenUrl,
     Encuadre? encuadre,
     required this.fechaAlta,
   }) : titulo = titulo.trim(),
+       fechaTerminado = estado == Estado.terminado ? fechaTerminado : null,
        encuadre = imagenUrl == null || imagenUrl.trim().isEmpty
            ? null
            : encuadre {
@@ -54,6 +57,8 @@ class Elemento {
   final Tipo tipo;
   final Estado estado;
   final int valoracion;
+  final bool favorito;
+  final DateTime? fechaTerminado;
   final String? notas;
   final String? imagenUrl;
   final Encuadre? encuadre;
@@ -70,6 +75,8 @@ class Elemento {
     'tipo': tipo.name,
     'estado': estado.name,
     'valoracion': valoracion,
+    'favorito': favorito,
+    'fechaTerminado': fechaTerminado?.toIso8601String(),
     'notas': notas,
     'imagenUrl': imagenUrl,
     if (encuadre != null) 'encuadre': encuadre!.toJson(),
@@ -83,6 +90,10 @@ class Elemento {
     tipo: Tipo.values.byName(json['tipo'] as String),
     estado: Estado.values.byName(json['estado'] as String),
     valoracion: json['valoracion'] as int,
+    favorito: json['favorito'] as bool? ?? false,
+    fechaTerminado: json['fechaTerminado'] == null
+        ? null
+        : DateTime.parse(json['fechaTerminado'] as String),
     notas: json['notas'] as String?,
     imagenUrl: json['imagenUrl'] as String?,
     encuadre: json['encuadre'] == null
@@ -90,6 +101,29 @@ class Elemento {
         : Encuadre.fromJson(json['encuadre'] as Map<String, dynamic>),
     fechaAlta: DateTime.parse(json['fechaAlta'] as String),
   );
+
+  static DateTime hoy() {
+    final ahora = DateTime.now();
+    return DateTime(ahora.year, ahora.month, ahora.day);
+  }
+
+  static String fechaEnEspanol(DateTime fecha) {
+    const meses = [
+      'ene',
+      'feb',
+      'mar',
+      'abr',
+      'may',
+      'jun',
+      'jul',
+      'ago',
+      'sep',
+      'oct',
+      'nov',
+      'dic',
+    ];
+    return '${fecha.day} ${meses[fecha.month - 1]} ${fecha.year}';
+  }
 
   static const _sinCambio = Object();
 
@@ -99,6 +133,8 @@ class Elemento {
     Tipo? tipo,
     Estado? estado,
     int? valoracion,
+    bool? favorito,
+    Object? fechaTerminado = _sinCambio,
     Object? notas = _sinCambio,
     Object? imagenUrl = _sinCambio,
     Object? encuadre = _sinCambio,
@@ -108,6 +144,12 @@ class Elemento {
     tipo: tipo ?? this.tipo,
     estado: estado ?? this.estado,
     valoracion: valoracion ?? this.valoracion,
+    favorito: favorito ?? this.favorito,
+    fechaTerminado: identical(fechaTerminado, _sinCambio)
+        ? (estado == Estado.terminado && this.estado != Estado.terminado
+              ? hoy()
+              : this.fechaTerminado)
+        : fechaTerminado as DateTime?,
     notas: identical(notas, _sinCambio) ? this.notas : notas as String?,
     imagenUrl: identical(imagenUrl, _sinCambio)
         ? this.imagenUrl

@@ -36,6 +36,7 @@ void main() {
       ...original.toJson(),
       'estado': 'terminado',
       'valoracion': 5,
+      'fechaTerminado': Elemento.hoy().toIso8601String(),
     });
     expect(original.estado, Estado.pendiente);
     expect(original.valoracion, 4);

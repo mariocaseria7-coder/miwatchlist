@@ -12,10 +12,12 @@ class TarjetaElemento extends StatelessWidget {
     super.key,
     required this.elemento,
     required this.onTap,
+    this.onFavorito,
   });
 
   final Elemento elemento;
   final VoidCallback onTap;
+  final VoidCallback? onFavorito;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,29 @@ class TarjetaElemento extends StatelessWidget {
                   tipo: elemento.tipo,
                   url: elemento.imagenUrl,
                   encuadre: elemento.encuadre,
+                ),
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: IconButton.filledTonal(
+                    tooltip: elemento.favorito
+                        ? 'Quitar de favoritos'
+                        : 'Marcar favorito',
+                    isSelected: elemento.favorito,
+                    onPressed: onFavorito,
+                    icon: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 220),
+                      transitionBuilder: (child, animation) =>
+                          ScaleTransition(scale: animation, child: child),
+                      child: Icon(
+                        elemento.favorito
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        key: ValueKey(elemento.favorito),
+                        color: colores.primary,
+                      ),
+                    ),
+                  ),
                 ),
                 Positioned(
                   top: 12,
@@ -82,7 +107,40 @@ class TarjetaElemento extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium
                           ?.copyWith(fontSize: 18),
                     ),
+                    const SizedBox(height: 6),
+                    if (elemento.notas?.trim().isNotEmpty ?? false)
+                      Text(
+                        elemento.notas!,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: EstilosApp.textoSecundario(context)
+                            ?.copyWith(fontSize: 13),
+                      ),
                     const Spacer(),
+                    if (elemento.estado == Estado.terminado &&
+                        elemento.fechaTerminado != null)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.calendar_today_outlined,
+                              size: 13,
+                              color: colores.onSurfaceVariant,
+                            ),
+                            const SizedBox(width: 6),
+                            Expanded(
+                              child: Text(
+                                'Terminado el ${Elemento.fechaEnEspanol(elemento.fechaTerminado!)}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: EstilosApp.textoSecundario(context)
+                                    ?.copyWith(fontSize: 12),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     Row(
                       children: [
                         SelectorEstrellas(valor: elemento.valoracion),

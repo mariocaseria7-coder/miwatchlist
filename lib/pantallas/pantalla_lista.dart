@@ -25,6 +25,7 @@ class _PantallaListaState extends State<PantallaLista> {
   late final Almacen _almacen;
   final _busqueda = TextEditingController();
   Estado? _filtro;
+  bool _soloFavoritos = false;
   Tipo? _categoria;
   bool _cargando = true;
   bool _guardando = false;
@@ -132,6 +133,7 @@ class _PantallaListaState extends State<PantallaLista> {
         _elementos
             .where(
               (e) =>
+                  (!_soloFavoritos || e.favorito) &&
                   (_filtro == null || e.estado == _filtro) &&
                   (_categoria == null || e.tipo == _categoria) &&
                   e.titulo.toLowerCase().contains(consulta),
@@ -359,6 +361,17 @@ class _PantallaListaState extends State<PantallaLista> {
                                         onSelected: (_) =>
                                             setState(() => _filtro = null),
                                       ),
+                                      FilterChip(
+                                        label: const Text('Favoritos'),
+                                        avatar: const Icon(
+                                          Icons.favorite_border,
+                                          size: 18,
+                                        ),
+                                        selected: _soloFavoritos,
+                                        onSelected: (valor) => setState(
+                                          () => _soloFavoritos = valor,
+                                        ),
+                                      ),
                                       for (final estado in Estado.values)
                                         ChoiceChip(
                                           label: Text(estado.etiqueta),
@@ -522,7 +535,7 @@ class _PantallaListaState extends State<PantallaLista> {
                                                 anchoTarjeta /
                                                     EstilosApp
                                                         .proporcionPortada +
-                                                180 +
+                                                250 +
                                                 (escala - 1).clamp(
                                                       0,
                                                       double.infinity,
@@ -536,6 +549,17 @@ class _PantallaListaState extends State<PantallaLista> {
                                           key: ValueKey(elemento.id),
                                           elemento: elemento,
                                           onTap: () => _abrirDetalle(elemento),
+                                          onFavorito: ocupado
+                                              ? null
+                                              : () => _guardar([
+                                                  for (final e in _elementos)
+                                                    e.id == elemento.id
+                                                        ? e.copyWith(
+                                                            favorito:
+                                                                !e.favorito,
+                                                          )
+                                                        : e,
+                                                ]),
                                         );
                                       },
                                     );

@@ -25,6 +25,8 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
   late Tipo _tipo;
   late Estado _estado;
   late int _valoracion;
+  late bool _favorito;
+  DateTime? _fechaTerminado;
 
   @override
   void initState() {
@@ -37,6 +39,8 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
     _tipo = widget.inicial?.tipo ?? Tipo.pelicula;
     _estado = widget.inicial?.estado ?? Estado.pendiente;
     _valoracion = widget.inicial?.valoracion ?? 0;
+    _favorito = widget.inicial?.favorito ?? false;
+    _fechaTerminado = widget.inicial?.fechaTerminado;
   }
 
   @override
@@ -60,6 +64,10 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
         tipo: _tipo,
         estado: _estado,
         valoracion: _valoracion,
+        favorito: _favorito,
+        fechaTerminado: _estado == Estado.terminado
+            ? (_fechaTerminado ?? Elemento.hoy())
+            : null,
         notas: notas.isEmpty ? null : notas,
         imagenUrl: _imagen.text.trim().isNotEmpty ? _imagen.text.trim() : null,
         encuadre: _encuadre,
@@ -316,12 +324,60 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
                                     }, size: 18),
                                     label: Text(estado.etiqueta),
                                     selected: _estado == estado,
-                                    onSelected: (_) =>
-                                        setState(() => _estado = estado),
+                                    onSelected: (_) => setState(() {
+                                      if (_estado != estado) {
+                                        _fechaTerminado =
+                                            estado == Estado.terminado
+                                            ? Elemento.hoy()
+                                            : null;
+                                      }
+                                      _estado = estado;
+                                    }),
                                   ),
                               ],
                             ),
                             const SizedBox(height: 28),
+                            SwitchListTile.adaptive(
+                              contentPadding: EdgeInsets.zero,
+                              title: const Text('Favorito'),
+                              secondary: Icon(
+                                _favorito
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: colores.primary,
+                              ),
+                              value: _favorito,
+                              onChanged: (valor) =>
+                                  setState(() => _favorito = valor),
+                            ),
+                            if (_estado == Estado.terminado) ...[
+                              OutlinedButton.icon(
+                                key: const ValueKey('fechaTerminado'),
+                                icon: const Icon(Icons.calendar_today_outlined),
+                                label: Text(
+                                  'Terminado el ${Elemento.fechaEnEspanol(_fechaTerminado ?? Elemento.hoy())}',
+                                ),
+                                onPressed: () async {
+                                  final hoy = Elemento.hoy();
+                                  final fecha = await showDatePicker(
+                                    context: context,
+                                    initialDate: _fechaTerminado ?? hoy,
+                                    firstDate: DateTime(1),
+                                    lastDate: hoy,
+                                    helpText: 'Fecha de terminado',
+                                    cancelText: 'Cancelar',
+                                    confirmText: 'Aceptar',
+                                    fieldLabelText: 'Fecha',
+                                    errorInvalidText:
+                                        'Elige una fecha no futura.',
+                                  );
+                                  if (fecha != null && mounted) {
+                                    setState(() => _fechaTerminado = fecha);
+                                  }
+                                },
+                              ),
+                              const SizedBox(height: 20),
+                            ],
                             Text(
                               'Tu valoración',
                               style: tema.textTheme.titleMedium,

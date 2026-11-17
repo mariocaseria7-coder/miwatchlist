@@ -298,6 +298,34 @@ RESULTADO TÉCNICO DE LA IA PARA R17 (no reflexión del alumno)
   a enlaces que el servidor bloquee.
 - Se prepara el commit y push autorizados y se comprobará la publicación remota.
 
+R18 · REAL · 17/11/2026 · Favoritos, fecha de terminado y notas en tarjetas
+Resumen fiel de la petición del usuario: revisar modelo, JSON, pruebas y pantallas;
+añadir favorito opcional (false en datos antiguos), corazón animado en tarjetas,
+interruptor en formulario y filtro combinable con categoría y estado. Añadir
+fechaTerminado opcional ISO 8601, automática al terminar y eliminada al reabrir,
+editable con calendario sin fechas futuras y visible en español en tarjetas.
+Mostrar hasta dos líneas de notas entre título y estrellas sin cambiar las notas
+completas en detalle y edición. Mantener inmutabilidad, datos antiguos, tema,
+tipografía, estadísticas y funcionamiento móvil/web. Ejecutar analyze y test,
+corregir fallos, hacer commit y push a master y avisar al publicarse.
+
+RESULTADO TÉCNICO DE LA IA PARA R18 (no reflexión del alumno)
+- Campos favorito y fechaTerminado en modelo inmutable, JSON y copyWith.
+  Los registros antiguos conservan favorito false y fecha ausente; no se inventa
+  una fecha histórica de terminado al leer el almacenamiento.
+- Corazón con AnimatedSwitcher y guardado por id a través de Almacen; los fallos
+  conservan los datos anteriores. Filtro Favoritos combinado con búsqueda,
+  categoría y estado, sin alterar estadísticas sobre la colección completa.
+- Formulario conserva favoritos y fechas, asigna hoy al terminar, borra al
+  reabrir y permite seleccionar una fecha hasta hoy. Fechas visibles en español.
+- Notas a dos líneas con elipsis y fecha discreta; altura de las tarjetas
+  ajustada para mantener alineadas las estrellas con y sin notas.
+- Seis pruebas nuevas: JSON antiguo y nuevo, fechas y transiciones, corazón
+  y filtros con fallo de escritura, tarjetas en ambos temas y calendario.
+- flutter analyze sin incidencias y 61 pruebas pasadas con flutter test.
+  Se prepara el commit y push y se comprobará la publicación autorizada.
+- No se ha probado en un móvil físico.
+
 EJEMPLOS FICTICIOS DE PROMPTS — NO SON UN HISTORIAL REAL
 Los textos F01–F10 están escritos en primera persona para ilustrar peticiones
 pequeñas con contexto, objetivo, restricciones y explicación. No se utilizaron
