@@ -167,6 +167,10 @@ RESULTADO TÉCNICO DE LA IA PARA R12–R14 (no reflexión del alumno)
 - Compilación local flutter build apk --release correcta: app-release.apk,
   aproximadamente 50 MB. Se prepara el commit y push a master solicitados;
   el resultado remoto se comunicará al comprobar GitHub Actions.
+- La primera ejecución remota instaló Flutter 3.50 al solicitar stable sin
+  versión. El análisis falló por la nueva deprecación de flutter/material.dart.
+  Se fijó Flutter estable 3.47.9, igual que el entorno local ya comprobado,
+  manteniendo el análisis y las pruebas como requisitos de la publicación.
 - Límites comunicados: datos separados entre dispositivos; posibles bloqueos
   CORS en portadas externas; APK educativa con firma de desarrollo, cuya clave
   puede cambiar entre compilaciones en distintos equipos.

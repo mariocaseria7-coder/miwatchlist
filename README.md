@@ -117,6 +117,7 @@ a `master`, o desde **Actions → Publicar web y APK → Run workflow**. Comprue
 formato, análisis y pruebas antes de compilar. Pages debe usar **GitHub Actions**
 como origen. La APK se reemplaza en la Release `latest` y la web usa la ruta
 `/miwatchlist/`. Las URLs se mantienen en `lib/config/app_links.dart`.
+El workflow fija Flutter estable 3.47.9 para reproducir el entorno verificado.
 
 La colección se agrupa por tipo y se ordena por título; categoría, estado y
 búsqueda se pueden combinar. El botón de tema conserva la preferencia entre
