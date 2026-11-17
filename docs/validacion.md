@@ -6,12 +6,14 @@
 
 Se ha contrastado la documentación con lib, test, pubspec.yaml y el workflow de
 publicación. La reescritura no modifica el código de aplicación. Las capturas
-anteriores y su generador se han apartado; esta fase no produce imágenes nuevas.
+anteriores permanecen apartadas. Esta revisión posterior añade 16 renders nuevos
+y un boceto de apoyo mediante dos generadores documentales.
 
 Entorno utilizado: Flutter 3.47.9 estable y Dart 3.13.7. Las comprobaciones locales
 de esta revisión son flutter analyze sin incidencias y 66 pruebas habituales
 aprobadas mediante flutter test. Los resultados no se atribuyen a una instalación
-en el Xiaomi ni a una revisión visual de capturas que todavía no ha aportado Mario.
+en el Xiaomi. Las imágenes nuevas proceden del renderizador de Flutter Test, con
+fuentes de texto e iconos y datos de demostración aislados.
 
 ## Qué cubren las pruebas
 
@@ -31,8 +33,17 @@ en el Xiaomi ni a una revisión visual de capturas que todavía no ha aportado M
 | sugerencia_test.dart | Categoría/estado correctos, vacío, alternativa distinta y acciones. |
 | encuadre_web_test.dart | Tres pruebas exclusivas Chrome de gestos y CORS. |
 
-Las 66 pruebas habituales no incluyen las tres de Chrome. No existe ya un generador
-de capturas dentro del proyecto ni se cuenta como prueba de la app.
+Las 66 pruebas habituales no incluyen las tres de Chrome ni los dos generadores
+documentales. Se comprueban por separado con:
+
+```bash
+flutter test tool/capturas_documentacion_test.dart
+flutter test tool/boceto_documentacion_test.dart
+```
+
+Ambos exportan PNG y sus comprobaciones pasan. La portada sintética se suministra
+desde caché del test; estas capturas no se usan como evidencia de acceso a una URL
+pública ni de CORS. El boceto incluye en la propia imagen su procedencia de IA.
 
 ## Repetir formato, análisis y suite
 
@@ -77,7 +88,8 @@ python tool/empaquetar.py
 La aplicación no cambia en esta fase, por lo que se reutiliza el APK debug de la
 última compilación funcional local. Su hash se conserva en entrega/SHA256SUMS.txt.
 El ZIP se regenera con los documentos nuevos y se comprueban integridad, APK y
-exclusión de build, caches y credenciales. No contiene las capturas apartadas.
+exclusión de build, caches y credenciales. Incluye las 16 imágenes nuevas y el boceto
+documental; no contiene las capturas apartadas.
 
 ## Comprobación manual pendiente
 

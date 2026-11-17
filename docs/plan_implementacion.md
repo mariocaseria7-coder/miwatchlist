@@ -51,5 +51,7 @@ consumen desde las pantallas.
 
 El modelo se explica en [memoria.md](memoria.md), los casos de prueba en
 [validacion.md](validacion.md) y los flujos de uso en [manual_usuario.md](manual_usuario.md).
-Las capturas nuevas se añaden manualmente; no hay un generador dentro del proyecto
-que sobrescriba los archivos que aporte Mario.
+tool/capturas_documentacion_test.dart exporta las capturas actual-*.png y
+tool/boceto_documentacion_test.dart genera el diagrama. Son herramientas documentales
+y no forman parte de lib ni de la lógica de la aplicación. Ejecutarlas sobrescribe
+sus archivos previstos; conservar por separado las capturas personales.

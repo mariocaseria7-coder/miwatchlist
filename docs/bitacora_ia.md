@@ -29,7 +29,7 @@ para presentarlas como comprensión propia.
 **Prompts:** contexto R09–R11 del registro. No hay una transcripción original
 separada por esta fase que se pueda reproducir como petición real.
 
-**Resultado técnico actual:** No hay un boceto personal aportado. La estructura del proyecto existe; el dibujo propio se incorpora por separado.
+**Resultado técnico actual:** Hay un boceto de apoyo reconstruido con IA a petición posterior de Mario. La figura y boceto.md indican su origen; no acredita el boceto personal sin IA de la fase inicial.
 
 **Código/evidencia:** docs/boceto.png y estructura de carpetas.
 
@@ -207,7 +207,7 @@ separada por esta fase que se pueda reproducir como petición real.
 **Prompts:** contexto R09–R11 del registro. No hay una transcripción original
 separada por esta fase que se pueda reproducir como petición real.
 
-**Resultado técnico actual:** La suite habitual tiene 66 pruebas y hay tres adicionales de Chrome. Los documentos se reescriben; Mario aportará las capturas.
+**Resultado técnico actual:** La suite habitual tiene 66 pruebas y hay tres adicionales de Chrome. Los documentos se reescriben; después se incorporan 16 renders nuevos y un boceto con su procedencia documentada.
 
 **Código/evidencia:** test/, README.md y docs/.
 
@@ -236,6 +236,7 @@ separada por esta fase que se pueda reproducir como petición real.
 | R19 | Selección aleatoria por categoría, alternativa distinta, detalle y empezar. |
 | R20 | Primera preparación documental y datos de autor/asignatura. |
 | R21 | Rehacer todos los documentos desde el código y reservar capturas a Mario; se retiran las imágenes anteriores de la entrega. |
+| R22 | Mario solicita después nuevas capturas y boceto a la IA. Se generan 16 renders del código actual y una reconstrucción marcada como IA, incorporados a documentos y ZIP. |
 
 ## Decisiones y problemas técnicos observados por la IA
 
@@ -248,8 +249,9 @@ separada por esta fase que se pueda reproducir como petición real.
   web se incorporaron también a Actions sin desactivar las restricciones CORS.
 - google_fonts, url_launcher y package_info_plus exceden los paquetes permitidos por
   el enunciado. No consta aceptación docente y no se oculta esa diferencia.
-- A petición de Mario se rehace la documentación y se dejan las capturas nuevas pendientes;
-  no se reutilizan las anteriores como evidencia de esta revisión.
+- Después de rehacer la documentación, Mario solicita a la IA las capturas y el boceto.
+  Se generan desde los widgets actuales y con un diagrama de procedencia visible,
+  sin presentar renders como capturas físicas ni reconstrucciones como bocetos propios.
 
 ## Revisión personal de las ampliaciones
 
@@ -265,7 +267,8 @@ separada por esta fase que se pueda reproducir como petición real.
 
 ## Cierre personal
 
-- [ ] He incorporado mi boceto y capturas actuales.
+- [x] Se han incorporado imágenes actuales y un boceto de apoyo generados con IA.
+- [ ] He resuelto personalmente el requisito de boceto sin IA de fase 0.
 - [ ] He completado las reflexiones de cada fase honestamente.
 - [ ] He contestado las preguntas sin IA.
 - [ ] Puedo explicar los archivos de lib y ensayar un cambio sin ayuda.

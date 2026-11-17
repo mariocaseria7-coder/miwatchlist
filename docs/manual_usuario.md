@@ -91,7 +91,18 @@ Si una novedad publicada no aparece en web, recarga; en escritorio puedes usar C
 Si una imagen no carga, comprueba el enlace o usa otro origen. Para un Xiaomi conectado
 por USB, INSTALL_FAILED_USER_RESTRICTED indica rechazo de instalación en el teléfono.
 
-## Capturas
+## Capturas de esta revisión
 
-Mario incorporará las imágenes de la versión que utiliza. El recorrido propuesto
-está en [capturas/README.md](capturas/README.md). Este manual no incrusta capturas anteriores.
+Se incluyen imágenes recién generadas de los widgets actuales con datos de ejemplo
+aislados, mediante Flutter Test. No acreditan una instalación en un móvil físico.
+El [registro](capturas/README.md) identifica los archivos y su origen.
+
+| Encuadre | Fecha de terminado |
+| --- | --- |
+| <img src="capturas/actual-encuadre.png" width="300" alt="Editor de portada actual"> | <img src="capturas/actual-calendario.png" width="300" alt="Calendario actual"> |
+
+| Categorías del sorteo | Sugerencia |
+| --- | --- |
+| <img src="capturas/actual-categorias-azar.png" width="300" alt="Pendientes por categoría"> | <img src="capturas/actual-sugerencia.png" width="300" alt="Opción para empezar"> |
+
+![Edición en pantalla ancha](capturas/actual-formulario-ancho.png)

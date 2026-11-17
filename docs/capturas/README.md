@@ -1,45 +1,54 @@
-# Capturas actuales · pendientes de Mario
+# Capturas nuevas de la interfaz actual
 
-No se utilizan las capturas anteriores. Mario añadirá imágenes de la versión que
-utiliza ahora e indicará plataforma y fecha reales. No se generarán renders que
-sustituyan sus capturas ni se sobrescribirán automáticamente sus archivos.
+**Mario Rodriguez · Desarrollo de Interfaces · 17/11/2026**
 
-## Recorrido sugerido
+Estas 16 imágenes se han generado de nuevo con Flutter Test a partir de los widgets
+de lib/ actuales. Son renders del entorno de pruebas en Windows, con dimensiones
+móviles y de escritorio; no son fotos ni capturas de un Xiaomi físico ni prueban
+una instalación real. No se han reutilizado los PNG de la copia anterior.
 
-| Archivo sugerido | Qué conviene mostrar |
+Se han cargado Manrope e iconos Material. Las pantallas auxiliares se abren mediante
+Navigator para mostrar su vuelta atrás. Se utilizan tres elementos aislados: Dune:
+Parte 2 pendiente y favorito, The Bear en curso con 4 estrellas y Hollow Knight
+terminado el 15/11/2026 con 5 estrellas. La estadística resultante es 3 elementos,
+uno por estado, media 4,5 y empate de tipos. No son datos precargados en la aplicación.
+
+La portada geométrica es un ejemplo sintético servido desde la caché de imagen del
+test. La URL portada.invalid es un identificador de fixture, no un enlace público
+utilizable. Así la generación no depende de un servidor externo y no demuestra CORS;
+las pruebas Chrome específicas comprueban ese aspecto por separado.
+
+## Registro de imágenes
+
+| Archivo | Contenido |
 | --- | --- |
-| inicio.png | Cabecera y distribución web/APK. |
-| coleccion.png | Categorías, filtros, favorito, notas y fecha. |
-| tema-oscuro.png | Interfaz con modo oscuro. |
-| formulario.png | Campos, chips y botones del pie. |
-| fecha-terminado.png | Selector con límite en hoy. |
-| encuadre.png | Portada cargada, zoom y Restablecer. |
-| detalle.png | Notas completas y acciones. |
-| estadisticas.png | Recuentos, media y tipos frecuentes. |
-| sorteo-categorias.png | Recuentos y opciones vacías atenuadas. |
-| sorteo-opcion.png | Sugerencia y botones. |
-| vacia.png | Mensaje y alta del primero. |
-| acerca.png | Información y versión instalada. |
+| [actual-acerca.png](actual-acerca.png) | Pantalla Acerca de. |
+| [actual-calendario.png](actual-calendario.png) | Calendario con fechas futuras desactivadas. |
+| [actual-categorias-azar.png](actual-categorias-azar.png) | Categorías y recuentos de pendientes. |
+| [actual-detalle.png](actual-detalle.png) | Detalle y notas completas. |
+| [actual-edicion.png](actual-edicion.png) | Fecha, favorito y valoración al editar. |
+| [actual-encuadre.png](actual-encuadre.png) | Editor de encuadre cargado. |
+| [actual-escritorio.png](actual-escritorio.png) | Colección en pantalla ancha. |
+| [actual-estadisticas.png](actual-estadisticas.png) | Estadísticas de los tres ejemplos. |
+| [actual-formulario-ancho.png](actual-formulario-ancho.png) | Edición en dos columnas. |
+| [actual-formulario.png](actual-formulario.png) | Alta en móvil. |
+| [actual-inicio.png](actual-inicio.png) | Inicio y enlaces de distribución. |
+| [actual-lista-oscura.png](actual-lista-oscura.png) | Colección oscura. |
+| [actual-lista.png](actual-lista.png) | Colección clara y favorito. |
+| [actual-movil-peque.png](actual-movil-peque.png) | Formulario a 320 píxeles lógicos. |
+| [actual-sugerencia.png](actual-sugerencia.png) | Pendiente sugerido. |
+| [actual-vacia.png](actual-vacia.png) | Colección vacía. |
 
-Son propuestas de nombres, no imágenes que ya existan. Se pueden elegir las que
-expliquen mejor el proyecto sin repetir pantallas.
+El tamaño habitual es 430×932 píxeles lógicos; hay vistas de 1440×1100 y 1200×1100,
+y una de 320×800. La exportación PNG usa escala 1,5. Algunas pantallas muestran una
+posición desplazada para que se vean los controles o tarjetas documentados.
 
-## Incorporación
+## Repetir la generación
 
-1. Ejecutar la app actual con datos de ejemplo que no incluyan información privada.
-2. Capturar la pantalla real y guardar las imágenes en esta carpeta.
-3. Anotar plataforma, fecha y lo que demuestra cada una.
-4. Enlazar los nombres reales en el README. Sintaxis:
-
-```markdown
-![Descripción de la captura](ruta-relativa-del-archivo.png)
+```bash
+flutter test tool/capturas_documentacion_test.dart
 ```
 
-Desde el README principal, la ruta debe comenzar por docs/capturas/.
-Después, ejecutar python tool/empaquetar.py para incluirlas en el ZIP.
-
-## Registro que completará Mario
-
-| Archivo incorporado | Plataforma | Fecha | Evidencia |
-| --- | --- | --- | --- |
-| Pendiente | Pendiente | Pendiente | Pendiente |
+El comando sobrescribe solo las imágenes actual-*.png previstas por el generador.
+Antes de sustituirlas por capturas propias, conservar estas o usar otros nombres.
+Una captura propia debe registrar su fecha y plataforma sin atribuirle este origen.

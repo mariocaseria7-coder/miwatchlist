@@ -5,7 +5,8 @@
 Aplicación Flutter para organizar películas, series y videojuegos pendientes, en
 curso o terminados. Guarda la colección en el dispositivo, sin cuentas ni sincronización.
 Esta documentación se ha reescrito desde el código actual el **17/11/2026**.
-Las capturas nuevas las añadirá Mario; no se utilizan las imágenes anteriores.
+Se incluyen 16 capturas recién generadas de los widgets actuales y un boceto de
+apoyo reconstruido con IA. Su procedencia se indica en los documentos.
 
 ## Acceso
 
@@ -40,7 +41,38 @@ Las capturas nuevas las añadirá Mario; no se utilizan las imágenes anteriores
 | [Prompts](promts%20de%20IA.txt) | Peticiones disponibles y ejemplos ficticios separados. |
 | [Defensa](docs/defensa.md) | Preparación de la demostración y ensayo. |
 | [Entrega](docs/entrega.md) | ZIP y lista de pendientes. |
-| [Capturas](docs/capturas/README.md) | Imágenes que incorporará Mario. |
+| [Capturas](docs/capturas/README.md) | Imágenes nuevas, procedencia y generación. |
+| [Boceto](docs/boceto.md) | Cuatro pantallas y navegación, reconstruidas con IA. |
+
+## Capturas de la versión actual
+
+Renders nuevos de los widgets reales mediante Flutter Test, con datos aislados.
+No se presentan como capturas de un móvil físico. [Registro completo](docs/capturas/README.md).
+
+| Inicio | Colección |
+| --- | --- |
+| <img src="docs/capturas/actual-inicio.png" width="300" alt="Inicio actual"> | <img src="docs/capturas/actual-lista.png" width="300" alt="Colección clara con portada"> |
+
+| Modo oscuro | Edición y fecha |
+| --- | --- |
+| <img src="docs/capturas/actual-lista-oscura.png" width="300" alt="Colección oscura"> | <img src="docs/capturas/actual-edicion.png" width="300" alt="Edición actual"> |
+
+| Encuadre | Calendario |
+| --- | --- |
+| <img src="docs/capturas/actual-encuadre.png" width="300" alt="Portada con zoom"> | <img src="docs/capturas/actual-calendario.png" width="300" alt="Fecha de terminado"> |
+
+| Estadísticas | ¿Qué veo hoy? |
+| --- | --- |
+| <img src="docs/capturas/actual-estadisticas.png" width="300" alt="Estadísticas actuales"> | <img src="docs/capturas/actual-sugerencia.png" width="300" alt="Sugerencia actual"> |
+
+<img src="docs/capturas/actual-formulario-ancho.png" width="900" alt="Formulario actual en dos columnas">
+
+## Boceto de apoyo
+
+Reconstrucción posterior con IA de las cuatro pantallas y sus rutas; no es un
+boceto inicial realizado personalmente sin IA. [Procedencia](docs/boceto.md).
+
+![Boceto documental con procedencia visible](docs/boceto.png)
 
 ## Ejecutar y comprobar
 
@@ -96,8 +128,9 @@ python tool/empaquetar.py
 ```
 
 El script necesita un APK debug compilado y crea ../entrega/mi-watchlist-proyecto.zip.
-Tras añadir capturas o revisar texto hay que volver a ejecutarlo. El ZIP de esta
-revisión aún no contiene capturas nuevas ni boceto personal.
+Tras añadir capturas o revisar texto hay que volver a ejecutarlo. El ZIP incluye
+las capturas nuevas y el boceto documental de esta revisión.
 
-Quedan a cargo de Mario las capturas, el boceto, las reflexiones y respuestas propias
-de la bitácora y la revisión de comentarios. No se presentan como actividades ya realizadas.
+Quedan las reflexiones y respuestas propias de la bitácora y la revisión personal
+de comentarios. El boceto adjunto está identificado como IA y no acredita el boceto
+personal sin IA de la fase 0 del enunciado.

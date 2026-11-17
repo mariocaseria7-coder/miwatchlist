@@ -9,16 +9,17 @@ memoria, manual, estructura, estilos, validación, bitácora y guía de defensa.
 El registro de prompts se conserva como historial y añade la petición de reescritura.
 El código de la aplicación permanece sin cambios.
 
-Mario se encargará de las capturas nuevas. Las imágenes anteriores y su generador
-están en una copia local fuera del proyecto:
-`../entrega/capturas-anteriores-42e0c7c/`. No se incluyen en el ZIP ni se enlazan como
-pruebas del estado actual. El índice de imágenes está en capturas/README.md.
+Se incluyen 16 capturas nuevas de widgets actuales, con datos aislados y procedencia
+indicada en capturas/README.md, y docs/boceto.png con su explicación en boceto.md.
+Son renders de Flutter Test y una reconstrucción con IA, no evidencias personales.
+Las imágenes anteriores permanecen apartadas en ../entrega/capturas-anteriores-42e0c7c/.
 
 ## Pendientes antes de presentar
 
-- [ ] Añadir las capturas actuales y enlazarlas en README.
-- [ ] Añadir el boceto propio a docs/boceto.png. Si se dibuja ahora, indicar que es
-  posterior al desarrollo y no presentarlo como un boceto inicial que ya existía.
+- [x] Generar capturas nuevas de la interfaz actual y enlazarlas en README.
+- [x] Incorporar el boceto de apoyo con autoría de IA visible.
+- [ ] Resolver el requisito de boceto personal sin IA: la reconstrucción adjunta
+  no acredita esa actividad de fase 0. No atribuirle una procedencia distinta.
 - [ ] Completar revisión personal, aprendizajes y preguntas de cada fase.
 - [ ] Leer el código y escribir los comentarios propios después de comprenderlo.
 - [ ] Ensayar demostración y cambio en directo sin IA.
@@ -46,9 +47,8 @@ APK debug existente. Si falta el compilado, el script indica que hay que generar
 El ZIP queda en `../entrega/mi-watchlist-proyecto.zip` sin build ni caches. El script
 verifica integridad y excluye credenciales locales.
 
-El ZIP de esta revisión contiene los documentos nuevos, pero aún no tiene las
-capturas nuevas ni el boceto. Abrirlo de nuevo antes de entregar y verificar esos
-archivos después de incorporarlos.
+El ZIP incluye los documentos, las 16 capturas nuevas y el boceto de apoyo.
+Comprobarlo antes de enviar y completar los pendientes personales.
 
 ## GitHub
 

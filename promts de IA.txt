@@ -369,6 +369,15 @@ como descripción vigente. Las imágenes anteriores y su generador se apartan en
 una copia local fuera del proyecto. Mario incorporará las capturas nuevas.
 Se conserva el historial real de prompts, separado de los ejemplos ficticios.
 
+R22 · REAL · 17/11/2026 · Capturas nuevas y boceto
+puedes ahora hacer capturas nuevas y ponerlas, y encargarte del boceto?
+RESULTADO TÉCNICO DE LA IA: 16 imágenes nuevas del renderizador Flutter Test con
+los widgets actuales y datos de demostración aislados; portada sintética en caché,
+encuadre, calendario, temas y tamaños adaptables. No se afirman capturas del Xiaomi.
+Boceto documental con cuatro pantallas y navegación, identificado en la propia
+imagen como reconstrucción posterior elaborada con IA. No se declara cumplido
+con ello el requisito de boceto personal sin IA. Documentos y ZIP actualizados.
+
 EJEMPLOS FICTICIOS DE PROMPTS — NO SON UN HISTORIAL REAL
 Los textos F01–F10 están escritos en primera persona para ilustrar peticiones
 pequeñas con contexto, objetivo, restricciones y explicación. No se utilizaron

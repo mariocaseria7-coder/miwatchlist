@@ -44,6 +44,7 @@ Los tests verifican casos de contraste, formulario ancho/estrecho, cabecera, tec
 notas/fechas y diálogo en ambos temas. Esto no constituye una auditoría completa de
 accesibilidad en todos los dispositivos.
 
-Mario incorporará capturas propias de la app actual conforme a
-[capturas/README.md](capturas/README.md). Las imágenes anteriores no son evidencia
-de esta revisión y no se utilizan en los documentos.
+Se incluyen capturas recién generadas de los widgets actuales: modo claro/oscuro,
+encuadre, calendario, formulario ancho y vistas estrechas. El [registro](capturas/README.md)
+identifica su generación en Flutter Test; no son fotografías de un dispositivo.
+Las imágenes anteriores no se reutilizan como evidencia de esta revisión.

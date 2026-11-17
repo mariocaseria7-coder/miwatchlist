@@ -151,6 +151,7 @@ Estos tres últimos paquetes están fuera de la lista cerrada shared_preferences
 del enunciado. También se han implementado más ampliaciones de las dos propuestas.
 Se declara la diferencia; no consta una excepción aprobada por el profesor.
 
-Las capturas nuevas las incorporará Mario. Esta memoria no certifica su existencia,
-la realización personal del boceto ni respuestas de comprensión. La bitácora separa
-el registro técnico de esas aportaciones individuales.
+Se incluyen 16 renders nuevos de los widgets actuales con datos de ejemplo, y un
+boceto reconstruido con IA. Su procedencia está en [capturas](capturas/README.md) y
+[boceto](boceto.md). No acreditan una sesión en móvil físico ni la realización personal
+del boceto de fase 0 o de respuestas de comprensión. La bitácora separa esos hechos.
