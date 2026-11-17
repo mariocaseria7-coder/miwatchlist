@@ -6,6 +6,7 @@ import '../modelos/elemento.dart';
 
 /// Calcula un resumen de toda la colección sin depender de sus filtros.
 class ResumenEstadisticas {
+  /// Cuenta toda la colección y calcula la media solo entre quienes tienen estrellas.
   ResumenEstadisticas(List<Elemento> elementos)
     : total = elementos.length,
       porEstado = {
@@ -41,6 +42,7 @@ class PantallaEstadisticas extends StatelessWidget {
   const PantallaEstadisticas({super.key, required this.elementos});
   final List<Elemento> elementos;
 
+  /// Representa el resumen completo y contempla ausencia de elementos o valoraciones.
   @override
   Widget build(BuildContext context) {
     final resumen = ResumenEstadisticas(elementos);

@@ -20,6 +20,7 @@ class PantallaFormulario extends StatefulWidget {
   State<PantallaFormulario> createState() => _PantallaFormularioState();
 }
 
+/// Edita datos locales: no modifica la colección mientras no se pulse Guardar.
 class _PantallaFormularioState extends State<PantallaFormulario> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _titulo;
@@ -33,6 +34,7 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
   late bool _favorito;
   DateTime? _fechaTerminado;
 
+  /// Carga una copia de los datos iniciales o los valores de un alta nueva.
   @override
   void initState() {
     super.initState();
@@ -48,6 +50,7 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
     _fechaTerminado = widget.inicial?.fechaTerminado;
   }
 
+  /// Libera los controladores de texto cuando el formulario deja de utilizarse.
   @override
   void dispose() {
     _titulo.dispose();
@@ -81,6 +84,7 @@ class _PantallaFormularioState extends State<PantallaFormulario> {
     );
   }
 
+  /// La portada es opcional; si hay texto, exige un enlace http o https con servidor.
   String? _validarImagen(String? valor) {
     final texto = valor?.trim() ?? '';
     if (texto.isEmpty) return null;

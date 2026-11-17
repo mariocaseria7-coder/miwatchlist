@@ -20,12 +20,14 @@ class MiWatchlistApp extends StatefulWidget {
   State<MiWatchlistApp> createState() => _MiWatchlistAppState();
 }
 
+/// Conserva la elección de tema y comparte el almacén con la pantalla inicial.
 class _MiWatchlistAppState extends State<MiWatchlistApp> {
   late final SharedPreferencesAsync _preferencias;
   late final Almacen _almacen;
   bool _oscuro = true;
   bool _temaOcupado = true;
 
+  /// Prepara el almacén y empieza a recuperar el tema sin bloquear el arranque.
   @override
   void initState() {
     super.initState();
@@ -34,6 +36,7 @@ class _MiWatchlistAppState extends State<MiWatchlistApp> {
     _cargarTema();
   }
 
+  /// Lee la preferencia al arrancar; si no existe, mantiene el modo oscuro inicial.
   Future<void> _cargarTema() async {
     try {
       final oscuro = await _preferencias.getBool('temaOscuro');

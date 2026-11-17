@@ -5,6 +5,7 @@ import '../modelos/elemento.dart';
 import '../servicios/sugerencia.dart';
 import 'imagen_elemento.dart';
 
+/// Presenta un pendiente sorteado y delega al padre su apertura o cambio de estado.
 class DialogoSugerencia extends StatefulWidget {
   const DialogoSugerencia({
     super.key,
@@ -24,11 +25,13 @@ class DialogoSugerencia extends StatefulWidget {
   State<DialogoSugerencia> createState() => _DialogoSugerenciaState();
 }
 
+/// Recuerda la opción anterior y espera el guardado antes de cerrar el diálogo.
 class _DialogoSugerenciaState extends State<DialogoSugerencia> {
   late Elemento? _elegido = elegirPendiente(widget.elementos, widget.tipo);
   bool _guardando = false;
   bool _error = false;
 
+  /// Muestra vacío, alternativa o reintento y desactiva acciones mientras se guarda.
   @override
   Widget build(BuildContext context) {
     final elemento = _elegido;

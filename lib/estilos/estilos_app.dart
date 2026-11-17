@@ -11,6 +11,7 @@ abstract final class EstilosApp {
   static const radioPanel = BorderRadius.all(Radius.circular(24));
   static const proporcionPortada = 16 / 9;
 
+  /// Asocia cada categoría con el mismo icono en todas las pantallas.
   static IconData iconoTipo(Tipo tipo) => switch (tipo) {
     Tipo.pelicula => Icons.movie_outlined,
     Tipo.serie => Icons.tv_rounded,
@@ -30,6 +31,7 @@ abstract final class EstilosApp {
     borderRadius: radioPanel,
   );
 
+  /// Da a las etiquetas de sección el acento y el espaciado definidos para la app.
   static TextStyle? etiqueta(BuildContext context) => Theme.of(context)
       .textTheme
       .labelLarge
@@ -38,6 +40,7 @@ abstract final class EstilosApp {
         letterSpacing: 2,
       );
 
+  /// Usa el color secundario del tema para notas y detalles que acompañan al título.
   static TextStyle? textoSecundario(BuildContext context) =>
       Theme.of(context).textTheme.bodyMedium
           ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant);

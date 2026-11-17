@@ -7,6 +7,7 @@ import '../servicios/enlaces_app.dart';
 class CabeceraColeccion extends StatelessWidget {
   const CabeceraColeccion({super.key});
 
+  /// Solicita abrir la distribución y comunica el fallo sin cambiar los datos.
   Future<void> _abrir(BuildContext context, Uri direccion) async {
     final abierto = await EnlacesApp.abrir(direccion);
     if (!abierto && context.mounted) {

@@ -23,6 +23,7 @@ class PantallaDetalle extends StatefulWidget {
   State<PantallaDetalle> createState() => _PantallaDetalleState();
 }
 
+/// Conserva la copia mostrada y bloquea acciones mientras el padre guarda o borra.
 class _PantallaDetalleState extends State<PantallaDetalle> {
   late Elemento _elemento;
   bool _ocupado = false;

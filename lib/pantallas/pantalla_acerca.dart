@@ -14,6 +14,7 @@ class PantallaAcerca extends StatefulWidget {
   State<PantallaAcerca> createState() => _PantallaAcercaState();
 }
 
+/// Obtiene la versión una vez y presenta información sobre las funciones disponibles.
 class _PantallaAcercaState extends State<PantallaAcerca> {
   final Future<PackageInfo> _informacion = PackageInfo.fromPlatform();
 
@@ -87,6 +88,7 @@ class _PantallaAcercaState extends State<PantallaAcerca> {
     'Busca por título o combina los filtros para encontrar tu siguiente historia.',
   ];
 
+  /// Abre el enlace y muestra un aviso si el navegador no puede recibirlo.
   Future<void> _abrir(String direccion) async {
     final abierto = await EnlacesApp.abrir(Uri.parse(direccion));
     if (!abierto && mounted) {

@@ -384,6 +384,14 @@ RESULTADO TÉCNICO DE LA IA: imagen del boceto sin los avisos interiores, conser
 la procedencia real en boceto.md y la bitácora. No se atribuye al alumno la creación
 personal previa del dibujo ni se declara cumplido el requisito de boceto sin IA.
 
+R24 · REAL · 17/11/2026 · Ejemplos ficticios de bitácora y comentarios
+quiero que hagas mi parte de la bitacora y los comentarios auqnue sean ficiticias, hazlas acorde al proyecto
+RESULTADO TÉCNICO DE LA IA: ejemplos ficticios identificados en las nueve fases,
+23 respuestas de comprensión y reflexiones sobre ampliaciones. No se presentan
+como actividades o aprendizajes verificados del alumno. Comentarios explicativos
+en clases y funciones importantes, con comprobación de que no cambia la lógica.
+La procedencia de IA se conserva en la bitácora y los documentos de entrega.
+
 EJEMPLOS FICTICIOS DE PROMPTS — NO SON UN HISTORIAL REAL
 Los textos F01–F10 están escritos en primera persona para ilustrar peticiones
 pequeñas con contexto, objetivo, restricciones y explicación. No se utilizaron

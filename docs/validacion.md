@@ -5,7 +5,7 @@
 ## Alcance de esta revisión
 
 Se ha contrastado la documentación con lib, test, pubspec.yaml y el workflow de
-publicación. La reescritura no modifica el código de aplicación. Las capturas
+publicación. La revisión añade comentarios explicativos sin modificar el código ejecutable. Las capturas
 anteriores permanecen apartadas. Esta revisión posterior añade 16 renders nuevos
 y un boceto de apoyo mediante dos generadores documentales.
 
@@ -98,3 +98,12 @@ cancelación de edición, borrado confirmado, búsqueda con filtros, favoritos, 
 encuadre, estadísticas vacías y sorteo. Registrar plataforma, fecha y resultado real
 al hacer las capturas. Los tests automáticos no certifican que se haya realizado
 esa sesión manual ni que se haya comprendido el código.
+
+## Revisión de comentarios y ejemplos de bitácora
+
+Se añaden ejemplos ficticios identificados por fase y 23 respuestas de estudio.
+No se consideran verificadas la comprensión ni las experiencias personales de Mario.
+En lib se compara el contenido antes/después excluyendo comentarios de línea y se
+comprueba que no cambia el código ejecutable. Se aplican formato, análisis y suite
+habitual después de las aclaraciones. No se añaden pruebas nuevas de comportamiento
+porque las funciones conservan su implementación.

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import '../modelos/elemento.dart';
 
+/// Calcula los pendientes de un tipo; null permite elegir entre las tres categorías.
 List<Elemento> pendientesDe(List<Elemento> elementos, Tipo? tipo) => elementos
     .where(
       (e) => e.estado == Estado.pendiente && (tipo == null || e.tipo == tipo),

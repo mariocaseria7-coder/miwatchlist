@@ -7,7 +7,7 @@
 README y documentos se han redactado de nuevo desde la implementación actual:
 memoria, manual, estructura, estilos, validación, bitácora y guía de defensa.
 El registro de prompts se conserva como historial y añade la petición de reescritura.
-El código de la aplicación permanece sin cambios.
+Se amplían comentarios de lib sin modificar la lógica de la aplicación.
 
 Se incluyen 16 capturas nuevas de widgets actuales, con datos aislados y procedencia
 indicada en capturas/README.md, y docs/boceto.png con su explicación en boceto.md.
@@ -20,7 +20,9 @@ Las imágenes anteriores permanecen apartadas en ../entrega/capturas-anteriores-
 - [x] Incorporar el boceto de apoyo y documentar su procedencia en boceto.md.
 - [ ] Resolver el requisito de boceto personal sin IA: la reconstrucción adjunta
   no acredita esa actividad de fase 0. No atribuirle una procedencia distinta.
-- [ ] Completar revisión personal, aprendizajes y preguntas de cada fase.
+- [x] Añadir ejemplos ficticios de reflexiones y 23 respuestas redactados por IA.
+- [x] Aclarar clases y funciones importantes con comentarios explicativos de IA.
+- [ ] Revisar los ejemplos y completar personalmente aprendizajes y preguntas.
 - [ ] Leer el código y escribir los comentarios propios después de comprenderlo.
 - [ ] Ensayar demostración y cambio en directo sin IA.
 - [ ] Revisar con el profesor los paquetes adicionales y el número de ampliaciones.

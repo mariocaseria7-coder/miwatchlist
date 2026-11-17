@@ -23,6 +23,7 @@ enum Estado {
 
 /// Datos inmutables de una película, serie o videojuego.
 class Elemento {
+  /// Construye un elemento válido y descarta fecha o encuadre cuando no corresponden.
   Elemento({
     required this.id,
     required String titulo,
@@ -64,6 +65,7 @@ class Elemento {
   final Encuadre? encuadre;
   final DateTime fechaAlta;
 
+  /// En curso se muestra como Jugando para juegos y Viendo para películas o series.
   String get etiquetaEstado => estado == Estado.enCurso
       ? (tipo == Tipo.videojuego ? 'Jugando' : 'Viendo')
       : estado.etiqueta;
@@ -102,11 +104,13 @@ class Elemento {
     fechaAlta: DateTime.parse(json['fechaAlta'] as String),
   );
 
+  /// Obtiene la fecha local sin hora para comparar y seleccionar días del calendario.
   static DateTime hoy() {
     final ahora = DateTime.now();
     return DateTime(ahora.year, ahora.month, ahora.day);
   }
 
+  /// Muestra día, mes abreviado en español y año sin añadir una dependencia.
   static String fechaEnEspanol(DateTime fecha) {
     const meses = [
       'ene',
@@ -125,9 +129,11 @@ class Elemento {
     return '${fecha.day} ${meses[fecha.month - 1]} ${fecha.year}';
   }
 
+  /// Distingue un campo omitido de null: omitir conserva el dato y null lo elimina.
   static const _sinCambio = Object();
 
-  /// Crea otra versión; omitir notas las conserva y pasar null las elimina.
+  /// Crea una copia sin cambiar el original; conserva identidad y aplica las reglas de fecha.
+  /// Los campos anulables omitidos se conservan y un null explícito los elimina.
   Elemento copyWith({
     String? titulo,
     Tipo? tipo,

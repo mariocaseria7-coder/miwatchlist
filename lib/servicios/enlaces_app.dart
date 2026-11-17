@@ -8,6 +8,7 @@ abstract final class EnlacesApp {
   static Uri get web => Uri.parse(AppLinks.webUrl);
   static Uri get apk => Uri.parse(AppLinks.apkUrl);
 
+  /// Abre una dirección web válida fuera de la app y devuelve false si el plugin falla.
   static Future<bool> abrir(Uri direccion) async {
     if (!['http', 'https'].contains(direccion.scheme) ||
         direccion.host.isEmpty) {

@@ -7,6 +7,7 @@ abstract final class TemaApp {
   static ThemeData get claro => _crear(Brightness.light);
   static ThemeData get oscuro => _crear(Brightness.dark);
 
+  /// Construye los dos modos con Manrope local y colores legibles del mismo acento.
   static ThemeData _crear(Brightness brillo) {
     GoogleFonts.config.allowRuntimeFetching = false;
     final oscuro = brillo == Brightness.dark;

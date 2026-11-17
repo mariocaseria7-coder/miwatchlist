@@ -26,6 +26,7 @@ class ImagenElemento extends StatefulWidget {
   State<ImagenElemento> createState() => _ImagenElementoState();
 }
 
+/// Escucha la carga de imagen y transforma los gestos en parámetros de encuadre.
 class _ImagenElementoState extends State<ImagenElemento> {
   ImageStream? _stream;
   ImageInfo? _imagen;
@@ -48,6 +49,7 @@ class _ImagenElementoState extends State<ImagenElemento> {
     },
   );
 
+  /// Empieza a resolver la portada cuando el widget entra en el árbol.
   @override
   void initState() {
     super.initState();
@@ -60,6 +62,7 @@ class _ImagenElementoState extends State<ImagenElemento> {
     if (oldWidget.url?.trim() != widget.url?.trim()) _cargar();
   }
 
+  /// Desconecta la portada anterior y escucha la nueva URL para evitar respuestas antiguas.
   void _cargar() {
     _stream?.removeListener(_listener);
     _stream = null;
@@ -73,6 +76,7 @@ class _ImagenElementoState extends State<ImagenElemento> {
     }
   }
 
+  /// Retira el oyente y libera la imagen recibida para no conservar recursos fuera de uso.
   @override
   void dispose() {
     _stream?.removeListener(_listener);
@@ -80,6 +84,7 @@ class _ImagenElementoState extends State<ImagenElemento> {
     super.dispose();
   }
 
+  /// Ofrece una reserva legible cuando no hay imagen o no se puede cargar.
   Widget _fondo(BuildContext context) {
     final colores = Theme.of(context).colorScheme;
     return DecoratedBox(
@@ -119,6 +124,7 @@ class _ImagenElementoState extends State<ImagenElemento> {
     );
   }
 
+  /// Comparte el marco de portada y solo añade gestos y controles cuando la imagen está cargada.
   @override
   Widget build(BuildContext context) {
     final encuadre = widget.encuadre ?? Encuadre();

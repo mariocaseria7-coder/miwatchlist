@@ -4,7 +4,7 @@ import 'package:flutter/painting.dart';
 
 import '../modelos/encuadre.dart';
 
-/// Cover, zoom y posición usan la misma geometría en edición y visualización.
+/// Escala para cubrir el marco y reparte el sobrante según la posición normalizada.
 Rect rectanguloPortada(Size imagen, Size marco, Encuadre encuadre) {
   final escala =
       math.max(marco.width / imagen.width, marco.height / imagen.height) *
@@ -19,7 +19,7 @@ Rect rectanguloPortada(Size imagen, Size marco, Encuadre encuadre) {
   );
 }
 
-/// Conserva el punto bajo el gesto y limita el movimiento para no dejar huecos.
+/// Mantiene bajo el dedo o ratón el mismo punto y limita el desplazamiento a los bordes.
 Encuadre transformarEncuadre(
   Size imagen,
   Size marco,

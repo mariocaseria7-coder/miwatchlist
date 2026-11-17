@@ -37,7 +37,7 @@ apoyo reconstruido con IA. Su procedencia se indica en los documentos.
 | [Estructura](docs/plan_implementacion.md) | Responsabilidades y flujo de datos. |
 | [Estilos](docs/estilos.md) | Tema, tipografía y adaptación. |
 | [Validación](docs/validacion.md) | Pruebas y comandos reproducibles. |
-| [Bitácora](docs/bitacora_ia.md) | Registro técnico y aportación personal pendiente. |
+| [Bitácora](docs/bitacora_ia.md) | Registro técnico y ejemplos ficticios de reflexión/respuestas, separados de la revisión personal. |
 | [Prompts](promts%20de%20IA.txt) | Peticiones disponibles y ejemplos ficticios separados. |
 | [Defensa](docs/defensa.md) | Preparación de la demostración y ensayo. |
 | [Entrega](docs/entrega.md) | ZIP y lista de pendientes. |
@@ -134,3 +134,12 @@ las capturas nuevas y el boceto documental de esta revisión.
 Quedan las reflexiones y respuestas propias de la bitácora y la revisión personal
 de comentarios. La procedencia de IA del boceto consta en docs/boceto.md; no acredita el boceto
 personal sin IA de la fase 0 del enunciado.
+
+## Comentarios y ejemplos para estudiar
+
+La bitácora incluye ejemplos ficticios de decisiones y reflexión en las nueve fases,
+23 respuestas de ejemplo y comentarios sobre las ampliaciones. Los redactó la IA:
+no son experiencias de Mario ni respuestas personales realizadas sin ayuda.
+Los comentarios explicativos de lib también se han redactado con IA. Se ha
+comprobado que el código ejecutable no cambia al añadirlos. Quedan para revisión y
+comprensión del alumno; no se marca cumplido el requisito de comentarios propios.

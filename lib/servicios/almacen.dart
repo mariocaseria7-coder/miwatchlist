@@ -11,7 +11,8 @@ class Almacen {
   late final SharedPreferencesAsync _prefs =
       preferencias ?? SharedPreferencesAsync();
 
-  /// Recupera una lista vacía si no hay datos o su contenido está dañado.
+  /// Convierte el JSON local en elementos; datos dañados o ids repetidos dan una lista vacía.
+  /// Un error al acceder a preferencias se propaga para que la pantalla permita reintentar.
   Future<List<Elemento>> cargar() async {
     final texto = await _prefs.getString('watchlist');
     if (texto == null) return [];
@@ -33,7 +34,7 @@ class Almacen {
     }
   }
 
-  /// Espera la escritura y propaga sus errores para que la interfaz los muestre.
+  /// Escribe la colección completa como un único texto JSON y comunica cualquier fallo.
   Future<void> guardar(List<Elemento> elementos) async {
     final texto = jsonEncode(elementos.map((e) => e.toJson()).toList());
     await _prefs.setString('watchlist', texto);

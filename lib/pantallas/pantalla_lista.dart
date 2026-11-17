@@ -22,6 +22,7 @@ class PantallaLista extends StatefulWidget {
   State<PantallaLista> createState() => _PantallaListaState();
 }
 
+/// Mantiene los datos originales separados de los filtros que cambian lo visible.
 class _PantallaListaState extends State<PantallaLista> {
   List<Elemento> _elementos = [];
   late final Almacen _almacen;
@@ -33,6 +34,7 @@ class _PantallaListaState extends State<PantallaLista> {
   bool _guardando = false;
   bool _errorCarga = false;
 
+  /// Selecciona el almacén e inicia la carga; Flutter no espera un Future de initState.
   @override
   void initState() {
     super.initState();
@@ -40,7 +42,7 @@ class _PantallaListaState extends State<PantallaLista> {
     _cargar();
   }
 
-  /// Inicia la lectura fuera de initState y evita perder datos si falla el acceso.
+  /// Carga al arrancar; separa un error de acceso de una colección vacía y ofrece reintento.
   Future<void> _cargar() async {
     setState(() {
       _cargando = true;
@@ -58,13 +60,14 @@ class _PantallaListaState extends State<PantallaLista> {
     }
   }
 
+  /// Libera el controlador de búsqueda al salir de la pantalla.
   @override
   void dispose() {
     _busqueda.dispose();
     super.dispose();
   }
 
-  /// Reemplaza la colección completa después de validar una operación.
+  /// Confirma la propuesta solo al terminar la escritura; un fallo conserva lo anterior.
   Future<bool> _guardar(List<Elemento> propuesta) async {
     if (_guardando || _cargando || _errorCarga) return false;
     setState(() => _guardando = true);
@@ -89,7 +92,7 @@ class _PantallaListaState extends State<PantallaLista> {
     }
   }
 
-  /// El formulario devuelve null cuando se cierra sin guardar.
+  /// Espera el formulario y añade su resultado; cancelar devuelve null y no guarda nada.
   Future<void> _anadir({Tipo tipo = Tipo.pelicula}) async {
     final elemento = await Navigator.push<Elemento>(
       context,
@@ -101,7 +104,7 @@ class _PantallaListaState extends State<PantallaLista> {
     await _guardar([..._elementos, elemento]);
   }
 
-  /// Las operaciones del detalle se aplican por id a la lista original.
+  /// Abre el detalle y aplica sus cambios por id sobre toda la colección, no sobre el filtro.
   void _abrirDetalle(Elemento elemento) {
     Navigator.push<void>(
       context,
@@ -128,6 +131,7 @@ class _PantallaListaState extends State<PantallaLista> {
     );
   }
 
+  /// Cuenta todos los pendientes y abre el sorteo sin aplicar los filtros de la lista.
   Future<void> _queVeoHoy() async {
     final categoria = await showDialog<int>(
       context: context,
@@ -180,6 +184,7 @@ class _PantallaListaState extends State<PantallaLista> {
     );
   }
 
+  /// Calcula resultados y grupos sin tocar la colección original ni reducir las estadísticas.
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context);

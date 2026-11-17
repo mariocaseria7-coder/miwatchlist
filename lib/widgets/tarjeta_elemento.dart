@@ -6,7 +6,7 @@ import '../modelos/elemento.dart';
 import 'selector_estrellas.dart';
 import 'imagen_elemento.dart';
 
-/// Presenta un resumen y delega la apertura del detalle en la pantalla padre.
+/// Resume un elemento; abrirlo o marcar favorito se delega mediante callbacks al padre.
 class TarjetaElemento extends StatelessWidget {
   const TarjetaElemento({
     super.key,
