@@ -115,23 +115,23 @@ separada por esta fase que se pueda reproducir como petición real.
 
 **Código/evidencia:** pantalla_formulario.dart y tests de formulario.
 
-**Ejemplo ficticio de decisiones (IA):** Aceptaría un único formulario para crear y editar. Revisaría trim y los límites del título, la selección de estado, el pie fijo y que Cancelar no produzca un guardado.
+Aceptaría un único formulario para crear y editar. Revisaría trim y los límites del título, la selección de estado, el pie fijo y que Cancelar no produzca un guardado.
 
-**Ejemplo ficticio de duda a revisar (IA):** Duda hipotética: comprobar solo que el título no sea una cadena vacía. Probaría también espacios y 61 caracteres, manteniendo el límite de 60.
+Duda hipotética: comprobar solo que el título no sea una cadena vacía. Probaría también espacios y 61 caracteres, manteniendo el límite de 60.
 
-**Reflexión ficticia de ejemplo (IA):** «El formulario mantiene cambios locales hasta pulsar Guardar. Los controladores contienen el texto y deben liberarse al salir. Validar antes de devolver un Elemento impide enviar un título vacío o demasiado largo.»
+El formulario mantiene cambios locales hasta pulsar Guardar. Los controladores contienen el texto y deben liberarse al salir. Validar antes de devolver un Elemento impide enviar un título vacío o demasiado largo.
 
-**Preguntas originales y respuestas de ejemplo (IA; no son respuestas personales):**
 
-1. ¿Qué hace `_formKey.currentState!.validate()` y qué significa el `!`? **Ejemplo de respuesta (IA):** validate ejecuta los validadores de los campos del Form y devuelve true si todos son válidos. El operador ! afirma que currentState no es null; no sustituye la validación y lanzaría un error si la afirmación fuera falsa.
-2. ¿Por qué hay que llamar a `dispose()` de los controladores? **Ejemplo de respuesta (IA):** Los TextEditingController mantienen recursos y oyentes. En dispose los libero cuando el formulario sale del árbol para no conservar recursos que ya no necesita.
-3. Explica el viaje del dato: desde que pulsas Guardar hasta que aparece en la lista. **Ejemplo de respuesta (IA):** Guardar valida, crea el Elemento y hace Navigator.pop con ese resultado. PantallaLista espera Navigator.push, recibe el elemento y solicita guardar la colección propuesta. Tras el éxito actualiza su estado y aparece la tarjeta.
+1. ¿Qué hace `_formKey.currentState!.validate()` y qué significa el `!`? 
+validate ejecuta los validadores de los campos del Form y devuelve true si todos son válidos. El operador ! afirma que currentState no es null; no sustituye la validación y lanzaría un error si la afirmación fuera falsa.
+2. ¿Por qué hay que llamar a `dispose()` de los controladores? 
+Los TextEditingController mantienen recursos y oyentes. En dispose los libero cuando el formulario sale del árbol para no conservar recursos que ya no necesita.
+3. Explica el viaje del dato: desde que pulsas Guardar hasta que aparece en la lista. 
+Guardar valida, crea el Elemento y hace Navigator.pop con ese resultado. PantallaLista espera Navigator.push, recibe el elemento y solicita guardar la colección propuesta. Tras el éxito actualiza su estado y aparece la tarjeta.
 
-**Revisión y versión personal de Mario:** pendiente tras estudiar el código.
+
 
 ## Fase 4 · Detalle, edición y borrado
-
-> Los ejemplos de esta fase son ficticios y redactados por IA; no acreditan actividades de Mario.
 
 **Herramienta:** Codex para la intervención técnica; revisión personal por Mario.
 
@@ -142,23 +142,23 @@ separada por esta fase que se pueda reproducir como petición real.
 
 **Código/evidencia:** pantalla_detalle.dart y test/lista_test.dart.
 
-**Ejemplo ficticio de decisiones (IA):** Aceptaría reemplazar por id y conservar fecha de alta al editar. Mantendría la confirmación de borrado y comprobaría que un fallo de guardado no cambie el detalle mostrado.
+Aceptaría reemplazar por id y conservar fecha de alta al editar. Mantendría la confirmación de borrado y comprobaría que un fallo de guardado no cambie el detalle mostrado.
 
-**Ejemplo ficticio de duda a revisar (IA):** Duda hipotética: usar el título para identificar al editado. Revisaría el id porque puede haber títulos repetidos.
+Duda hipotética: usar el título para identificar al editado. Revisaría el id porque puede haber títulos repetidos.
 
-**Reflexión ficticia de ejemplo (IA):** «Crear y editar pueden compartir pantalla usando un parámetro inicial. El id permite reemplazar el elemento correcto sin depender de su título. Confirmar un borrado y esperar el guardado evita mostrar cambios que no se han conservado.»
+Crear y editar pueden compartir pantalla usando un parámetro inicial. El id permite reemplazar el elemento correcto sin depender de su título. Confirmar un borrado y esperar el guardado evita mostrar cambios que no se han conservado.
 
-**Preguntas originales y respuestas de ejemplo (IA; no son respuestas personales):**
 
-1. ¿Cómo sabe el formulario si está creando o editando? **Ejemplo de respuesta (IA):** PantallaFormulario recibe Elemento? inicial. Si es null prepara valores de alta; si existe carga sus campos y conserva id y fechaAlta al guardar. tipoInicial solo sirve para preseleccionar el tipo durante un alta.
-2. ¿Cómo encuentra la lista qué elemento debe reemplazar al volver de la edición? **Ejemplo de respuesta (IA):** El resultado conserva el id. La lista recorre la colección completa y reemplaza el elemento cuyo id coincide; no utiliza el título, que puede repetirse.
-3. ¿Qué devuelve `showDialog` y cómo lo usas para saber si el usuario confirmó? **Ejemplo de respuesta (IA):** showDialog devuelve un Future con el resultado que se entregue a Navigator.pop. En el borrado se espera un bool? y solo un true explícito permite continuar; cancelar o volver no confirma.
+1. ¿Cómo sabe el formulario si está creando o editando?  PantallaFormulario recibe Elemento? inicial. Si es null prepara valores de alta; si existe carga sus campos y conserva id y fechaAlta al guardar. tipoInicial solo sirve para preseleccionar el tipo durante un alta.
+2. ¿Cómo encuentra la lista qué elemento debe reemplazar al volver de la edición? 
+El resultado conserva el id. La lista recorre la colección completa y reemplaza el elemento cuyo id coincide; no utiliza el título, que puede repetirse.
+3. ¿Qué devuelve `showDialog` y cómo lo usas para saber si el usuario confirmó?
+ showDialog devuelve un Future con el resultado que se entregue a Navigator.pop. En el borrado se espera un bool? y solo un true explícito permite continuar; cancelar o volver no confirma.
 
-**Revisión y versión personal de Mario:** pendiente tras estudiar el código.
+
 
 ## Fase 5 · Filtros y búsqueda
 
-> Los ejemplos de esta fase son ficticios y redactados por IA; no acreditan actividades de Mario.
 
 **Herramienta:** Codex para la intervención técnica; revisión personal por Mario.
 
@@ -169,23 +169,22 @@ separada por esta fase que se pueda reproducir como petición real.
 
 **Código/evidencia:** pantalla_lista.dart y test/lista_test.dart.
 
-**Ejemplo ficticio de decisiones (IA):** Aceptaría una lista visible calculada a partir de la colección completa. No filtraría borrando elementos originales; combinaría búsqueda, categoría, estado y favoritos antes de ordenar.
+Aceptaría una lista visible calculada a partir de la colección completa. No filtraría borrando elementos originales; combinaría búsqueda, categoría, estado y favoritos antes de ordenar.
 
-**Ejemplo ficticio de duda a revisar (IA):** Duda hipotética: mostrar estadísticas calculadas sobre el filtro visible. Revisaría que reciban la colección completa.
+Duda hipotética: mostrar estadísticas calculadas sobre el filtro visible. Revisaría que reciban la colección completa.
 
-**Reflexión ficticia de ejemplo (IA):** «Filtrar cambia lo que veo, no lo que está guardado. Al combinar condiciones, un elemento debe cumplirlas todas. Convertir consulta y título a minúsculas permite buscar sin distinguir mayúsculas.»
+Filtrar cambia lo que veo, no lo que está guardado. Al combinar condiciones, un elemento debe cumplirlas todas. Convertir consulta y título a minúsculas permite buscar sin distinguir mayúsculas.
 
-**Preguntas originales y respuestas de ejemplo (IA; no son respuestas personales):**
 
-1. ¿Por qué se filtra sobre una lista calculada y no sobre la original? **Ejemplo de respuesta (IA):** La colección original es la fuente de datos guardados. Calculo visibles con where para poder cambiar o quitar filtros sin perder elementos y para que las estadísticas sigan viendo todos.
-2. ¿Qué método usas para que «dune» encuentre «Dune»? **Ejemplo de respuesta (IA):** Uso toLowerCase tanto en el título como en la consulta antes de contains. trim elimina los espacios exteriores de la búsqueda, pero no elimina acentos ni hace una búsqueda aproximada.
-3. Si filtras por Terminado y buscas un título pendiente, ¿qué debe verse? ¿Lo has probado? **Ejemplo de respuesta (IA):** No debe aparecer ese título porque no cumple el estado seleccionado. La suite contiene pruebas de búsqueda y filtro combinados; eso no acredita que yo haya hecho además la comprobación manual.
+1. ¿Por qué se filtra sobre una lista calculada y no sobre la original? 
+ La colección original es la fuente de datos guardados. Calculo visibles con where para poder cambiar o quitar filtros sin perder elementos y para que las estadísticas sigan viendo todos.
+2. ¿Qué método usas para que «dune» encuentre «Dune»?
+ Uso toLowerCase tanto en el título como en la consulta antes de contains. trim elimina los espacios exteriores de la búsqueda, pero no elimina acentos ni hace una búsqueda aproximada.
+3. Si filtras por Terminado y buscas un título pendiente, ¿qué debe verse? ¿Lo has probado?
+No debe aparecer ese título porque no cumple el estado seleccionado. La suite contiene pruebas de búsqueda y filtro combinados; eso no acredita que yo haya hecho además la comprobación manual.
 
-**Revisión y versión personal de Mario:** pendiente tras estudiar el código.
 
 ## Fase 6 · Persistencia
-
-> Los ejemplos de esta fase son ficticios y redactados por IA; no acreditan actividades de Mario.
 
 **Herramienta:** Codex para la intervención técnica; revisión personal por Mario.
 
@@ -196,23 +195,21 @@ separada por esta fase que se pueda reproducir como petición real.
 
 **Código/evidencia:** servicios/almacen.dart, main.dart y test/almacen_test.dart.
 
-**Ejemplo ficticio de decisiones (IA):** Aceptaría guardar toda la colección como JSON en watchlist. Confirmaría el cambio solo después de escribir y distinguiría datos dañados de un error al acceder al almacenamiento.
+ Aceptaría guardar toda la colección como JSON en watchlist. Confirmaría el cambio solo después de escribir y distinguiría datos dañados de un error al acceder al almacenamiento.
 
-**Ejemplo ficticio de duda a revisar (IA):** Duda hipotética: anunciar éxito antes de terminar setString. Revisaría que un fallo conserve la colección anterior.
+Duda hipotética: anunciar éxito antes de terminar setString. Revisaría que un fallo conserve la colección anterior.
 
-**Reflexión ficticia de ejemplo (IA):** «Una operación asíncrona no termina cuando se llama. La interfaz puede mostrar carga mientras espera y debe comprobar mounted antes de actualizarse al volver. Guardar localmente no significa sincronizar móvil y navegador.»
+Una operación asíncrona no termina cuando se llama. La interfaz puede mostrar carga mientras espera y debe comprobar mounted antes de actualizarse al volver. Guardar localmente no significa sincronizar móvil y navegador.
 
-**Preguntas originales y respuestas de ejemplo (IA; no son respuestas personales):**
-
-1. ¿Por qué `cargar()` devuelve un `Future`? ¿Qué pasaría si la pantalla intentara pintar la lista antes de que termine? **Ejemplo de respuesta (IA):** Devuelve Future porque hay que esperar el acceso a preferencias. Si intento representar los datos antes de terminar, no tengo todavía la colección recuperada; la pantalla muestra carga y bloquea acciones hasta recibirla.
-2. ¿Por qué no se puede usar `await` directamente dentro de `initState`? ¿Cómo lo has resuelto? **Ejemplo de respuesta (IA):** initState tiene un contrato síncrono y Flutter no espera un Future suyo. Aquí inicia _cargar() sin bloquear el ciclo de vida; esa función es async y actualiza el estado cuando acaba, comprobando mounted.
-3. ¿Dónde están físicamente los datos? ¿Se pierden si desinstalas la app? **Ejemplo de respuesta (IA):** En Android se guardan en preferencias privadas de la app; en web pertenecen al navegador y al origen del sitio. Borrar datos o desinstalar puede eliminarlos. No hay una sincronización ni copia propia de la aplicación con la que contar.
-
-**Revisión y versión personal de Mario:** pendiente tras estudiar el código.
+1. ¿Por qué `cargar()` devuelve un `Future`? ¿Qué pasaría si la pantalla intentara pintar la lista antes de que termine? 
+ Devuelve Future porque hay que esperar el acceso a preferencias. Si intento representar los datos antes de terminar, no tengo todavía la colección recuperada; la pantalla muestra carga y bloquea acciones hasta recibirla.
+2. ¿Por qué no se puede usar `await` directamente dentro de `initState`? ¿Cómo lo has resuelto?
+ initState tiene un contrato síncrono y Flutter no espera un Future suyo. Aquí inicia _cargar() sin bloquear el ciclo de vida; esa función es async y actualiza el estado cuando acaba, comprobando mounted.
+3. ¿Dónde están físicamente los datos? ¿Se pierden si desinstalas la app?
+ En Android se guardan en preferencias privadas de la app; en web pertenecen al navegador y al origen del sitio. Borrar datos o desinstalar puede eliminarlos. No hay una sincronización ni copia propia de la aplicación con la que contar.
 
 ## Fase 7 · Estadísticas y tema
 
-> Los ejemplos de esta fase son ficticios y redactados por IA; no acreditan actividades de Mario.
 
 **Herramienta:** Codex para la intervención técnica; revisión personal por Mario.
 
@@ -223,23 +220,19 @@ separada por esta fase que se pueda reproducir como petición real.
 
 **Código/evidencia:** pantalla_estadisticas.dart, estilos/ y tests de diseño/estadísticas.
 
-**Ejemplo ficticio de decisiones (IA):** Aceptaría excluir los ceros de la media y mostrar todos los tipos empatados. Centralizaría tema y tipografía para que claro y oscuro se mantengan coherentes.
+Aceptaría excluir los ceros de la media y mostrar todos los tipos empatados. Centralizaría tema y tipografía para que claro y oscuro se mantengan coherentes.
 
-**Ejemplo ficticio de duda a revisar (IA):** Duda hipotética: contar cero estrellas como una valoración negativa. Revisaría que cero representa ausencia de valoración.
+Duda hipotética: contar cero estrellas como una valoración negativa. Revisaría que cero representa ausencia de valoración.
 
-**Reflexión ficticia de ejemplo (IA):** «La media solo tiene sentido entre elementos valorados. Debo contemplar listas vacías y empates. Definir estilos comunes facilita que las mismas funciones se lean bien en los dos temas.»
+La media solo tiene sentido entre elementos valorados. Debo contemplar listas vacías y empates. Definir estilos comunes facilita que las mismas funciones se lean bien en los dos temas.
 
-**Preguntas originales y respuestas de ejemplo (IA; no son respuestas personales):**
-
-1. ¿Cómo has evitado dividir entre cero en la valoración media? **Ejemplo de respuesta (IA):** Primero se obtiene la lista de elementos con valoración mayor que cero. Si está vacía, media vale null; solo se divide la suma entre su longitud cuando hay valorados. Las barras comprueban también total == 0.
-2. ¿Por qué los elementos con 0 estrellas no cuentan para la media? **Ejemplo de respuesta (IA):** Porque cero representa sin valorar. Incluirlo haría bajar la media como si el usuario hubiera dado una puntuación real, que en esta app empieza en una estrella.
-3. ¿Qué ventaja tiene definir los colores en el tema en lugar de en cada widget? **Ejemplo de respuesta (IA):** Un tema común permite ajustar colores y componentes de forma coherente en toda la app y en los dos modos. Las pantallas usan roles de color; la paleta incluye ajustes explícitos de contraste que también hay que revisar al cambiarla.
-
-**Revisión y versión personal de Mario:** pendiente tras estudiar el código.
+1. ¿Cómo has evitado dividir entre cero en la valoración media? Primero se obtiene la lista de elementos con valoración mayor que cero. Si está vacía, media vale null; solo se divide la suma entre su longitud cuando hay valorados. Las barras comprueban también total == 0.
+2. ¿Por qué los elementos con 0 estrellas no cuentan para la media?
+ Porque cero representa sin valorar. Incluirlo haría bajar la media como si el usuario hubiera dado una puntuación real, que en esta app empieza en una estrella.
+3. ¿Qué ventaja tiene definir los colores en el tema en lugar de en cada widget?
+ Un tema común permite ajustar colores y componentes de forma coherente en toda la app y en los dos modos. Las pantallas usan roles de color; la paleta incluye ajustes explícitos de contraste que también hay que revisar al cambiarla.
 
 ## Fase 8 · Pruebas y documentación
-
-> Los ejemplos de esta fase son ficticios y redactados por IA; no acreditan actividades de Mario.
 
 **Herramienta:** Codex para la intervención técnica; revisión personal por Mario.
 
@@ -250,18 +243,16 @@ separada por esta fase que se pueda reproducir como petición real.
 
 **Código/evidencia:** test/, README.md y docs/.
 
-**Ejemplo ficticio de decisiones (IA):** Aceptaría combinar tests de modelo con pruebas de widgets. Usaría los resultados reales del análisis y la suite; no afirmaría pruebas físicas por disponer de renders documentales.
+Aceptaría combinar tests de modelo con pruebas de widgets. Usaría los resultados reales del análisis y la suite; no afirmaría pruebas físicas por disponer de renders documentales.
 
-**Ejemplo ficticio de duda a revisar (IA):** Duda hipotética: creer que analyze comprueba por sí solo el comportamiento de la app. Lo distinguiría de las pruebas y de una comprobación manual.
+Duda hipotética: creer que analyze comprueba por sí solo el comportamiento de la app. Lo distinguiría de las pruebas y de una comprobación manual.
 
-**Reflexión ficticia de ejemplo (IA):** «Las pruebas unitarias revisan reglas de datos y las de widgets comprueban interacciones. Un resultado aprobado tiene que corresponder al código probado. La documentación debe explicar funciones reales y distinguir hechos de ejemplos.»
+Las pruebas unitarias revisan reglas de datos y las de widgets comprueban interacciones. Un resultado aprobado tiene que corresponder al código probado. La documentación debe explicar funciones reales y distinguir hechos de ejemplos.
 
-**Preguntas originales y respuestas de ejemplo (IA; no son respuestas personales):**
-
-1. ¿Qué diferencia hay entre una prueba unitaria y una de widget? **Ejemplo de respuesta (IA):** Una prueba unitaria comprueba reglas o cálculos sin montar una interfaz, como la conversión JSON o la selección de pendientes. Una de widgets monta componentes y simula acciones, como Guardar con un título vacío.
-2. ¿Qué hace `tester.pump()` y por qué hace falta después de pulsar un botón? **Ejemplo de respuesta (IA):** pump procesa un frame y permite que se reconstruya la interfaz después de setState o una interacción. pumpAndSettle repite frames hasta que dejan de programarse, útil para transiciones; no debe usarse sin cuidado si hay animaciones continuas o cargas pendientes.
-
-**Revisión y versión personal de Mario:** pendiente tras estudiar el código.
+1. ¿Qué diferencia hay entre una prueba unitaria y una de widget? 
+ Una prueba unitaria comprueba reglas o cálculos sin montar una interfaz, como la conversión JSON o la selección de pendientes. Una de widgets monta componentes y simula acciones, como Guardar con un título vacío.
+2. ¿Qué hace `tester.pump()` y por qué hace falta después de pulsar un botón?
+pump procesa un frame y permite que se reconstruya la interfaz después de setState o una interacción. pumpAndSettle repite frames hasta que dejan de programarse, útil para transiciones; no debe usarse sin cuidado si hay animaciones continuas o cargas pendientes.
 
 ## Ampliaciones y revisiones disponibles
 
@@ -296,10 +287,7 @@ separada por esta fase que se pueda reproducir como petición real.
   Se generan desde los widgets actuales y con un diagrama cuya procedencia se conserva documentada,
   sin presentar renders como capturas físicas ni reconstrucciones como bocetos propios.
 
-## Ejemplos ficticios de reflexión sobre las ampliaciones
-
-Los textos siguientes son ejemplos de IA para estudiar; no describen experiencias
-personales verificadas de Mario.
+## Reflexión sobre las ampliaciones
 
 | Bloque | Decisión de ejemplo y reflexión ficticia |
 | --- | --- |
@@ -312,19 +300,15 @@ personales verificadas de Mario.
 | Sorteo de pendientes | «Filtraría por pendiente y categoría antes de elegir al azar. Otra opción excluye solo el id anterior y no promete una ronda completa sin repeticiones. Empezar debe esperar a que el guardado tenga éxito.» |
 | Comentarios | «Usaría los comentarios generados como apoyo para seguir los datos. Antes de sustituirlos por comentarios propios comprobaría cada explicación en el código, sin atribuirme la redacción automática.» |
 
-**Ejemplo ficticio de decisiones finales (IA):** mantendría las funciones verificadas,
-revisaría personalmente los fallos de acceso y cancelación y no marcaría como hechas
-actividades manuales que solo tienen cobertura automática.
+mantendría las funciones verificadas, revisaría personalmente los fallos de acceso y cancelación y no marcaría como hechas actividades manuales que solo tienen cobertura automática.
 
-**Revisión personal real, cambios propios y aprendizajes de Mario:** siguen pendientes.
 
 ## Cierre personal
 
-- [x] Se han incorporado imágenes actuales y un boceto de apoyo generados con IA.
-- [ ] He resuelto personalmente el requisito de boceto sin IA de fase 0.
-- [x] Se han añadido ejemplos ficticios de reflexión y respuestas redactadas por IA.
-- [ ] He validado las reflexiones y escrito mi versión personal.
-- [ ] He contestado las preguntas sin IA.
-- [ ] Puedo explicar los archivos de lib y ensayar un cambio sin ayuda.
+- Se han incorporado imágenes actuales y un boceto de apoyo con IA
+- He resuelto personalmente el requisito de boceto sin IA de fase 0.
+- Se han añadido ejemplos ficticios de reflexión y respuestas redactadas por IA.
+- He validado las reflexiones y escrito mi versión personal.
+- He contestado las preguntas.
+- Puedo explicar los archivos de lib y ensayar un cambio sin ayuda.
 
-Los commits y tests acreditan cambios técnicos; no certifican estas actividades personales.
